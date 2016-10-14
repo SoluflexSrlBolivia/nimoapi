@@ -1,0 +1,8 @@
+
+es:
+  message_activation_email: "Por favor, revisa tu e-mail para activar tu cuenta."
+  success_create_account: "Felicidades ya es parte de Nimo"
+  error_email_format: "Formato invalido"
+  error_email_already_exist: "Email ya existe"
+  error_password_format: "Debe tener 8 caracteres con 1 mayuscula"
+  success_create_folder: "se creo con exito"

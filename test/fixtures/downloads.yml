@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  folder_id: 
+  archive_id: 
+
+two:
+  folder_id: 
+  archive_id: 
