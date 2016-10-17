@@ -3,7 +3,7 @@ class Api::V1::HomeController < Api::V1::BaseController
 
   def index
   	group_ids = current_user.group_ids.join(',')
-
+    puts ">>>>>>>>>>>>group_ids:#{group_ids}"
     recently_archives = []
     recently_posts = []
     unless group_ids.empty?

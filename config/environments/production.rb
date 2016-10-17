@@ -65,16 +65,16 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
-  host = 'nimo.com'
-  config.action_mailer.default_url_options = { host: host, port: "3000" }
-  ActionMailer::Base.smtp_settings = {
-    :address        => 'smtp.gmail.com',
-    :port           => '587',
-    :domain         => 'Nimo.app',
-    :user_name      => "nimoapp.2016@gmail.com",
-    :password       => "nimo2016",
-    :authentication => :plain,
-    :enable_starttls_auto => true
+  host = 'nimo.social'
+  config.action_mailer.default_url_options = { host: host }
+  config.action_mailer.smtp_settings = {
+      :address        => 'smtp.gmail.com',
+      :port           => '587',
+      :domain         => 'gmail.com',
+      :user_name      => "nimoapp.2016@gmail.com",
+      :password       => "mxotoggbmtviyobn",
+      :authentication => :plain,
+      :enable_starttls_auto => true
   }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to

@@ -101,14 +101,25 @@ class Api::V1::UserGroupsController < Api::V1::BaseController
         notification = Notification.find_by_action action
         if notification.nil?
           notification = Notification.new(
-            :title=>"Solicitud de acceso a:#{group.name}",
             :message=>"#{current_user.notifier_name} solicita el ingreso al grupo:#{group.name}",
-            :notification_type=>Notification::NOTIFICATION_TYPE_REQUEST_GROUP,
+            :notification_type=>Notification::NOTIFICATION_REQUEST_TO_JOIN_GROUP,
             :action=>action
           )
           notification.user = group.admin
           notification.save!
-          notification.send_notification
+
+          users_enabled = [notification.user].select{|u| u.notification }.map{|u| u.id}
+          user_to_push = group.user_groups.where(:user_id=>users_enabled).where(:notification=>true)
+          devices = Device.where("user_id IN (#{user_to_push.map{|u| u.user_id}.join(",")})")
+          devices = devices.map{|d| d.player_id}
+
+          if devices.count > 0
+            Notification::send_notification notification_ans.message, devices, {
+                :type => notification_ans.notification_type,
+                :message => notification_ans.message,
+                :notification=>Api::V1::NotificationSerializer.new(notification_ans, root: false)
+            }
+          end
 
         end
 

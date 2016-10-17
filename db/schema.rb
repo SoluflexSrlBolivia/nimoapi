@@ -60,13 +60,14 @@ ActiveRecord::Schema.define(version: 20160728192636) do
 
   create_table "devices", force: :cascade do |t|
     t.string   "identifier"
-    t.string   "idDevice"
+    t.string   "player_id"
+    t.string   "name_device"
     t.string   "version"
     t.string   "os"
     t.string   "model"
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   add_index "devices", ["user_id"], name: "index_devices_on_user_id", using: :btree

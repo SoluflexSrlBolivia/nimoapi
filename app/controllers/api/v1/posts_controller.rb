@@ -39,23 +39,30 @@ class Api::V1::PostsController < Api::V1::BaseController
     
     users_to_notify = post.group.users.where.not(:id=>create_params[:user_id]).where(:deleted=>false)
     if users_to_notify.count > 0
-      notification_title = "Nuevo post en Nimo"
       notification_message = "#{current_user.notifier_name} acaba de postear al grupo:#{post.group.name}"
 
       users_to_notify.each do |user|
         notification = Notification.new(
-          :title=>notification_title,
           :message=>notification_message,
-          :notification_type=>Notification::NOTIFICATION_TYPE_NORMAL_NEWS
+          :notification_type=>Notification::NOTIFICATION_NEW_POST
         )
         notification.user = user
         notification.save!
       end
+
       users_enabled = users_to_notify.select{|u| u.notification }.map{|u| u.id}
       user_to_push = post.group.user_groups.where(:user_id=>users_enabled).where(:notification=>true)
       devices = Device.where("user_id IN (#{user_to_push.map{|u| u.user_id}.join(",")})")
-      devices = devices.map{|d| d.idDevice}
-      Notification.send_notification(notification_title, notification_message, devices) if devices.count>0
+      devices = devices.map{|d| d.player_id}
+
+      if devices.count>0
+        Notification::send_notification notification_message, devices, {
+            :type => Notification::NOTIFICATION_NEW_POST,
+            :message => notification_message,
+            :post=>Api::V1::HomePostSerializer.new(post, root: false)
+        }
+      end
+
     end
 
     render(

@@ -2,7 +2,8 @@ class CreateDevices < ActiveRecord::Migration
   def change
     create_table :devices do |t|
       t.string :identifier
-      t.string :idDevice    #this parameter is for devicepush.com 
+      t.string :player_id
+      t.string :name_device
       t.string :version
       t.string :os
       t.string :model
