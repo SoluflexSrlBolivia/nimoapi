@@ -1,8 +1,8 @@
 class Api::V1::UserSearchSerializer < Api::V1::BaseSerializer
-  attributes :id, :email, :name, :firstname, :lastname, :phone_number
+  attributes :id, :email, :fullname, :name, :lastname, :phone_number
 
-  def name
-  	object.try(:name) || "Sin nombre"
+  def fullname
+  	object.try(:fullname) || "Sin nombre"
   end
 
 end

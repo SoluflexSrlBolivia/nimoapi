@@ -2,7 +2,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   before_filter :authenticate_user!, only: [:show, :update, :destroy, :picture]
   
   def search 
-    result = User.search(params[:q]).where(:deleted=>false).order(firstname: :desc)
+    result = User.search(params[:q]).where(:deleted=>false).order(name: :desc)
     result = apply_filters(result, params)
 
     result = paginate(result)
@@ -20,7 +20,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
   
   def index
-    users = User.where(:deleted=>false).order(firstname: :desc)
+    users = User.where(:deleted=>false).order(name: :desc)
     users = apply_filters(users, params)
 
     users = paginate(users)
@@ -96,7 +96,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     end
     def update_params
       params.require(:user).permit(
-        :email, :password, :password_confirmation, :firstname, 
+        :email, :password, :password_confirmation, :name,
         :lastname, :gender, :birthday, :occupation, :phone_number, 
         :country, :subregion, :alias_id, :notification, :deleted
       ).delete_if{ |k,v| v.nil?}

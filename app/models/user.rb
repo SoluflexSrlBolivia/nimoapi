@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   
   validates_length_of :aliases, maximum: 5
   
-  attr_accessor :remember_token, :activation_token, :reset_token, :name
+  attr_accessor :remember_token, :activation_token, :reset_token, :fullname
   before_save   :downcase_email
   before_create :create_activation_digest
   before_create :generate_authentication_token
@@ -30,10 +30,10 @@ class User < ActiveRecord::Base
   validates :password_confirmation, :presence => true, :if => '!password.nil?'
 
   include PgSearch
-  pg_search_scope :search, :against => [:firstname, :lastname, :email, :gender, :occupation],
+  pg_search_scope :search, :against => [:name, :lastname, :email, :gender, :occupation],
   :using => {
             :tsearch => {:prefix => true},
-            :trigram => {:only => [:firstname, :lastname, :email, :gender, :occupation]}
+            :trigram => {:only => [:name, :lastname, :email, :gender, :occupation]}
           },
   ignoring: :accents
 
@@ -51,13 +51,13 @@ class User < ActiveRecord::Base
   end
 
   #full name
-  def name
-    "#{self.firstname} #{self.lastname}".strip
+  def fullname
+    "#{self.name} #{self.lastname}".strip
   end
 
   def notifier_name
-    if "#{self.firstname} #{self.lastname}".strip.size > 0
-      return "#{self.firstname} #{self.lastname}".strip
+    if "#{self.name} #{self.lastname}".strip.size > 0
+      return "#{self.name} #{self.lastname}".strip
     elsif !alias_selected.nil?
       return alias_selected.name
     end

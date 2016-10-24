@@ -1,8 +1,8 @@
 class Api::V1::MemberSerializer < Api::V1::BaseSerializer
-  attributes :id, :email, :name, :lastname, :notification, :phone_number, :gender, :occupation, :country
+  attributes :id, :email, :fullname, :notification, :phone_number, :gender, :occupation, :country
 
-  def name
-  	object.try(:name) || "Sin nombre"
+  def fullname
+  	object.try(:fullname) || "Sin nombre"
   end
 
   def country

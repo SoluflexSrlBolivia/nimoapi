@@ -1,5 +1,5 @@
 class Api::V1::UserSerializer < Api::V1::BaseSerializer
-  attributes :id, :email, :name, :firstname, :lastname, :gender, :birthday, :notification,
+  attributes :id, :email, :fullname, :name, :lastname, :gender, :birthday, :notification,
   					 :country, :subregion, :occupation, :phone_number, :aliases
 
   has_one :folder
