@@ -1,6 +1,7 @@
 class Api::V1::DownloadsController < Api::V1::BaseController
   before_filter :authenticate_user!
 
+  api! "Crear descarga en el folder de un usuario"
   def create
     download = Download.new(create_params)
     
@@ -15,6 +16,7 @@ class Api::V1::DownloadsController < Api::V1::BaseController
     )
   end
 
+  api! "Eliminacion de un download de un usuario"
   def destroy
   	archive = Download.find_by(:archive_id=>params[:id], :folder_id=>params[:folder_id])
     

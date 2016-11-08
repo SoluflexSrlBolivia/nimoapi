@@ -1,6 +1,7 @@
 class Api::V1::ArchivesController < Api::V1::BaseController
   before_filter :authenticate_user!, only: [:create, :update, :destroy]
-  
+
+  api! "Descarga un archivo directo o por HTTP Range"
   def show
   	archive = Archive.find(params[:id])
     if request.headers["HTTP_RANGE"]
@@ -10,11 +11,13 @@ class Api::V1::ArchivesController < Api::V1::BaseController
     end
   end
 
+  api! "Solo descarga el archivo"
   def download
   	archive = Archive.find(params[:id])
   	send_file archive.digital.path, :filename => archive.original_file_name, :type => archive.digital_content_type, :disposition => 'downloaded'
   end
 
+  api! "Crea un archivo"
   def create
     archive = Archive.new(create_params)
     archive.digital = digital_params[:data]
@@ -30,6 +33,7 @@ class Api::V1::ArchivesController < Api::V1::BaseController
     )
   end
 
+  api! "Actuliza un archivo"
   def update
     archive = Archive.find(params[:id])
 
@@ -53,6 +57,7 @@ class Api::V1::ArchivesController < Api::V1::BaseController
     )
   end
 
+  api! "Elimina un archivo"
   def destroy
   	archive = Archive.find(params[:id])
     

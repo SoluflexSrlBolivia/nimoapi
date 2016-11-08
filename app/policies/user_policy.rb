@@ -3,7 +3,8 @@ class UserPolicy < ApplicationPolicy
     return true if user.admin?
   end
   def show?
-    return true
+    return true if user.admin?
+    return true if record.id == user.id
   end
 
   def create?
@@ -16,6 +17,11 @@ class UserPolicy < ApplicationPolicy
   end
 
   def destroy?
+    return true if user.admin?
+    return true if record.id == user.id
+  end
+
+  def search?
     return true if user.admin?
     return true if record.id == user.id
   end

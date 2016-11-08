@@ -2,6 +2,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
   before_filter :authenticate_user!
 
   #########Files
+  api! "listado de fotos de un group"
   def pictures
     group = Group.find(params[:id])
     
@@ -24,6 +25,8 @@ class Api::V1::GroupsController < Api::V1::BaseController
       )
     )
   end
+
+  api! "listado de videos de un group"
   def videos
     group = Group.find(params[:id])
     
@@ -47,6 +50,8 @@ class Api::V1::GroupsController < Api::V1::BaseController
       )
     )
   end
+
+  api! "listado de audios de un group"
   def audios
     group = Group.find(params[:id])
     
@@ -69,6 +74,8 @@ class Api::V1::GroupsController < Api::V1::BaseController
       )
     )
   end
+
+  api! "listado de archivos de un group"
   def g_archives
     group = Group.find(params[:id])
     
@@ -97,6 +104,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
   end
 
   ######################################
+  api! "busqueda de grupos"
   def search 
     result = Group.search(params[:q]).where(:deleted=>false).order(name: :asc)
 
@@ -116,7 +124,8 @@ class Api::V1::GroupsController < Api::V1::BaseController
       )
     )
   end
-  
+
+  api! "listado de groups de un usuario"
   def index
     groups = current_user.groups.where(:deleted=>false).order(name: :asc)
     groups = apply_filters(groups, params)
@@ -136,6 +145,8 @@ class Api::V1::GroupsController < Api::V1::BaseController
     )
   end
 
+
+  api! "detalle de un grupo"
   def show
     group = Group.find(params[:id])
     return api_error(status: 422) if group.deleted?
@@ -147,6 +158,8 @@ class Api::V1::GroupsController < Api::V1::BaseController
     )
   end
 
+
+  api! "Creacion de un group"
   def create
     group = Group.new(create_params)
     group.admin_id = current_user.id
@@ -170,6 +183,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
     )
   end
 
+  api! "actulizacion de un grupo"
   def update
     group = Group.find(params[:id])
     authorize group
@@ -193,6 +207,8 @@ class Api::V1::GroupsController < Api::V1::BaseController
     )
   end
 
+
+  api! "Eliminacion de un grupo"
   def destroy
     group = Group.find(params[:id])
     authorize group

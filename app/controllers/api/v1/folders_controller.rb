@@ -1,6 +1,7 @@
 class Api::V1::FoldersController < Api::V1::BaseController
   before_filter :authenticate_user!
 
+  api! "Busqueda de carpetas"
   def search 
     resultFolders = Folder.search(params[:q]).where(:owner_type=>search_params[:name], :owner_id => search_params[:id])
     resultArchives = Archive.search(params[:q]).where(:owner_type=>search_params[:name], :owner_id => search_params[:id])
@@ -24,6 +25,7 @@ class Api::V1::FoldersController < Api::V1::BaseController
     )
   end
 
+  api! "listado de carpetas y archivos del folder de un usuario"
   def index
     archives = ActiveModel::ArraySerializer.new(
       current_user.folder.archives,
@@ -43,6 +45,7 @@ class Api::V1::FoldersController < Api::V1::BaseController
     )
   end
 
+  api! "listado de carpetas y archivos de una carpeta"
   def show
     folder = Folder.find(params[:id])
     authorize folder
@@ -65,6 +68,7 @@ class Api::V1::FoldersController < Api::V1::BaseController
     )
   end
 
+  api! "Creacion de una carpeta"
   def create
     new_params = create_params.merge(:folderable_type=>"Folder", :folderable_id=>create_params[:folder_id])
     new_params = new_params.except!(:folder_id)
@@ -82,6 +86,7 @@ class Api::V1::FoldersController < Api::V1::BaseController
     )
   end
 
+  api! "actulizacion de una carpeta"
   def update
     folder = Folder.find(params[:id])
     authorize folder
@@ -97,6 +102,8 @@ class Api::V1::FoldersController < Api::V1::BaseController
     )
   end
 
+
+  api! "eliminacion de una carpeta"
   def destroy
     folder = Folder.find(params[:id])
     authorize folder

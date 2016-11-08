@@ -1,6 +1,7 @@
 class Api::V1::PostCommentsController < Api::V1::BaseController
   before_filter :authenticate_user!
 
+  api! "listado de comentarios de un post"
   def show
     post = Post.find(params[:id])
     
@@ -23,6 +24,7 @@ class Api::V1::PostCommentsController < Api::V1::BaseController
     )
   end
 
+  api! "Creacion de un comentario"
   def create
     comment = Comment.new(create_params)
     #authorize comment
@@ -75,6 +77,7 @@ class Api::V1::PostCommentsController < Api::V1::BaseController
     )
   end
 
+  api! "Actulizacion de un comentario"
   def update
     comment = Comment.find(params[:id])
     authorize comment
@@ -93,6 +96,7 @@ class Api::V1::PostCommentsController < Api::V1::BaseController
     )
   end
 
+  api! "Eliminacion de un comentario"
   def destroy
     comment = Comment.find(params[:id])
     authorize comment

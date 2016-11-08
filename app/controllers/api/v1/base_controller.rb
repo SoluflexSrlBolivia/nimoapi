@@ -32,7 +32,7 @@ class Api::V1::BaseController < ApplicationController
   end
 
   def unauthorized!
-    render json: { error: 'not authorized' }, status: 403
+    render json: { error: 'Not authorized' }, status: 403
   end
 
   def invalid_resource!(errors = [])
@@ -92,16 +92,16 @@ class Api::V1::BaseController < ApplicationController
 
   #ember specific :/
   def jsonapi_format(errors)
-    return errors if errors.is_a? String
-    errors_hash = {}
+    return {:errors=>[{:error=>errors}]} if errors.is_a? String
+    errors_hash = []
     errors.messages.each do |attribute, error|
       array_hash = []
       error.each do |e|
-        array_hash << {attribute: attribute, message: e}
+        array_hash << e #{attribute: attribute, message: e}
       end
-      errors_hash.merge!({ attribute => array_hash })
+      errors_hash << { attribute => array_hash }
     end
 
-    return errors_hash
+    return {:errors=>errors_hash}
   end
 end

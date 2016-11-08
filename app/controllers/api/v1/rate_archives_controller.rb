@@ -1,6 +1,7 @@
 class Api::V1::RateArchivesController < Api::V1::BaseController
   before_filter :authenticate_user!
 
+	api! "Calificar un archivo"
   def create
   	rate = RateArchive.find_by(:archive_id=>create_params[:archive_id], :user_id=>create_params[:user_id])
   	if rate.nil?

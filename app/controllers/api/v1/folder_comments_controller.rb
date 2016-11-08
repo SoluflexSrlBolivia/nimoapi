@@ -1,6 +1,7 @@
 class Api::V1::FolderCommentsController < Api::V1::BaseController
   before_filter :authenticate_user!
 
+  api! "listado de comentarios de una carpeta"
   def show
     folder = Folder.find(params[:id])
 
@@ -23,6 +24,7 @@ class Api::V1::FolderCommentsController < Api::V1::BaseController
     )
   end
 
+  api! "Creacion de comentario de una carpeta"
   def create
     comment = Comment.new(create_params.merge({:commentable_type=>"Folder"}))
     authorize comment
@@ -41,6 +43,7 @@ class Api::V1::FolderCommentsController < Api::V1::BaseController
     )
   end
 
+  api! "Actulizacion de un comentario de carpeta"
   def update
     comment = Comment.find(params[:id])
     authorize comment
@@ -59,6 +62,7 @@ class Api::V1::FolderCommentsController < Api::V1::BaseController
     )
   end
 
+  api! "Eliminacion de comentario de una carpeta"
   def destroy
     comment = Comment.find(params[:id])
     authorize comment
@@ -72,7 +76,7 @@ class Api::V1::FolderCommentsController < Api::V1::BaseController
         comment.folder.comments,
         each_serializer: Api::V1::CommentSerializer,
         root: 'comments',
-        )
+        ),
       status: 204
     )
   end

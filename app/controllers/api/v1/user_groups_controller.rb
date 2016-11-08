@@ -1,6 +1,58 @@
 class Api::V1::UserGroupsController < Api::V1::BaseController
   before_filter :authenticate_user!
 
+  def_param_group :group do
+    param :group, Hash, :required => true do
+      param :notification, [true, false], :required => true
+      param :rate, Integer, :required => true
+    end
+  end
+
+  def_param_group :member do
+    param :group, Hash, :required => true do
+      param :member_ids, [Integer], :required => true
+    end
+  end
+
+  def_param_group :alias do
+    param :group, Hash, :required => true do
+      param :alias, String, :required => true
+    end
+  end
+
+  def_param_group :register do
+    param :group, Hash, :required => true do
+      param :keyword, String, :required => true
+    end
+  end
+
+  api! "Lista de miembros de mi grupo con MemberSerializer"
+  meta :header => "Authorization:Token token=pU7SOyDNY+URPeGZHlE/knqWzv131oTPOf/t3aXs+mM5x0zGrQfbi+5lGasQl47A6HaLTaPNUbN9KJQ2hA7QYw==, email=demo@gmail.com",
+       :url => "/api/v1/user_groups/:1/members",
+       :id => "1"
+  param :id, String, :desc => "Group ID", :required => true
+  error 401, "Bad credentials"
+  error 403, "not authorized"
+  error 422, "No existe el grupo"
+  example "Response" + '
+{
+  "members": [
+    {
+      "id": 1,
+      "email": "demo@gmail.com",
+      "fullname": "Demo User",
+      "notification": true
+    }
+  ],
+  "meta": {
+    "current_page": 1,
+    "next_page": null,
+    "prev_page": null,
+    "total_pages": 1,
+    "total_count": 1
+  }
+}
+'
   def members
   	group = Group.find(params[:id])
 
@@ -23,6 +75,37 @@ class Api::V1::UserGroupsController < Api::V1::BaseController
     )
   end
 
+  api! "Detalle de un grupo con GroupSerializer"
+  meta :header => "Authorization:Token token=pU7SOyDNY+URPeGZHlE/knqWzv131oTPOf/t3aXs+mM5x0zGrQfbi+5lGasQl47A6HaLTaPNUbN9KJQ2hA7QYw==, email=demo@gmail.com",
+       :url => "/api/v1/user_groups/:1",
+       :id => "1"
+  param :id, String, :desc => "Group ID", :required => true
+  error 401, "Bad credentials"
+  error 403, "not authorized"
+  error 422, "No existe el grupo"
+  example "Response" + '
+{
+  "group": {
+    "id": 1,
+    "name": "Bins, Maggio and Corwin",
+    "description": "Phased scalable artificial intelligence",
+    "keyword": "PeR149",
+    "privacity": 3,
+    "admin": {
+      "id": 1,
+      "email": "demo@gmail.com",
+      "fullname": "Demo User",
+      "name": "Demo User",
+      "notification": true
+    },
+    "notification": true,
+    "rate": 1,
+    "member": 1,
+    "my_rate": 1,
+    "folder_id": 2
+  }
+}
+'
   def show
     group = Group.find params[:id]
 
@@ -34,6 +117,42 @@ class Api::V1::UserGroupsController < Api::V1::BaseController
     )
   end
 
+  api! "Registro de usuario a un grupo con contraseña - GroupSerializer"
+  param_group :register
+  meta :header => "Authorization:Token token=pU7SOyDNY+URPeGZHlE/knqWzv131oTPOf/t3aXs+mM5x0zGrQfbi+5lGasQl47A6HaLTaPNUbN9KJQ2hA7QYw==, email=demo@gmail.com",
+       :url => "/api/v1/user_groups/:1/keyword",
+       :id => "1"
+  param :id, String, :desc => "Group ID", :required => true
+  error 401, "Bad credentials"
+  error 403, "not authorized"
+  error 422, "No existe el grupo"
+  example "Response" + '
+{"message":"Ya esta dentro del grupo"}
+------------------------
+{"message":"keyword invalido"}
+------------------------
+{
+  "group": {
+    "id": 1,
+    "name": "Bins, Maggio and Corwin",
+    "description": "Phased scalable artificial intelligence",
+    "keyword": "PeR149",
+    "privacity": 3,
+    "admin": {
+      "id": 1,
+      "email": "demo@gmail.com",
+      "fullname": "Demo User",
+      "name": "Demo User",
+      "notification": true
+    },
+    "notification": true,
+    "rate": 0,
+    "member": 1,
+    "my_rate": 0,
+    "folder_id": 2
+  }
+}
+'
   def register_by_keyword
     group = Group.find params[:id]
     return api_error(status: 422) if group.nil?
@@ -54,6 +173,8 @@ class Api::V1::UserGroupsController < Api::V1::BaseController
     render(json: {:message=>"Ya esta dentro del grupo"})
   end
 
+  api! "Adicion de alias a un grupo"
+  param_group :alias
   def add_alias
     alias_name = alias_params[:alias]
     return api_error(status: 422) if alias_name.empty?
@@ -80,6 +201,7 @@ class Api::V1::UserGroupsController < Api::V1::BaseController
 
   end
 
+  api! "Solicitud de ingreso a un grupo"
   def join
     group = Group.find params[:id]
     return api_error(status: 422) if group.nil?
@@ -131,6 +253,8 @@ class Api::V1::UserGroupsController < Api::V1::BaseController
 
     render(json: {:message=>"Ya se envio la solicitud"})
   end
+
+  api! "Salir de un grupo"
   def destroy
     group = Group.find params[:id]
     return api_error(status: 422) if group.nil?
@@ -144,6 +268,7 @@ class Api::V1::UserGroupsController < Api::V1::BaseController
     head status: 204
   end
 
+  api! "Actulizacion de grupo"
   def update
     userGroup = UserGroup.find_by(:group_id=>params[:id], :user_id=>current_user)
     
@@ -157,6 +282,8 @@ class Api::V1::UserGroupsController < Api::V1::BaseController
     )
   end
 
+  api! "Agregar miembro al grupo"
+  param_group :member
   def add_members
     group = Group.find params[:id]
     return api_error(status: 422) if group.nil?

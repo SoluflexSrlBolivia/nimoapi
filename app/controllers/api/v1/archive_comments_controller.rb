@@ -1,6 +1,7 @@
 class Api::V1::ArchiveCommentsController < Api::V1::BaseController
   before_filter :authenticate_user!
 
+  api! "listado de comentarios de un archivo"
   def show
     archive = Archive.find(params[:id])
     
@@ -23,6 +24,7 @@ class Api::V1::ArchiveCommentsController < Api::V1::BaseController
     )
   end
 
+  api! "Creacion de comentario de un archivo"
   def create
     comment = Comment.new(create_params)
     #authorize comment
@@ -39,6 +41,7 @@ class Api::V1::ArchiveCommentsController < Api::V1::BaseController
     )
   end
 
+  api! "Actulizacion de comentario de un archivo"
   def update
     comment = Comment.find(params[:id])
     authorize comment
@@ -57,6 +60,7 @@ class Api::V1::ArchiveCommentsController < Api::V1::BaseController
     )
   end
 
+  api! "eliminacion de comentario de un archivo"
   def destroy
     comment = Comment.find(params[:id])
     authorize comment

@@ -1,4 +1,6 @@
 class AccountActivationsController < ApplicationController
+
+  api! "Activacion de una cuenta, que posteriormente recibio en su mail"
   def edit
     user = User.find_by(email: params[:email])
     if user && !user.activated? && user.authenticated?(:activation, params[:id])

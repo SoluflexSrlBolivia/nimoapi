@@ -63,3 +63,5 @@ gem 'send_file_with_range'
 gem "paperclip", git: "git://github.com/thoughtbot/paperclip.git"
 
 gem "faker"
+
+gem 'apipie-rails'

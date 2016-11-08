@@ -1,6 +1,7 @@
 class Api::V1::RatePostsController < Api::V1::BaseController
   before_filter :authenticate_user!
 
+	api! "Calificar un post"
   def create
   	rate = RatePost.find_by(:post_id=>create_params[:post_id], :user_id=>create_params[:user_id])
   	if rate.nil?

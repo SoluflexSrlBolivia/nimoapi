@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  apipie
   root                'static_pages#home'
   get    'help'    => 'static_pages#help'
   get    'about'   => 'static_pages#about'
@@ -41,7 +42,7 @@ Rails.application.routes.draw do
       get "user_groups/:id/members" => "user_groups#members"
       post "user_groups/:id/add"  => "user_groups#add_members"
       post "user_groups/:id/alias"  => "user_groups#add_alias"
-      get "user_groups/:id/keyword" => "user_groups#register_by_keyword"
+      post "user_groups/:id/keyword" => "user_groups#register_by_keyword"
       resources :notifications, only: [:index, :update]
       resources :downloads, only: [:create, :destroy]
       resources :rate_archives, only: [:create]

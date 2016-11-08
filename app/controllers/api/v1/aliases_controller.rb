@@ -1,6 +1,7 @@
 class Api::V1::AliasesController < Api::V1::BaseController
   before_filter :authenticate_user!
 
+  api! "listado de alias de un usuario"
   def index
     render(
       json: ActiveModel::ArraySerializer.new(
@@ -11,6 +12,7 @@ class Api::V1::AliasesController < Api::V1::BaseController
     )
   end
 
+  api! "Creacion de alias"
   def create
     aliass = Alias.new(create_params)
     current_user.aliases << aliass
@@ -35,6 +37,7 @@ class Api::V1::AliasesController < Api::V1::BaseController
     )
   end
 
+  api! "Actulizacion de alias"
   def update
     aliass = Alias.find(params[:id])
     authorize aliass
@@ -61,6 +64,7 @@ class Api::V1::AliasesController < Api::V1::BaseController
     )
   end
 
+  api! "Eliminacion de alias"
   def destroy
     aliass = Alias.find(params[:id])
     authorize aliass

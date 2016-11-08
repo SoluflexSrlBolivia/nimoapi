@@ -1,6 +1,7 @@
 class Api::V1::PostsController < Api::V1::BaseController
   before_filter :authenticate_user!
 
+  api! "Listado de post's de un group"
   def show
   	group = Group.find(params[:id])
   	#authorize group
@@ -23,6 +24,7 @@ class Api::V1::PostsController < Api::V1::BaseController
     )
   end
 
+  api! "Crear un post"
   def create
     post = Post.new(create_params)
     authorize post
@@ -72,6 +74,7 @@ class Api::V1::PostsController < Api::V1::BaseController
     )
   end
 
+  api! "Actulizacion de un post"
   def update
     post = Post.find(params[:id])
     authorize post
@@ -90,6 +93,7 @@ class Api::V1::PostsController < Api::V1::BaseController
     )
   end
 
+  api! "Eliminacion de un post"
   def destroy
     post = Post.find(params[:id])
     authorize post

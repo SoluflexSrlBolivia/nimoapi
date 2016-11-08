@@ -1,6 +1,7 @@
 class Api::V1::PasswordResetsController < Api::V1::BaseController
 	before_filter :authenticate_user!
 
+  api! "Reset password"
 	def create
     user = User.find_by(email: user_params[:email].downcase)
     if user

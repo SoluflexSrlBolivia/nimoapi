@@ -1,6 +1,7 @@
 class Api::V1::HomeController < Api::V1::BaseController
   before_filter :authenticate_user!
 
+  api! "listado de novedades de un usuario"
   def index
   	group_ids = current_user.group_ids.join(',')
     puts ">>>>>>>>>>>>group_ids:#{group_ids}"

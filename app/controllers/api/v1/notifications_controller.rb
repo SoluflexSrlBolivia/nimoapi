@@ -1,6 +1,7 @@
 class Api::V1::NotificationsController < Api::V1::BaseController
   before_filter :authenticate_user!
 
+  api! "Listado de notificaciones de un usuario"
   def index
   	notifications = current_user.notifications.order(id: :desc)
     notifications = apply_filters(notifications, params)
@@ -19,6 +20,7 @@ class Api::V1::NotificationsController < Api::V1::BaseController
     )
   end
 
+  api! "Actulizacion de notificacion"
   def update
   	notification = Notification.find params[:id]
     

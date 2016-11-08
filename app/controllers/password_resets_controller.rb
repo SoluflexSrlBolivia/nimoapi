@@ -18,10 +18,10 @@ class PasswordResetsController < ApplicationController
       render 'new'
     end
   end
-  
+
   def edit
   end
-  
+
   def update
     if both_passwords_blank?
       flash.now[:danger] = "Password/confirmation can't be blank"
