@@ -1,5 +1,5 @@
 class Api::V1::ArchivesController < Api::V1::BaseController
-  before_filter :authenticate_user!, only: [:create, :update, :destroy]
+  before_filter :authenticate_user!#, only: [:create, :update, :destroy]
 
   api! "Descarga un archivo directo o por HTTP Range"
   def show
