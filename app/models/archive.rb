@@ -5,8 +5,8 @@ class Archive < ActiveRecord::Base
   has_many :downloads
   has_many :rates, :class_name => "RateArchive", :foreign_key => :archive_id
 
-  has_attached_file :digital
-  
+  has_attached_file :digital, styles: { medium: "500x500>", thumb: "200x200>" }
+
   attr_accessor :owner, :uploader, :rate
 
   validates :digital, attachment_presence: true

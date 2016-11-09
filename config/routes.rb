@@ -35,6 +35,7 @@ Rails.application.routes.draw do
       get "groups/:id/files" => "groups#g_archives"
       resources :archives, only: [:show, :create, :destroy, :update]
       get "archives/:id/download" => "archives#download"
+      get "archives/:id/:scale" => "archives#scale"
       resources :worldwide_locations, only: [:index, :show]
       resources :home, only: [:index]
       resources :user_groups, only: [:update, :show, :destroy]

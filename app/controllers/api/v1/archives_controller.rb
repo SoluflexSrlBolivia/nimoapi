@@ -11,6 +11,16 @@ class Api::V1::ArchivesController < Api::V1::BaseController
     end
   end
 
+  api! "Descarga un archivo directo o por HTTP Range con el parametro scale para imagenes - medium(500x500), thumb(200x200)"
+  def scale
+    archive = Archive.find(params[:id])
+    if request.headers["HTTP_RANGE"]
+      send_file archive.digital.path(params[:scale]), :range => true, type: archive.digital_content_type, :disposition => 'inline'
+    else
+      send_file archive.digital.path(params[:scale]), :filename => archive.original_file_name, :type => archive.digital_content_type, :disposition => 'inline'
+    end
+  end
+
   api! "Solo descarga el archivo"
   def download
   	archive = Archive.find(params[:id])
