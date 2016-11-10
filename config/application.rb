@@ -36,7 +36,7 @@ module Nimo
       end
     end
 
-    Paperclip.options[:command_path] = "/usr/bin/"
+    Paperclip.options[:command_path] = "/usr/bin/identify"
     
   end
 end
