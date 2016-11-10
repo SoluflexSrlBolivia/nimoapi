@@ -6,7 +6,8 @@ class Archive < ActiveRecord::Base
   has_many :rates, :class_name => "RateArchive", :foreign_key => :archive_id
 
   has_attached_file :digital,
-                    styles: { full: "1024x1024>", medium: "800x800>", thumb: "400x400>" },
+                    styles: { :full=>{ :geometry => "1024x1024>", :format => 'jpg', :time => 10 }, :medium=>{ :geometry => "800x800>", :format => 'jpg', :time => 10 }, :thumb=> { :geometry => "400x400>", :format => 'jpg', :time => 10 } },
+                    :use_timestamp => true,
                     default_style: :medium#,
                     #convert_options: { all: '-strip -auto-orient -colorspace sRGB' }
 
@@ -30,7 +31,7 @@ class Archive < ActiveRecord::Base
             },
     ignoring: :accents
 
-  before_create :randomize_file_name
+  #before_create :randomize_file_name
 
   def randomize_file_name
     self.original_file_name = self.digital_file_name
