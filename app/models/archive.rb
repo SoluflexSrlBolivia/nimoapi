@@ -56,35 +56,35 @@ class Archive < ActiveRecord::Base
     end
   end
   def is_image?
-    self.file_upload.content_type =~ %r(image)
+    self.digital.content_type =~ %r(image)
   end
 
   def is_video?
-    self.file_upload.content_type =~ %r(video)
+    self.digital.content_type =~ %r(video)
   end
 
   def is_audio?
-    self.file_upload.content_type =~ /\Aaudio\/.*\Z/
+    self.digital.content_type =~ /\Aaudio\/.*\Z/
   end
 
   def is_plain_text?
-    self.file_upload_file_name =~ %r{\.(txt)$}i
+    self.digital_file_name =~ %r{\.(txt)$}i
   end
 
   def is_excel?
-    self.file_upload_file_name =~ %r{\.(xls|xlt|xla|xlsx|xlsm|xltx|xltm|xlsb|xlam|csv|tsv)$}i
+    self.digital_file_name =~ %r{\.(xls|xlt|xla|xlsx|xlsm|xltx|xltm|xlsb|xlam|csv|tsv)$}i
   end
 
   def is_word_document?
-    self.file_upload_file_name =~ %r{\.(docx|doc|dotx|docm|dotm)$}i
+    self.digital_file_name =~ %r{\.(docx|doc|dotx|docm|dotm)$}i
   end
 
   def is_powerpoint?
-    self.file_upload_file_name =~ %r{\.(pptx|ppt|potx|pot|ppsx|pps|pptm|potm|ppsm|ppam)$}i
+    self.digital_file_name =~ %r{\.(pptx|ppt|potx|pot|ppsx|pps|pptm|potm|ppsm|ppam)$}i
   end
 
   def is_pdf?
-    self.file_upload_file_name =~ %r{\.(pdf)$}i
+    self.digital_file_name =~ %r{\.(pdf)$}i
   end
 
   def has_default_image?
