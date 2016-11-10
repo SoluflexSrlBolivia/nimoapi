@@ -35,6 +35,8 @@ module Nimo
         resource '*', :headers => :any, :methods => [:get, :post, :put, :patch, :delete, :options, :head]
       end
     end
+
+    Paperclip.options[:command_path] = "/usr/bin/"
     
   end
 end
