@@ -1,7 +1,22 @@
 class Api::V1::ArchivesController < Api::V1::BaseController
   before_filter :authenticate_user!#, only: [:create, :update, :destroy]
 
+  def_param_group :create do
+    param :file, Hash, :required => true do
+      param :archivable_type, String, :required => true
+      param :archivable_id, Fixnum, :required => true
+      param :owner_id, Fixnum, :required => true
+      param :owner_type, String, :required => true
+      param :uploader_id, Fixnum, :required => true
+    end
+  end
+
   api! "Descarga un archivo directo o por HTTP Range"
+  meta :header => "Authorization:Token token=pU7SOyDNY+URPeGZHlE/knqWzv131oTPOf/t3aXs+mM5x0zGrQfbi+5lGasQl47A6HaLTaPNUbN9KJQ2hA7QYw==, email=demo@gmail.com"
+  param :id, Fixnum, :desc => "Archive ID", :required => true
+  error 401, "Bad credentials"
+  error 403, "not authorized"
+  error 404, 'Not found'
   def show
   	archive = Archive.find(params[:id])
     if request.headers["HTTP_RANGE"]
@@ -11,7 +26,13 @@ class Api::V1::ArchivesController < Api::V1::BaseController
     end
   end
 
-  api! "Descarga un archivo directo o por HTTP Range con el parametro scale para imagenes - medium(500x500), thumb(200x200)"
+  api! "Descarga un archivo directo o por HTTP Range con el parametro scale para imagenes - full: '1024x1024>', medium: '800x800>', thumb: '400x400>'"
+  meta :header => "Authorization:Token token=pU7SOyDNY+URPeGZHlE/knqWzv131oTPOf/t3aXs+mM5x0zGrQfbi+5lGasQl47A6HaLTaPNUbN9KJQ2hA7QYw==, email=demo@gmail.com"
+  param :id, Fixnum, :desc => "Archive ID", :required => true
+  param :scale, String, :desc => "Scale:full, medium, thumb", :required => true
+  error 401, "Bad credentials"
+  error 403, "not authorized"
+  error 404, 'Not found'
   def scale
     archive = Archive.find(params[:id])
     if request.headers["HTTP_RANGE"]
@@ -22,12 +43,18 @@ class Api::V1::ArchivesController < Api::V1::BaseController
   end
 
   api! "Solo descarga el archivo"
+  meta :header => "Authorization:Token token=pU7SOyDNY+URPeGZHlE/knqWzv131oTPOf/t3aXs+mM5x0zGrQfbi+5lGasQl47A6HaLTaPNUbN9KJQ2hA7QYw==, email=demo@gmail.com"
+  param :id, Fixnum, :desc => "Archive ID", :required => true
+  error 401, "Bad credentials"
+  error 403, "not authorized"
+  error 404, 'Not found'
   def download
   	archive = Archive.find(params[:id])
   	send_file archive.digital.path, :filename => archive.original_file_name, :type => archive.digital_content_type, :disposition => 'downloaded'
   end
 
   api! "Crea un archivo"
+  param_group :create
   def create
     archive = Archive.new(create_params)
     archive.digital = digital_params[:data]
@@ -44,6 +71,7 @@ class Api::V1::ArchivesController < Api::V1::BaseController
   end
 
   api! "Actuliza un archivo"
+  param_group :create
   def update
     archive = Archive.find(params[:id])
 
@@ -68,6 +96,11 @@ class Api::V1::ArchivesController < Api::V1::BaseController
   end
 
   api! "Elimina un archivo"
+  meta :header => "Authorization:Token token=pU7SOyDNY+URPeGZHlE/knqWzv131oTPOf/t3aXs+mM5x0zGrQfbi+5lGasQl47A6HaLTaPNUbN9KJQ2hA7QYw==, email=demo@gmail.com"
+  param :id, Fixnum, :desc => "Archive ID", :required => true
+  error 401, "Bad credentials"
+  error 403, "not authorized"
+  error 404, 'Not found'
   def destroy
   	archive = Archive.find(params[:id])
     
@@ -96,5 +129,7 @@ class Api::V1::ArchivesController < Api::V1::BaseController
     def update_params
       create_params
     end
+
+
 
 end
