@@ -7,7 +7,7 @@ class Api::V1::ArchiveSerializer < Api::V1::BaseSerializer
   end
 
   def name
-  	object.original_file_name
+  	object.digital_file_name
   end
   def size
   	object.digital_file_size
