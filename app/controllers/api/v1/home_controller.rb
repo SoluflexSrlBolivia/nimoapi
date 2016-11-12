@@ -28,7 +28,7 @@ class Api::V1::HomeController < Api::V1::BaseController
         posts,
         each_serializer: Api::V1::HomePostSerializer,
         root: false,
-        meta: meta_attributes(archives)
+        meta: meta_attributes(posts)
     )
 
     #recents = Recent.new(posts, archives)
