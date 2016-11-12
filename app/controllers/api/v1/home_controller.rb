@@ -18,15 +18,17 @@ class Api::V1::HomeController < Api::V1::BaseController
     recently_posts = apply_filters(recently_posts, params)
     recently_posts = paginate(recently_posts)
 
-    recents = recently_archives + recently_posts
+    archives = ActiveModel::ArraySerializer.new(
+        recently_archives,
+        each_serializer: Api::V1::HomeArchiveSerializer
+    )
+    posts = ActiveModel::ArraySerializer.new(
+        recently_posts,
+        each_serializer: Api::V1::HomePostSerializer
+    )
 
     render(
-      json: ActiveModel::ArraySerializer.new(
-          recents,
-          each_serializer: Api::V1::HomePostSerializer,
-          root: 'recents',
-          meta: meta_attributes(recents)
-      )
+      json: {archives:archives, posts:posts}
     )
   end
 
