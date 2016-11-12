@@ -29,11 +29,19 @@ class Api::V1::DevicesController < Api::V1::BaseController
 Response" + '
   {"status":"ok"}'
   def create
-  	device = Device.new(create_params)
-    
-  	return api_error(status: 422, errors: device.errors) unless device.valid?
+    device = Device.find_by_player_id create_params[:player_id]
+    if device.nil?
+      device = Device.new(create_params)
+      return api_error(status: 422, errors: device.errors) unless device.valid?
 
-    device.save!
+      device.save!
+    else
+      if !device.update_attributes(create_params)
+        return api_error(status: 422, errors: device.errors)
+      end
+    end
+
+
 
     render(
       json: {:status=>"ok"},

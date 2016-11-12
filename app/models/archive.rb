@@ -46,7 +46,7 @@ class Archive < ActiveRecord::Base
             },
     ignoring: :accents
 
-  #before_create :randomize_file_name
+  before_create :randomize_file_name
 
   def default_images
     if has_default_image?
