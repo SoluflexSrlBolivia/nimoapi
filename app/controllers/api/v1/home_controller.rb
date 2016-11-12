@@ -12,25 +12,25 @@ class Api::V1::HomeController < Api::V1::BaseController
       recently_posts = Post.where("group_id IN (#{group_ids})").order(created_at: :desc)
     end
 
-    recently_archives = apply_filters(recently_archives, params)
-    recently_archives = paginate(recently_archives)
+    archives = apply_filters(recently_archives, params)
+    archives = paginate(archives)
 
-    recently_posts = apply_filters(recently_posts, params)
-    recently_posts = paginate(recently_posts)
+    posts = apply_filters(recently_posts, params)
+    posts = paginate(posts)
 
     archives = ActiveModel::ArraySerializer.new(
-        recently_archives,
+        archives,
         each_serializer: Api::V1::HomeArchiveSerializer
     )
     posts = ActiveModel::ArraySerializer.new(
-        recently_posts,
+        posts,
         each_serializer: Api::V1::HomePostSerializer
     )
 
     recents = Recent.new(posts, archives)
 
     render(
-      json: {recents:recents, meta: meta_attributes(recents)}
+      json: {recents:recents, meta: meta_attributes(recently_archives+recently_posts)}
     )
 
 
