@@ -21,20 +21,20 @@ class Api::V1::HomeController < Api::V1::BaseController
     archives = ActiveModel::ArraySerializer.new(
         archives,
         each_serializer: Api::V1::HomeArchiveSerializer,
-        root: false,
+        root: "archives",
         meta: meta_attributes(archives)
     )
     posts = ActiveModel::ArraySerializer.new(
         posts,
         each_serializer: Api::V1::HomePostSerializer,
-        root: false,
+        root: "posts",
         meta: meta_attributes(posts)
     )
 
-    #recents = Recent.new(posts, archives)
+    recents = Recent.new(posts, archives)
 
     render(
-      json: {posts:posts, archives:archives}
+      json: {recents:recents}
     )
 
 
