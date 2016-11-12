@@ -8,14 +8,17 @@ class Api::V1::HomeController < Api::V1::BaseController
     recently_archives = []
     recently_posts = []
     unless group_ids.empty?
-      recently_archives =Archive.where("owner_type = 'Group' AND owner_id IN (#{group_ids})").order(created_at: :desc).limit(10)
-      recently_posts = Post.where("group_id IN (#{group_ids})").order(created_at: :desc).limit(10)
+      recently_archives =Archive.where("owner_type = 'Group' AND owner_id IN (#{group_ids})").order(created_at: :desc)
+      recently_posts = Post.where("group_id IN (#{group_ids})").order(created_at: :desc)
     end
 
-    recents = recently_archives + recently_posts
-    recents = apply_filters(recents, params)
+    recently_archives = apply_filters(recently_archives, params)
+    recently_archives = paginate(recently_archives)
 
-    recents = paginate(recents)
+    recently_posts = apply_filters(recently_posts, params)
+    recently_posts = paginate(recently_posts)
+
+    recents = recently_archives + recently_posts
 
     render(
       json: ActiveModel::ArraySerializer.new(
