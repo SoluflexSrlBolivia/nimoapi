@@ -4,7 +4,7 @@ class Api::V1::HomePostSerializer < Api::V1::BaseSerializer
   
   
   def archive
-  	Api::V1::HomeArchiveSerializer.new(object.archive, root: false) unless object.archive.nil?
+  	Api::V1::ArchiveSerializer.new(object.archive, root: false) unless object.archive.nil?
   end
   
   def rate
