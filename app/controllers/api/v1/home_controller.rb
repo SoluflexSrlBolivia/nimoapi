@@ -34,25 +34,9 @@ class Api::V1::HomeController < Api::V1::BaseController
     recents = Recent.new(posts, archives)
 
     render(
-      json: {recents:recents}
+      json: recents
     )
 
-
-
-=begin
-    recents = Recent.new(recently_posts, recently_archives)
-    recents = apply_filters(recents, params)
-    recents = paginate(recents)
-
-    render(
-        json: ActiveModel::ArraySerializer.new(
-            recents,
-            each_serializer: Api::V1::HomeRecentSerializer,
-            root: 'recents',
-            meta: meta_attributes(recents)
-        )
-    )
-=end
   end
 
   private
