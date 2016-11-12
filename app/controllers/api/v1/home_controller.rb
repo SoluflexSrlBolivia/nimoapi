@@ -4,25 +4,26 @@ class Api::V1::HomeController < Api::V1::BaseController
   api! "listado de novedades de un usuario"
   def index
   	group_ids = current_user.group_ids.join(',')
-    puts ">>>>>>>>>>>>group_ids:#{group_ids}"
+
     recently_archives = []
     recently_posts = []
     unless group_ids.empty?
       recently_archives =Archive.where("owner_type = 'Group' AND owner_id IN (#{group_ids})").order(created_at: :desc).limit(10)
       recently_posts = Post.where("group_id IN (#{group_ids})").order(created_at: :desc).limit(10)
     end
-  	
-  	archives = ActiveModel::ArraySerializer.new(
-      recently_archives,
-      each_serializer: Api::V1::HomeArchiveSerializer
-    )
-    posts = ActiveModel::ArraySerializer.new(
-      recently_posts,
-      each_serializer: Api::V1::HomePostSerializer
-    )
-    
+
+    recents = recently_archives + recently_posts
+    recents = apply_filters(recents, params)
+
+    recents = paginate(recents)
+
     render(
-      json: {:archives=>archives, :posts=>posts}
+      json: ActiveModel::ArraySerializer.new(
+          recents,
+          each_serializer: Api::V1::HomePostSerializer,
+          root: 'recents',
+          meta: meta_attributes(recents)
+      )
     )
   end
 
