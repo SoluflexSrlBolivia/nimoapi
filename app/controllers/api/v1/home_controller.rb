@@ -31,10 +31,10 @@ class Api::V1::HomeController < Api::V1::BaseController
         meta: meta_attributes(archives)
     )
 
-    recents = Recent.new(posts, archives)
+    #recents = Recent.new(posts, archives)
 
     render(
-      json: {recents:recents}
+      json: {posts:posts, archives:archives}
     )
 
 
