@@ -30,7 +30,7 @@ class Api::V1::HomeController < Api::V1::BaseController
     recents = Recent.new(posts, archives)
 
     render(
-      json: {recents:recents, meta: meta_attributes(recently_archives+recently_posts)}
+      json: {recents:recents, meta: meta_attributes(paginate(recently_archives)+paginate(recently_posts))}
     )
 
 
