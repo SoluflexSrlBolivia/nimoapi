@@ -35,7 +35,19 @@ class Api::V1::HomeController < Api::V1::BaseController
       )
     end
 
-    render json: {:posts=>[], :archives=>[]}
+    render json: {:posts=>{:posts=>[], :meta=>{
+        current_page: 1,
+        next_page: nil,
+        prev_page: nil,
+        total_pages: 1,
+        total_count: 0
+    }}, :archives=>{:archives=>[], :meta=>{
+        current_page: 1,
+        next_page: nil,
+        prev_page: nil,
+        total_pages: 1,
+        total_count: 0
+    }}}
   end
 
   private
