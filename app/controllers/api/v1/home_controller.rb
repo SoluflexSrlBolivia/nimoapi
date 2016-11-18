@@ -13,13 +13,13 @@ class Api::V1::HomeController < Api::V1::BaseController
     end
 
     archives = []
-    if recently_archives.empty?
+    unless recently_archives.empty?
       archives = apply_filters(recently_archives, params)
       archives = paginate(archives)
     end
 
     posts = []
-    if recently_posts.empty?
+    unless recently_posts.empty?
       posts = apply_filters(recently_posts, params)
       posts = paginate(posts)
     end
