@@ -12,11 +12,17 @@ class Api::V1::HomeController < Api::V1::BaseController
       recently_posts = Post.where("group_id IN (#{group_ids})").order(created_at: :desc)
     end
 
-    archives = apply_filters(recently_archives, params)
-    archives = paginate(archives)
+    archives = []
+    if recently_archives.empty?
+      archives = apply_filters(recently_archives, params)
+      archives = paginate(archives)
+    end
 
-    posts = apply_filters(recently_posts, params)
-    posts = paginate(posts)
+    posts = []
+    if recently_posts.empty?
+      posts = apply_filters(recently_posts, params)
+      posts = paginate(posts)
+    end
 
     archives = ActiveModel::ArraySerializer.new(
         archives,
