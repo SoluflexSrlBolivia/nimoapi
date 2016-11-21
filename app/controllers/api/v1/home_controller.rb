@@ -9,6 +9,9 @@ class Api::V1::HomeController < Api::V1::BaseController
       recently_archives =Archive.where("owner_type = 'Group' AND owner_id IN (#{group_ids})").order(created_at: :desc)
       recently_posts = Post.where("group_id IN (#{group_ids})").order(created_at: :desc)
 
+      archives_from_post = recently_posts.reject{|p| p.archive.nil? }.map{|p| p.archive.id }
+      recently_archives = recently_archives.reject{|a| archives_from_post.include?(a.id) }
+      
       recently_archives = apply_filters(recently_archives, params)
       recently_archives = paginate(recently_archives)
 
