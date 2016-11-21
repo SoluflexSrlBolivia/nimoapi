@@ -3,12 +3,12 @@ class Api::V1::HomeController < Api::V1::BaseController
 
   api! "listado de novedades de un usuario"
   def index
-  	group_ids = current_user.group_ids.join(',')
+  	group_ids = current_user.group_ids
 
-    recently_posts = Post.where(group_id: group_ids).order(created_at: :desc)
+    recently_posts = Post.where("group_id IN (?)", group_ids).order(created_at: :desc)
     archives_from_post = recently_posts.reject{|p| p.archive.nil? }.map{|p| p.archive.id }
 
-    recently_archives =Archive.where("owner_type = 'Group'").where(owner_id: group_ids).where.not(id: archives_from_post).order(created_at: :desc)
+    recently_archives =Archive.where("owner_type = 'Group'").where("owner_id IN (?)", group_ids).where.not(id: archives_from_post).order(created_at: :desc)
 
     recently_archives = apply_filters(recently_archives, params)
     recently_archives = paginate(recently_archives)
