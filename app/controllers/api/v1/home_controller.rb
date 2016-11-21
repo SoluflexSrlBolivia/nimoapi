@@ -18,17 +18,26 @@ class Api::V1::HomeController < Api::V1::BaseController
       recently_posts = apply_filters(recently_posts, params) unless recently_posts.empty?
       recently_posts = paginate(recently_posts) unless recently_posts.empty?
 
+
+      meta_empty = {
+          current_page: 1,
+          next_page: nil,
+          prev_page: nil,
+          total_pages: 1,
+          total_count: 0
+      }
+
       archives = ActiveModel::ArraySerializer.new(
           recently_archives,
           each_serializer: Api::V1::HomeArchiveSerializer,
           root: "archives",
-          meta: meta_attributes(recently_archives)
+          meta: recently_archives.empty?? meta_empty : meta_attributes(recently_archives)
       )
       posts = ActiveModel::ArraySerializer.new(
           recently_posts,
           each_serializer: Api::V1::HomePostSerializer,
           root: "posts",
-          meta: meta_attributes(recently_posts)
+          meta: recently_posts.empty?? meta_empty : meta_attributes(recently_posts)
       )
 
       recents = Recent.new(posts, archives)
