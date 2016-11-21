@@ -11,12 +11,12 @@ class Api::V1::HomeController < Api::V1::BaseController
 
       archives_from_post = recently_posts.reject{|p| p.archive.nil? }.map{|p| p.archive.id }
       recently_archives = recently_archives.reject{|a| archives_from_post.include?(a.id) }
-      
-      recently_archives = apply_filters(recently_archives, params)
-      recently_archives = paginate(recently_archives)
 
-      recently_posts = apply_filters(recently_posts, params)
-      recently_posts = paginate(recently_posts)
+      recently_archives = apply_filters(recently_archives, params) unless recently_archives.empty?
+      recently_archives = paginate(recently_archives) unless recently_archives.empty?
+
+      recently_posts = apply_filters(recently_posts, params) unless recently_posts.empty?
+      recently_posts = paginate(recently_posts) unless recently_posts.empty?
 
       archives = ActiveModel::ArraySerializer.new(
           recently_archives,
