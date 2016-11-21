@@ -5,6 +5,14 @@ class Api::V1::HomeController < Api::V1::BaseController
   def index
   	group_ids = current_user.group_ids.join(',')
 
+    meta_empty = {
+        current_page: 1,
+        next_page: nil,
+        prev_page: nil,
+        total_pages: 1,
+        total_count: 0
+    }
+
     unless group_ids.empty?
       recently_archives =Archive.where("owner_type = 'Group' AND owner_id IN (#{group_ids})").order(created_at: :desc)
       recently_posts = Post.where("group_id IN (#{group_ids})").order(created_at: :desc)
@@ -18,14 +26,6 @@ class Api::V1::HomeController < Api::V1::BaseController
       recently_posts = apply_filters(recently_posts, params) unless recently_posts.empty?
       recently_posts = paginate(recently_posts) unless recently_posts.empty?
 
-
-      meta_empty = {
-          current_page: 1,
-          next_page: nil,
-          prev_page: nil,
-          total_pages: 1,
-          total_count: 0
-      }
 
       archives = ActiveModel::ArraySerializer.new(
           recently_archives,
@@ -47,19 +47,7 @@ class Api::V1::HomeController < Api::V1::BaseController
       )
     end
 
-    render json: {:posts=>{:posts=>[], :meta=>{
-        current_page: 1,
-        next_page: nil,
-        prev_page: nil,
-        total_pages: 1,
-        total_count: 0
-    }}, :archives=>{:archives=>[], :meta=>{
-        current_page: 1,
-        next_page: nil,
-        prev_page: nil,
-        total_pages: 1,
-        total_count: 0
-    }}}
+    render json: {:posts=>{:posts=>[], :meta=>meta_empty}, :archives=>{:archives=>[], :meta=>meta_empty}}
   end
 
   private
