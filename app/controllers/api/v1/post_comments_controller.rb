@@ -5,7 +5,7 @@ class Api::V1::PostCommentsController < Api::V1::BaseController
     param :comment, Hash, :required => true do
       param :comment, String, :desc => "Comentario",  :required => true
       param :commentable_id, Fixnum, :desc => "Archive ID", :required => true
-      param :commentable_type, String, :desc => "\"Archive\" tabla propietaria del comentario", :required => true
+      param :commentable_type, "Archive", :desc => "\"Archive\" tabla propietaria del comentario", :required => true
     end
   end
 
