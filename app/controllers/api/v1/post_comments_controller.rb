@@ -1,7 +1,71 @@
 class Api::V1::PostCommentsController < Api::V1::BaseController
   before_filter :authenticate_user!
 
+  def_param_group :create do
+    param :comment, Hash, :required => true do
+      param :comment, String, :desc => "Comentario",  :required => true
+      param :commentable_id, Fixnum, :desc => "Archive ID", :required => true
+      param :commentable_type, String, :desc => "Archive", :required => true
+    end
+  end
+
+  def_param_group :update do
+    param :comment, Hash, :required => true do
+      param :comment, String, :desc => "Comentario",  :required => true
+    end
+  end
+
   api! "listado de comentarios de un post"
+  param :id, Fixnum, :desc => "Post ID", :required => true
+  error 401, "Bad credentials"
+  error 403, "not authorized"
+  error 422, "API Error"
+  example "Response" + '
+{
+  "comments": [
+    {
+      "id": 6,
+      "comment": "test",
+      "user": {
+        "id": 1,
+        "email": "demo@gmail.com",
+        "fullname": "Demo User"
+      },
+      "created_at": "2016-11-23T00:52:09Z",
+      "updated_at": "2016-11-23T00:52:09Z"
+    },
+    {
+      "id": 2,
+      "comment": "Another",
+      "user": {
+        "id": 1,
+        "email": "demo@gmail.com",
+        "fullname": "Demo User"
+      },
+      "created_at": "2016-11-20T22:41:37Z",
+      "updated_at": "2016-11-20T22:41:37Z"
+    },
+    {
+      "id": 1,
+      "comment": "Comment",
+      "user": {
+        "id": 1,
+        "email": "demo@gmail.com",
+        "fullname": "Demo User"
+      },
+      "created_at": "2016-11-20T22:41:31Z",
+      "updated_at": "2016-11-20T22:41:31Z"
+    }
+  ],
+  "meta": {
+    "current_page": 1,
+    "next_page": null,
+    "prev_page": null,
+    "total_pages": 1,
+    "total_count": 3
+  }
+}
+'
   def show
     post = Post.find(params[:id])
     
@@ -25,6 +89,10 @@ class Api::V1::PostCommentsController < Api::V1::BaseController
   end
 
   api! "Creacion de un comentario"
+  param_group :create
+  error 401, "Bad credentials"
+  error 403, "not authorized"
+  error 422, "API Error"
   def create
     comment = Comment.new(create_params)
     #authorize comment
@@ -78,6 +146,11 @@ class Api::V1::PostCommentsController < Api::V1::BaseController
   end
 
   api! "Actulizacion de un comentario"
+  param :id, String, :desc => "Comment id", :required => true
+  param_group :update
+  error 401, "Bad credentials"
+  error 403, "not authorized"
+  error 422, "API Error"
   def update
     comment = Comment.find(params[:id])
     authorize comment
@@ -97,6 +170,10 @@ class Api::V1::PostCommentsController < Api::V1::BaseController
   end
 
   api! "Eliminacion de un comentario"
+  param :id, String, :desc => "Comment id", :required => true
+  error 401, "Bad credentials"
+  error 403, "not authorized"
+  error 500, "API Error"
   def destroy
     comment = Comment.find(params[:id])
     authorize comment

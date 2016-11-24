@@ -1,7 +1,25 @@
 class Api::V1::ArchiveCommentsController < Api::V1::BaseController
   before_filter :authenticate_user!
 
+  def_param_group :create do
+    param :comment, Hash, :required => true do
+      param :comment, String, :desc => "Comentario",  :required => true
+      param :commentable_id, Fixnum, :desc => "Archive ID", :required => true
+      param :commentable_type, String, :desc => "Archive", :required => true
+    end
+  end
+
+  def_param_group :update do
+    param :comment, Hash, :required => true do
+      param :comment, String, :desc => "Comentario",  :required => true
+    end
+  end
+
   api! "listado de comentarios de un archivo"
+  param :id, Fixnum, :desc => "Archive ID", :required => true
+  error 401, "Bad credentials"
+  error 403, "not authorized"
+  error 422, "API Error"
   def show
     archive = Archive.find(params[:id])
     
@@ -25,6 +43,10 @@ class Api::V1::ArchiveCommentsController < Api::V1::BaseController
   end
 
   api! "Creacion de comentario de un archivo"
+  param_group :create
+  error 401, "Bad credentials"
+  error 403, "not authorized"
+  error 422, "API Error"
   def create
     comment = Comment.new(create_params)
     #authorize comment
@@ -42,6 +64,11 @@ class Api::V1::ArchiveCommentsController < Api::V1::BaseController
   end
 
   api! "Actulizacion de comentario de un archivo"
+  param :id, String, :desc => "Comment id", :required => true
+  param_group :update
+  error 401, "Bad credentials"
+  error 403, "not authorized"
+  error 422, "API Error"
   def update
     comment = Comment.find(params[:id])
     authorize comment
@@ -61,6 +88,10 @@ class Api::V1::ArchiveCommentsController < Api::V1::BaseController
   end
 
   api! "eliminacion de comentario de un archivo"
+  param :id, String, :desc => "Comment id", :required => true
+  error 401, "Bad credentials"
+  error 403, "not authorized"
+  error 500, "API Error"
   def destroy
     comment = Comment.find(params[:id])
     authorize comment
