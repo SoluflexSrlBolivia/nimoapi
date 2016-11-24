@@ -53,6 +53,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
 
   api! "listado de videos de un group"
   param :id, Fixnum, :desc => "ID Group",  :required => true
+  param_group :paginate
   meta :header => "Authorization:Token token=pU7SOyDNY+URPeGZHlE/knqWzv131oTPOf/t3aXs+mM5x0zGrQfbi+5lGasQl47A6HaLTaPNUbN9KJQ2hA7QYw==, email=demo@gmail.com"
   error 401, "Bad credentials"
   error 403, "not authorized"
@@ -86,6 +87,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
 
   api! "listado de audios de un group"
   param :id, Fixnum, :desc => "ID Group",  :required => true
+  param_group :paginate
   meta :header => "Authorization:Token token=pU7SOyDNY+URPeGZHlE/knqWzv131oTPOf/t3aXs+mM5x0zGrQfbi+5lGasQl47A6HaLTaPNUbN9KJQ2hA7QYw==, email=demo@gmail.com"
   error 401, "Bad credentials"
   error 403, "not authorized"
@@ -118,6 +120,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
 
   api! "listado de archivos de un group"
   param :id, Fixnum, :desc => "ID Group",  :required => true
+  param_group :paginate
   meta :header => "Authorization:Token token=pU7SOyDNY+URPeGZHlE/knqWzv131oTPOf/t3aXs+mM5x0zGrQfbi+5lGasQl47A6HaLTaPNUbN9KJQ2hA7QYw==, email=demo@gmail.com"
   error 401, "Bad credentials"
   error 403, "not authorized"
@@ -155,6 +158,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
   ######################################
   api! "busqueda de grupos"
   param :q, String, :desc => "Criterio de busqueda",  :required => true
+  param_group :paginate
   meta :header => "Authorization:Token token=pU7SOyDNY+URPeGZHlE/knqWzv131oTPOf/t3aXs+mM5x0zGrQfbi+5lGasQl47A6HaLTaPNUbN9KJQ2hA7QYw==, email=demo@gmail.com",
        :url => "/api/v1/groups/fotos/search",
        :q => "fotos"
@@ -184,6 +188,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
   end
 
   api! "listado de groups de un usuario"
+  param_group :paginate
   meta :header => "Authorization:Token token=pU7SOyDNY+URPeGZHlE/knqWzv131oTPOf/t3aXs+mM5x0zGrQfbi+5lGasQl47A6HaLTaPNUbN9KJQ2hA7QYw==, email=demo@gmail.com"
   error 401, "Bad credentials"
   error 403, "not authorized"
