@@ -3,26 +3,26 @@ class Api::V1::UserGroupsController < Api::V1::BaseController
 
   def_param_group :group do
     param :group, Hash, :required => true do
-      param :notification, [true, false], :required => true
-      param :rate, Integer, :required => true
+      param :notification, [true, false], :desc => "abilitar/desabilitar notificacion del grupo",:required => true
+      param :rate, [1,2,3,4,5], :desc => "valoracion del grupo entre 1 - 5", :required => true
     end
   end
 
   def_param_group :member do
     param :group, Hash, :required => true do
-      param :member_ids, [Integer], :required => true
+      param :member_ids, [Integer], :desc => "ID de los miembros(User)", :required => true
     end
   end
 
   def_param_group :alias do
     param :group, Hash, :required => true do
-      param :alias, String, :required => true
+      param :alias, String, :desc => "alias", :required => true
     end
   end
 
   def_param_group :register do
     param :group, Hash, :required => true do
-      param :keyword, String, :required => true
+      param :keyword, String, :desc => "password del grupo", :required => true
     end
   end
 
@@ -202,6 +202,7 @@ class Api::V1::UserGroupsController < Api::V1::BaseController
   end
 
   api! "Solicitud de ingreso a un grupo"
+  param :id, Fixnum, :desc => "ID Group", :required => true
   def join
     group = Group.find params[:id]
     return api_error(status: 422) if group.nil?
@@ -255,6 +256,7 @@ class Api::V1::UserGroupsController < Api::V1::BaseController
   end
 
   api! "Salir de un grupo"
+  param :id, Fixnum, :desc => "ID Group", :required => true
   def destroy
     group = Group.find params[:id]
     return api_error(status: 422) if group.nil?
@@ -269,6 +271,7 @@ class Api::V1::UserGroupsController < Api::V1::BaseController
   end
 
   api! "Actulizacion de grupo"
+  param :id, Fixnum, :desc => "ID Group", :required => true
   def update
     userGroup = UserGroup.find_by(:group_id=>params[:id], :user_id=>current_user)
     
