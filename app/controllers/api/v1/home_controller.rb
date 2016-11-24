@@ -2,6 +2,9 @@ class Api::V1::HomeController < Api::V1::BaseController
   before_filter :authenticate_user!
 
   api! "listado de novedades de un usuario"
+  param :locale, String, :desc => "idioma"
+  param :page, Fixnum, :desc => "Pagina a cargar"
+  param :per_page, :Fixnum, :desc => "numero de registros por pagina"
   def index
   	group_ids = current_user.group_ids
 

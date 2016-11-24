@@ -17,6 +17,9 @@ class Api::V1::ArchiveCommentsController < Api::V1::BaseController
 
   api! "listado de comentarios de un archivo"
   param :id, Fixnum, :desc => "Archive ID", :required => true
+  param :locale, String, :desc => "idioma"
+  param :page, Fixnum, :desc => "Pagina a cargar"
+  param :per_page, :Fixnum, :desc => "numero de registros por pagina"
   error 401, "Bad credentials"
   error 403, "not authorized"
   error 422, "API Error"
