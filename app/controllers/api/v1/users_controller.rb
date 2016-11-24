@@ -29,9 +29,6 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   api! "Busqueda de usuarios con UserSearchSerializer"
   param :q, String, :desc => "Criterio de busqueda", :required => true
-  param :locale, String, :desc => "idioma"
-  param :page, Fixnum, :desc => "Pagina a cargar"
-  param :per_page, :Fixnum, :desc => "numero de registros por pagina"
   meta :header => "Authorization:Token token=pU7SOyDNY+URPeGZHlE/knqWzv131oTPOf/t3aXs+mM5x0zGrQfbi+5lGasQl47A6HaLTaPNUbN9KJQ2hA7QYw==, email=demo@gmail.com",
   :url => "/api/v1/users/ar/search",
   :q => "ar"
@@ -81,9 +78,6 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   api! "lista todos los usuarios"
-  param :locale, String, :desc => "idioma"
-  param :page, Fixnum, :desc => "Pagina a cargar"
-  param :per_page, :Fixnum, :desc => "numero de registros por pagina"
   meta :header => "Authorization:Token token=pU7SOyDNY+URPeGZHlE/knqWzv131oTPOf/t3aXs+mM5x0zGrQfbi+5lGasQl47A6HaLTaPNUbN9KJQ2hA7QYw==, email=demo@gmail.com"
   error 401, "Bad credentials"
   error 403, "not authorized"

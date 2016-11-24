@@ -17,9 +17,6 @@ class Api::V1::PostCommentsController < Api::V1::BaseController
 
   api! "listado de comentarios de un post"
   param :id, Fixnum, :desc => "Post ID", :required => true
-  param :locale, String, :desc => "idioma"
-  param :page, Fixnum, :desc => "Pagina a cargar"
-  param :per_page, :Fixnum, :desc => "numero de registros por pagina"
   error 401, "Bad credentials"
   error 403, "not authorized"
   error 422, "API Error"
