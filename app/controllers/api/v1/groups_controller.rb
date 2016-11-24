@@ -269,7 +269,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
 
 
   api! "detalle de un grupo"
-  param :id, Fixnum, :desc => "ID Group", :required => true
+  #param :id, Fixnum, :desc => "ID Group", :required => true
   meta :header => "Authorization:Token token=pU7SOyDNY+URPeGZHlE/knqWzv131oTPOf/t3aXs+mM5x0zGrQfbi+5lGasQl47A6HaLTaPNUbN9KJQ2hA7QYw==, email=demo@gmail.com"
   error 401, "Bad credentials"
   error 403, "not authorized"
