@@ -20,6 +20,30 @@ class Api::V1::ArchiveCommentsController < Api::V1::BaseController
   error 401, "Bad credentials"
   error 403, "not authorized"
   error 422, "API Error"
+  example "Response" + '
+{
+  "comments": [
+    {
+      "id": 18,
+      "comment": "Hola archivo",
+      "user": {
+        "id": 1,
+        "email": "demo@gmail.com",
+        "fullname": "Demo User"
+      },
+      "created_at": "2016-11-24T19:03:59Z",
+      "updated_at": "2016-11-24T19:03:59Z"
+    }
+  ],
+  "meta": {
+    "current_page": 1,
+    "next_page": null,
+    "prev_page": null,
+    "total_pages": 1,
+    "total_count": 1
+  }
+}
+'
   def show
     archive = Archive.find(params[:id])
     
@@ -47,6 +71,21 @@ class Api::V1::ArchiveCommentsController < Api::V1::BaseController
   error 401, "Bad credentials"
   error 403, "not authorized"
   error 422, "API Error"
+  example "Response" + '
+{
+  "comment": {
+    "id": 17,
+    "comment": "Hola archivo",
+    "user": {
+      "id": 1,
+      "email": "demo@gmail.com",
+      "fullname": "Demo User"
+    },
+    "created_at": "2016-11-24T19:02:15Z",
+    "updated_at": "2016-11-24T19:02:15Z"
+  }
+}
+'
   def create
     comment = Comment.new(create_params)
     #authorize comment

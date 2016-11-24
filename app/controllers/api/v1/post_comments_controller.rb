@@ -93,6 +93,21 @@ class Api::V1::PostCommentsController < Api::V1::BaseController
   error 401, "Bad credentials"
   error 403, "not authorized"
   error 422, "API Error"
+  example "Response" + '
+{
+  "comment": {
+    "id": 16,
+    "comment": "Hola",
+    "user": {
+      "id": 1,
+      "email": "demo@gmail.com",
+      "fullname": "Demo User"
+    },
+    "created_at": "2016-11-24T19:00:34Z",
+    "updated_at": "2016-11-24T19:00:34Z"
+  }
+}
+'
   def create
     comment = Comment.new(create_params)
     #authorize comment
