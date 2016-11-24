@@ -14,9 +14,9 @@ class Api::V1::GroupsController < Api::V1::BaseController
   #########Files
   api! "listado de fotos de un group"
   param :id, Fixnum, :desc => "ID Group",  :required => true
-  param :locale, :desc => "idioma"
-  param :page,  :desc => "Pagina a cargar"
-  param :per_page, :desc => "numero de registros por pagina"
+  param :locale
+  param :page
+  param :per_page
   meta :header => "Authorization:Token token=pU7SOyDNY+URPeGZHlE/knqWzv131oTPOf/t3aXs+mM5x0zGrQfbi+5lGasQl47A6HaLTaPNUbN9KJQ2hA7QYw==, email=demo@gmail.com"
   error 401, "Bad credentials"
   error 403, "not authorized"
