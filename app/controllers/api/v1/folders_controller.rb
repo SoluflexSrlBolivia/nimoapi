@@ -14,7 +14,7 @@ class Api::V1::FoldersController < Api::V1::BaseController
       param :folder_id, Fixnum, :desc => "ID Folder, tabla padre(Folder es recursivo, todo folder tiene padre excepto el root)",  :required => true
       param :description, String, :desc => "Descripcion"
       param :owner_id, Fixnum, :desc => "ID User propietario del folder",  :required => true
-      param :owner_type, String, :desc => "\"User\" propietario del folder",  :required => true
+      param :owner_type, ["User"], :desc => "\"User\" propietario del folder",  :required => true
     end
   end
 
