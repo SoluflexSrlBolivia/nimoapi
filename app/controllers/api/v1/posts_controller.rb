@@ -1,7 +1,35 @@
 class Api::V1::PostsController < Api::V1::BaseController
   before_filter :authenticate_user!
 
+  def_param_group :digital do
+    param :digital, Hash, :required => true do
+      param :data, String, :desc => "conteniado del archivo", :required => true
+    end
+  end
+  def_param_group :archive do
+    param :file, Hash, :required => true do
+      param :owner_id, Fixnum, :desc => "ID Group propietario", :required => true
+      param :owner_type, ["Group"], :desc => "\"Group\" tabla del propiertario(un post solo pertenece a un grupo)",  :required => true
+      param :uploader_id, Fixnum, :desc => "ID del usuario q esta subiendo el archivo", :required => true
+    end
+  end
+  def_param_group :create do
+    param :post, Hash, :required => true do
+      param :post, String, :desc => "el post", :required => true
+      param :group_id, Fixnum, :desc => "ID Group",  :required => true
+      param :user_id, Fixnum, :desc => "ID del usuario", :required => true
+    end
+  end
+
+  def_param_group :paginate do
+    param :locale, ["es", "en", "pt"], :desc => "es=español, en=ingles, pt=portugues", :required => false
+    param :page, Integer, :desc => "# de pagina", :required => false
+    param :per_page, Integer, :desc => "# de registros por pagina", :required => false
+  end
+
   api! "Listado de post's de un group"
+  param :id, Fixnum, :desc => "ID group", :required => true
+  param_group :paginate
   def show
   	group = Group.find(params[:id])
   	#authorize group
@@ -25,6 +53,9 @@ class Api::V1::PostsController < Api::V1::BaseController
   end
 
   api! "Crear un post"
+  param_group :create
+  param_group :archive
+  param_group :digital
   def create
     post = Post.new(create_params)
     authorize post
@@ -75,6 +106,8 @@ class Api::V1::PostsController < Api::V1::BaseController
   end
 
   api! "Actulizacion de un post"
+  param :id, Fixnum, :desc => "ID group", :required => true
+  param_group :update
   def update
     post = Post.find(params[:id])
     authorize post
@@ -94,6 +127,7 @@ class Api::V1::PostsController < Api::V1::BaseController
   end
 
   api! "Eliminacion de un post"
+  param :id, Fixnum, :desc => "ID group", :required => true
   def destroy
     post = Post.find(params[:id])
     authorize post
