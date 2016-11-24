@@ -11,7 +11,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
   end
 
   def_param_group :paginate do
-    param :locale, String, :desc => "language", :required => false
+    param :locale, ["es", "en", "pt"], :desc => "language", :required => false
     param :page, Integer, :desc => "# de pagina", :required => false
     param :per_page, Integer, :desc => "# de registros por pagina", :required => false
   end
