@@ -6,7 +6,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
       param :name, String, :desc => "Nombre del grupo",  :required => true
       param :description, String, :desc => "Descripcion del grupo"
       param :keyword, String, :desc => "contraseña de acceso, solo si privacity es de tipo 3"
-      param :privacity, Fixnum, :desc => "#1=Abierto, 2=Cerrado, 3=Privado(keyword)",  :required => true
+      param :privacity, [1, 2, 3], :desc => "#1=Abierto, 2=Cerrado, 3=Privado(keyword)",  :required => true
     end
   end
 
@@ -14,9 +14,6 @@ class Api::V1::GroupsController < Api::V1::BaseController
   #########Files
   api! "listado de fotos de un group"
   param :id, Fixnum, :desc => "ID Group",  :required => true
-  param :locale, nil
-  param :page, nil
-  param :per_page, nil
   meta :header => "Authorization:Token token=pU7SOyDNY+URPeGZHlE/knqWzv131oTPOf/t3aXs+mM5x0zGrQfbi+5lGasQl47A6HaLTaPNUbN9KJQ2hA7QYw==, email=demo@gmail.com"
   error 401, "Bad credentials"
   error 403, "not authorized"
