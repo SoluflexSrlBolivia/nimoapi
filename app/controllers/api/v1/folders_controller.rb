@@ -1,7 +1,37 @@
 class Api::V1::FoldersController < Api::V1::BaseController
   before_filter :authenticate_user!
 
+  def_param_group :search do
+    param :search, Hash, :required => true do
+      param :name, String, :desc => "\"User\" tabla propietaria del folder, en este caso es el usuario ",  :required => true
+      param :id, Fixnum, :desc => "ID User",  :required => true
+    end
+  end
+
+  def_param_group :create do
+    param :folder, Hash, :required => true do
+      param :name, String, :desc => "Nombre del folder"
+      param :folder_id, Fixnum, :desc => "ID Folder, tabla padre(Folder es recursivo, todo folder tiene padre excepto el root)",  :required => true
+      param :description, String, :desc => "Descripcion"
+      param :owner_id, Fixnum, :desc => "ID User propietario del folder",  :required => true
+      param :owner_type, String, :desc => "\"User\" propietario del folder",  :required => true
+    end
+  end
+
   api! "Busqueda de carpetas"
+  param_group :search
+  meta :header => "Authorization:Token token=pU7SOyDNY+URPeGZHlE/knqWzv131oTPOf/t3aXs+mM5x0zGrQfbi+5lGasQl47A6HaLTaPNUbN9KJQ2hA7QYw==, email=demo@gmail.com",
+       :url => "/api/v1/folders/fotos/search",
+       :q => "fotos"
+  error 401, "Bad credentials"
+  error 403, "not authorized"
+  example "Response" + '
+{
+  "folders": [],
+  "archives": [],
+  "downloads": []
+}
+'
   def search 
     resultFolders = Folder.search(params[:q]).where(:owner_type=>search_params[:name], :owner_id => search_params[:id])
     resultArchives = Archive.search(params[:q]).where(:owner_type=>search_params[:name], :owner_id => search_params[:id])
@@ -26,6 +56,16 @@ class Api::V1::FoldersController < Api::V1::BaseController
   end
 
   api! "listado de carpetas y archivos del folder de un usuario"
+  meta :header => "Authorization:Token token=pU7SOyDNY+URPeGZHlE/knqWzv131oTPOf/t3aXs+mM5x0zGrQfbi+5lGasQl47A6HaLTaPNUbN9KJQ2hA7QYw==, email=demo@gmail.com"
+  error 401, "Bad credentials"
+  error 403, "not authorized"
+  example "Response" + '
+{
+  "folders": [],
+  "archives": [],
+  "downloads": []
+}
+'
   def index
     archives = ActiveModel::ArraySerializer.new(
       current_user.folder.archives,
@@ -46,6 +86,17 @@ class Api::V1::FoldersController < Api::V1::BaseController
   end
 
   api! "listado de carpetas y archivos de una carpeta"
+  param :id, Fixnum, :desc => "ID Folder",  :required => true
+  meta :header => "Authorization:Token token=pU7SOyDNY+URPeGZHlE/knqWzv131oTPOf/t3aXs+mM5x0zGrQfbi+5lGasQl47A6HaLTaPNUbN9KJQ2hA7QYw==, email=demo@gmail.com"
+  error 401, "Bad credentials"
+  error 403, "not authorized"
+  example "Response" + '
+{
+  "folders": [],
+  "archives": [],
+  "downloads": []
+}
+'
   def show
     folder = Folder.find(params[:id])
     authorize folder
@@ -69,6 +120,17 @@ class Api::V1::FoldersController < Api::V1::BaseController
   end
 
   api! "Creacion de una carpeta"
+  param_group :create
+  meta :header => "Authorization:Token token=pU7SOyDNY+URPeGZHlE/knqWzv131oTPOf/t3aXs+mM5x0zGrQfbi+5lGasQl47A6HaLTaPNUbN9KJQ2hA7QYw==, email=demo@gmail.com"
+  error 401, "Bad credentials"
+  error 403, "not authorized"
+  example "Response" + '
+{
+  "folders": [],
+  "archives": [],
+  "downloads": []
+}
+'
   def create
     new_params = create_params.merge(:folderable_type=>"Folder", :folderable_id=>create_params[:folder_id])
     new_params = new_params.except!(:folder_id)
@@ -104,6 +166,7 @@ class Api::V1::FoldersController < Api::V1::BaseController
 
 
   api! "eliminacion de una carpeta"
+  param :id, Fixnum, :desc => "ID Folder",  :required => true
   def destroy
     folder = Folder.find(params[:id])
     authorize folder
