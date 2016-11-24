@@ -1,8 +1,26 @@
 class Api::V1::GroupsController < Api::V1::BaseController
   before_filter :authenticate_user!
 
+  def_param_group :create do
+    param :group, Hash, :required => true do
+      param :name, String, :desc => "Nombre del grupo",  :required => true
+      param :description, String, :desc => "Descripcion del grupo"
+      param :keyword, String, :desc => "contraseña de acceso, solo si privacity es de tipo 3"
+      param :privacity, Fixnum, :desc => "#1=Abierto, 2=Cerrado, 3=Privado(keyword)",  :required => true
+    end
+  end
+
+
   #########Files
   api! "listado de fotos de un group"
+  param :id, Fixnum, :desc => "ID Group",  :required => true
+  meta :header => "Authorization:Token token=pU7SOyDNY+URPeGZHlE/knqWzv131oTPOf/t3aXs+mM5x0zGrQfbi+5lGasQl47A6HaLTaPNUbN9KJQ2hA7QYw==, email=demo@gmail.com"
+  error 401, "Bad credentials"
+  error 403, "not authorized"
+  error 422, "Not found Group"
+  example "Response" + '
+
+'
   def pictures
     group = Group.find(params[:id])
     
@@ -27,6 +45,14 @@ class Api::V1::GroupsController < Api::V1::BaseController
   end
 
   api! "listado de videos de un group"
+  param :id, Fixnum, :desc => "ID Group",  :required => true
+  meta :header => "Authorization:Token token=pU7SOyDNY+URPeGZHlE/knqWzv131oTPOf/t3aXs+mM5x0zGrQfbi+5lGasQl47A6HaLTaPNUbN9KJQ2hA7QYw==, email=demo@gmail.com"
+  error 401, "Bad credentials"
+  error 403, "not authorized"
+  error 422, "Not found Group"
+  example "Response" + '
+
+  '
   def videos
     group = Group.find(params[:id])
     
@@ -52,6 +78,14 @@ class Api::V1::GroupsController < Api::V1::BaseController
   end
 
   api! "listado de audios de un group"
+  param :id, Fixnum, :desc => "ID Group",  :required => true
+  meta :header => "Authorization:Token token=pU7SOyDNY+URPeGZHlE/knqWzv131oTPOf/t3aXs+mM5x0zGrQfbi+5lGasQl47A6HaLTaPNUbN9KJQ2hA7QYw==, email=demo@gmail.com"
+  error 401, "Bad credentials"
+  error 403, "not authorized"
+  error 422, "Not found Group"
+  example "Response" + '
+
+  '
   def audios
     group = Group.find(params[:id])
     
@@ -76,6 +110,14 @@ class Api::V1::GroupsController < Api::V1::BaseController
   end
 
   api! "listado de archivos de un group"
+  param :id, Fixnum, :desc => "ID Group",  :required => true
+  meta :header => "Authorization:Token token=pU7SOyDNY+URPeGZHlE/knqWzv131oTPOf/t3aXs+mM5x0zGrQfbi+5lGasQl47A6HaLTaPNUbN9KJQ2hA7QYw==, email=demo@gmail.com"
+  error 401, "Bad credentials"
+  error 403, "not authorized"
+  error 422, "Not found Group"
+  example "Response" + '
+
+  '
   def g_archives
     group = Group.find(params[:id])
     
@@ -105,6 +147,15 @@ class Api::V1::GroupsController < Api::V1::BaseController
 
   ######################################
   api! "busqueda de grupos"
+  param :q, String, :desc => "Criterio de busqueda",  :required => true
+  meta :header => "Authorization:Token token=pU7SOyDNY+URPeGZHlE/knqWzv131oTPOf/t3aXs+mM5x0zGrQfbi+5lGasQl47A6HaLTaPNUbN9KJQ2hA7QYw==, email=demo@gmail.com",
+       :url => "/api/v1/groups/fotos/search",
+       :q => "fotos"
+  error 401, "Bad credentials"
+  error 403, "not authorized"
+  example "Response" + '
+
+  '
   def search 
     result = Group.search(params[:q]).where(:deleted=>false).order(name: :asc)
 
@@ -147,6 +198,14 @@ class Api::V1::GroupsController < Api::V1::BaseController
 
 
   api! "detalle de un grupo"
+  param :id, Fixnum, :desc => "ID Group",  :required => true
+  meta :header => "Authorization:Token token=pU7SOyDNY+URPeGZHlE/knqWzv131oTPOf/t3aXs+mM5x0zGrQfbi+5lGasQl47A6HaLTaPNUbN9KJQ2hA7QYw==, email=demo@gmail.com"
+  error 401, "Bad credentials"
+  error 403, "not authorized"
+  error 422, "Not found Group"
+  example "Response" + '
+
+  '
   def show
     group = Group.find(params[:id])
     return api_error(status: 422) if group.deleted?
@@ -160,6 +219,14 @@ class Api::V1::GroupsController < Api::V1::BaseController
 
 
   api! "Creacion de un group"
+  param_group :create
+  meta :header => "Authorization:Token token=pU7SOyDNY+URPeGZHlE/knqWzv131oTPOf/t3aXs+mM5x0zGrQfbi+5lGasQl47A6HaLTaPNUbN9KJQ2hA7QYw==, email=demo@gmail.com"
+  error 401, "Bad credentials"
+  error 403, "not authorized"
+  error 422, "Not found Group"
+  example "Response" + '
+
+  '
   def create
     group = Group.new(create_params)
     group.admin_id = current_user.id
@@ -209,6 +276,13 @@ class Api::V1::GroupsController < Api::V1::BaseController
 
 
   api! "Eliminacion de un grupo"
+  param :id, Fixnum, :desc => "ID Group",  :required => true
+  meta :header => "Authorization:Token token=pU7SOyDNY+URPeGZHlE/knqWzv131oTPOf/t3aXs+mM5x0zGrQfbi+5lGasQl47A6HaLTaPNUbN9KJQ2hA7QYw==, email=demo@gmail.com"
+  error 401, "Bad credentials"
+  error 403, "not authorized"
+  error 500, "No pudo borrar"
+  example "Response" + '
+  '
   def destroy
     group = Group.find(params[:id])
     authorize group
