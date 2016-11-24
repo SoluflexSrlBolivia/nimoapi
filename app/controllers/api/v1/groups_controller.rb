@@ -177,6 +177,59 @@ class Api::V1::GroupsController < Api::V1::BaseController
   end
 
   api! "listado de groups de un usuario"
+  meta :header => "Authorization:Token token=pU7SOyDNY+URPeGZHlE/knqWzv131oTPOf/t3aXs+mM5x0zGrQfbi+5lGasQl47A6HaLTaPNUbN9KJQ2hA7QYw==, email=demo@gmail.com"
+  error 401, "Bad credentials"
+  error 403, "not authorized"
+  example "Response" + '
+{
+  "groups": [
+    {
+      "id": 6,
+      "name": "Boehm Group",
+      "description": "Organic zero defect matrix",
+      "keyword": "LeHoKj",
+      "privacity": 3,
+      "admin": {
+        "id": 1,
+        "email": "demo@gmail.com",
+        "fullname": "Demo User",
+        "name": "Demo User",
+        "notification": true
+      },
+      "notification": true,
+      "rate": 2,
+      "member": 1,
+      "my_rate": 5,
+      "folder_id": 7
+    },
+    {
+      "id": 3,
+      "name": "Witting Inc",
+      "description": "Multi-channelled responsive encryption",
+      "privacity": 2,
+      "admin": {
+        "id": 1,
+        "email": "demo@gmail.com",
+        "fullname": "Demo User",
+        "name": "Demo User",
+        "notification": true
+      },
+      "notification": true,
+      "rate": 4,
+      "member": 1,
+      "my_rate": 4,
+      "folder_id": 4
+    }
+  ],
+  "meta": {
+    "current_page": 1,
+    "next_page": null,
+    "prev_page": null,
+    "total_pages": 1,
+    "total_count": 9
+  }
+}
+  '
   def index
     groups = current_user.groups.where(:deleted=>false).order(name: :asc)
     groups = apply_filters(groups, params)
