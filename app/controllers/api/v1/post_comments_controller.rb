@@ -15,8 +15,15 @@ class Api::V1::PostCommentsController < Api::V1::BaseController
     end
   end
 
+  def_param_group :paginate do
+    param :locale, ["es", "en", "pt"], :desc => "es=español, en=ingles, pt=portugues", :required => false
+    param :page, Integer, :desc => "# de pagina", :required => false
+    param :per_page, Integer, :desc => "# de registros por pagina", :required => false
+  end
+
   api! "listado de comentarios de un post"
   param :id, Fixnum, :desc => "Post ID", :required => true
+  param_group :paginate
   error 401, "Bad credentials"
   error 403, "not authorized"
   error 422, "API Error"
