@@ -9,7 +9,7 @@ class Archive < ActiveRecord::Base
   has_attached_file :digital,
                     styles: lambda { |a| a.instance.check_file_type },
                     processors: lambda {
-                        |a| a.is_video? ? [ :ffmpeg ] : [ :thumbnail ]
+                        |a| a.is_video? ? [ :transcoder ] : [ :thumbnail ]
                     },
                     :default_url => :default_images
 

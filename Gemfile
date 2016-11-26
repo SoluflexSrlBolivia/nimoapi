@@ -64,4 +64,6 @@ gem "paperclip", git: "git://github.com/thoughtbot/paperclip.git"
 
 gem "faker"
 
+gem 'paperclip-av-transcoder'
+
 gem 'apipie-rails'
