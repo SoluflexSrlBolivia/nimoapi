@@ -7,8 +7,11 @@ class Api::V1::ArchiveSerializer < Api::V1::BaseSerializer
   end
 
   def name
-    return object.original_file_name if object.original_file_name.nil? || object.original_file_name.empty?
-  	object.digital_file_name
+    if object.original_file_name.nil? || object.original_file_name.empty?
+      object.digital_file_name
+    else
+      object.original_file_name
+    end
   end
   def size
   	object.digital_file_size
