@@ -30,7 +30,7 @@ class Api::V1::RatePostsController < Api::V1::BaseController
   	end
 
   	render(
-      json: Api::V1::HomePostSerializer.new(rate.post).to_json,
+      json: Api::V1::HomePostSerializer.new(rate.post, :root => "post").to_json,
       status: 201,
       location: api_v1_post_path(rate.post.id)
     )

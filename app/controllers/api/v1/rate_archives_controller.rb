@@ -30,7 +30,7 @@ class Api::V1::RateArchivesController < Api::V1::BaseController
   	end
 
   	render(
-      json: Api::V1::HomeArchiveSerializer.new(rate.archive).to_json,
+      json: Api::V1::HomeArchiveSerializer.new(rate.archive, :root => "archive").to_json,
       status: 201,
       location: api_v1_archive_path(rate.archive.id)
     )
