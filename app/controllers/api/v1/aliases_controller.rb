@@ -15,7 +15,6 @@ class Api::V1::AliasesController < Api::V1::BaseController
   api! "Creacion de alias"
   def create
     aliass = Alias.new(create_params)
-    current_user.aliases << aliass
 
     if params[:digital] && digital_params[:data].present?
       archive = Archive.new(archive_params)
@@ -25,6 +24,7 @@ class Api::V1::AliasesController < Api::V1::BaseController
 
     return api_error(status: 422, errors: aliass.errors) unless aliass.valid?
 
+    current_user.aliases << aliass
     current_user.save!
 
     render(
