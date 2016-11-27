@@ -50,9 +50,9 @@ class Archive < ActiveRecord::Base
 
   def default_images
     if has_default_image?
-      ":rails_root/public/default/:extension.png"
+      "/default/:extension.png"
     else
-      ":rails_root/public/default/default.png"
+      "/default/default.png"
     end
   end
   def is_image?
