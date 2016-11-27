@@ -17,7 +17,7 @@ class Archive < ActiveRecord::Base
 
   # Indicate we don't want to run validations server side (as client handles this)
   do_not_validate_attachment_file_type :file_upload
-  
+
 =begin
                     styles: {
                         :full=>{ :geometry => "1024x1024>", :format => 'jpg', :time => 10 },
@@ -93,7 +93,7 @@ class Archive < ActiveRecord::Base
   end
 
   def is_svg?
-    self.filename =~ %r{\.(svg)$}i
+    self.digital_file_name =~ %r{\.(svg)$}i
   end
 
   def has_default_image?
