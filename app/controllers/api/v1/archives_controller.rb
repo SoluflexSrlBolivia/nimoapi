@@ -11,8 +11,7 @@ class Api::V1::ArchivesController < Api::V1::BaseController
     end
   end
 
-  api! "Descarga un archivo directo o por HTTP Range"
-  meta :header => "Authorization:Token token=pU7SOyDNY+URPeGZHlE/knqWzv131oTPOf/t3aXs+mM5x0zGrQfbi+5lGasQl47A6HaLTaPNUbN9KJQ2hA7QYw==, email=demo@gmail.com"
+  api! "Descarga un archivo original directo o por HTTP Range"
   param :id, Fixnum, :desc => "Archive ID", :required => true
   error 401, "Bad credentials"
   error 403, "not authorized"
@@ -29,8 +28,8 @@ class Api::V1::ArchivesController < Api::V1::BaseController
     end
   end
 
-  api! "Descarga un archivo directo o por HTTP Range con el parametro scale para imagenes - full: '1024x1024>', medium: '800x800>', thumb: '400x400>'"
-  meta :header => "Authorization:Token token=pU7SOyDNY+URPeGZHlE/knqWzv131oTPOf/t3aXs+mM5x0zGrQfbi+5lGasQl47A6HaLTaPNUbN9KJQ2hA7QYw==, email=demo@gmail.com"
+  api! "Descarga un archivo directo o por HTTP Range con el parametro scale para imagenes - full: '1024x1024>', medium: '800x800>', thumb: '400x400>',"+
+  "Este servicio no devuelve el archivo original solo la imagen que lo representa, en el caso de foto o video devuelve el thumb"
   param :id, Fixnum, :desc => "Archive ID", :required => true
   param :scale, String, :desc => "Scale:full, medium, thumb", :required => true
   error 401, "Bad credentials"
@@ -56,7 +55,6 @@ class Api::V1::ArchivesController < Api::V1::BaseController
   end
 
   api! "Solo descarga el archivo"
-  meta :header => "Authorization:Token token=pU7SOyDNY+URPeGZHlE/knqWzv131oTPOf/t3aXs+mM5x0zGrQfbi+5lGasQl47A6HaLTaPNUbN9KJQ2hA7QYw==, email=demo@gmail.com"
   param :id, Fixnum, :desc => "Archive ID", :required => true
   error 401, "Bad credentials"
   error 403, "not authorized"
