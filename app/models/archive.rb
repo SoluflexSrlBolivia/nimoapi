@@ -11,8 +11,13 @@ class Archive < ActiveRecord::Base
                     processors: lambda {
                         |a| a.is_video? ? [ :transcoder ] : [ :thumbnail ]
                     },
-                    :default_url => :default_images
+                    #:default_url => :default_images
+                    # Skip Paperclip's validations, as Angular will validate all uploads before upload
+                    validate_media_type: false
 
+  # Indicate we don't want to run validations server side (as client handles this)
+  do_not_validate_attachment_file_type :file_upload
+  
 =begin
                     styles: {
                         :full=>{ :geometry => "1024x1024>", :format => 'jpg', :time => 10 },
@@ -87,11 +92,18 @@ class Archive < ActiveRecord::Base
     self.digital_file_name =~ %r{\.(pdf)$}i
   end
 
+  def is_svg?
+    self.filename =~ %r{\.(svg)$}i
+  end
+
   def has_default_image?
     is_audio?
     is_plain_text?
     is_excel?
     is_word_document?
+    is_powerpoint?
+    is_svg?
+    is_pdf?
   end
 
   # If the uploaded content type is an audio file,
@@ -137,10 +149,6 @@ class Archive < ActiveRecord::Base
           :audio => {
               :format => "mp3"
           }
-      }
-    elsif self.is_word_document?
-      {
-          :thumb => ["200x200>", :png],
       }
     else
       {}
