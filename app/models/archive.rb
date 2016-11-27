@@ -11,7 +11,7 @@ class Archive < ActiveRecord::Base
                     processors: lambda {
                         |a| a.is_video? ? [ :transcoder ] : [ :thumbnail ]
                     },
-                    :default => :default_images
+                    :default_url => :default_images
 
 =begin
                     styles: {
@@ -50,7 +50,7 @@ class Archive < ActiveRecord::Base
 
   def default_images
     if has_default_image?
-      ":rails_root/public/default/:extension.png"
+      ":rails_root/public/default/default.png"
     else
       ":rails_root/public/default/default.png"
     end
