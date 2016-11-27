@@ -62,7 +62,7 @@ class Archive < ActiveRecord::Base
     end
   end
   def default_image_path
-    ext_file = File.extname(self.digital_file_name)
+    ext_file = ext_from_file_name
     if ext_file.size > 0
       filename = "#{ext_file.downcase.sub('.', '')}.png"
       file_path = "#{Rails.root}/public/default/#{filename}"
@@ -73,11 +73,33 @@ class Archive < ActiveRecord::Base
         "#{Rails.root}/public/default/default.png"
       end
     else
-      "#{Rails.root}/public/default/default.png"
+      ext_file = ext_from_content_type
+      if ext_file.size > 0
+        filename = "#{ext_file.downcase.sub('.', '')}.png"
+        file_path = "#{Rails.root}/public/default/#{filename}"
+
+        if File.exist?(file_path)
+          file_path
+        else
+          "#{Rails.root}/public/default/default.png"
+        end
+      else
+        "#{Rails.root}/public/default/default.png"
+      end
     end
   end
   def default_content_type
     "image/png"
+  end
+  def ext_from_content_type
+    ext_file = Rack::Mime::MIME_TYPES.invert[self.digital.content_type]
+    return ext_file.downcase.sub('.', '') unless ext_file.nil?
+
+    ""
+  end
+  def ext_from_file_name
+    ext_file = File.extname(self.digital_file_name)
+    ext_file.downcase.sub('.', '')
   end
 
   # Helper method that uses the =~ regex method to see if
