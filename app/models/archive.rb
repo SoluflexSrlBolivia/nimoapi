@@ -64,9 +64,9 @@ class Archive < ActiveRecord::Base
     ext_file = File.extname(self.digital_file_name)
     if ext_file.size > 0
       filename = "#{ext_file.downcase.sub('.', '')}.png"
-      Rails.root.join('public' , 'default', filename)
+      "#{Rails.root}/public/default/#{filename}"
     else
-      Rails.root.join('public' , 'default', 'default.png')
+      "#{Rails.root}/public/default/default.png"
     end
   end
 
