@@ -53,6 +53,7 @@ class Archive < ActiveRecord::Base
 
   before_create :randomize_file_name
 
+  #MIME::Types.type_for(a.digital.path).first.content_type
   def default_images
     if has_default_image?
       ":rails_root/public/default/:extension.png"
@@ -64,7 +65,13 @@ class Archive < ActiveRecord::Base
     ext_file = File.extname(self.digital_file_name)
     if ext_file.size > 0
       filename = "#{ext_file.downcase.sub('.', '')}.png"
-      "#{Rails.root}/public/default/#{filename}"
+      file_path = "#{Rails.root}/public/default/#{filename}"
+
+      if File.exist?(file_path)
+        file_path
+      else
+        "#{Rails.root}/public/default/default.png"
+      end
     else
       "#{Rails.root}/public/default/default.png"
     end

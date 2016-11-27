@@ -19,6 +19,9 @@ class Api::V1::ArchivesController < Api::V1::BaseController
   error 404, 'Not found'
   def show
   	archive = Archive.find(params[:id])
+
+    return api_error(status: 404) if archive.nil?
+
     if request.headers["HTTP_RANGE"]
       send_file archive.digital.path, :range => true, type: archive.digital_content_type, :disposition => 'inline'
     else
@@ -35,22 +38,20 @@ class Api::V1::ArchivesController < Api::V1::BaseController
   error 404, 'Not found'
   def scale
     archive = Archive.find(params[:id])
+
+    return api_error(status: 404) if archive.nil?
+
+    file_path = archive.digital.path(params[:scale])
+    file_content_type = archive.is_video? ? archive.default_content_type : archive.digital_content_type
+    unless File.exist?(file_path)
+      file_path = archive.default_image_path
+      file_content_type = archive.default_content_type
+    end
+
     if request.headers["HTTP_RANGE"]
-      if archive.has_default_image?
-        send_file archive.default_image_path, :range => true, type: archive.default_content_type, :disposition => 'inline'
-      elsif archive.is_video?
-        send_file archive.digital.path(params[:scale]), :range => true, type: archive.default_content_type, :disposition => 'inline'
-      else
-        send_file archive.digital.path(params[:scale]), :range => true, type: archive.digital_content_type, :disposition => 'inline'
-      end
+      send_file file_path, :range => true, type: file_content_type, :disposition => 'inline'
     else
-      if archive.has_default_image?
-        send_file archive.default_image_path, :filename => archive.original_file_name, :type => archive.default_content_type, :disposition => 'inline'
-      elsif archive.is_video?
-        send_file archive.digital.path(params[:scale]), :filename => archive.original_file_name, :type => archive.default_content_type, :disposition => 'inline'
-      else
-        send_file archive.digital.path(params[:scale]), :filename => archive.original_file_name, :type => archive.digital_content_type, :disposition => 'inline'
-      end
+      send_file file_path, :filename => archive.original_file_name, :type => file_content_type, :disposition => 'inline'
     end
   end
 
@@ -62,6 +63,9 @@ class Api::V1::ArchivesController < Api::V1::BaseController
   error 404, 'Not found'
   def download
   	archive = Archive.find(params[:id])
+
+    return api_error(status: 404) if archive.nil?
+
   	send_file archive.digital.path, :filename => archive.original_file_name, :type => archive.digital_content_type, :disposition => 'downloaded'
   end
 
