@@ -38,12 +38,16 @@ class Api::V1::ArchivesController < Api::V1::BaseController
     if request.headers["HTTP_RANGE"]
       if archive.has_default_image?
         send_file archive.default_image_path, :range => true, type: archive.default_content_type, :disposition => 'inline'
+      elsif archive.is_video?
+        send_file archive.digital.path(params[:scale]), :range => true, type: archive.default_content_type, :disposition => 'inline'
       else
         send_file archive.digital.path(params[:scale]), :range => true, type: archive.digital_content_type, :disposition => 'inline'
       end
     else
       if archive.has_default_image?
         send_file archive.default_image_path, :filename => archive.original_file_name, :type => archive.default_content_type, :disposition => 'inline'
+      elsif archive.is_video?
+        send_file archive.digital.path(params[:scale]), :filename => archive.original_file_name, :type => archive.default_content_type, :disposition => 'inline'
       else
         send_file archive.digital.path(params[:scale]), :filename => archive.original_file_name, :type => archive.digital_content_type, :disposition => 'inline'
       end
