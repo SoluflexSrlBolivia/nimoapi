@@ -29,7 +29,7 @@ class Api::V1::ArchivesController < Api::V1::BaseController
   end
 
   api! "Descarga un archivo directo o por HTTP Range con el parametro scale para imagenes - full: '1024x1024>', medium: '800x800>', thumb: '400x400>',"+
-  "Este servicio no devuelve el archivo original solo la imagen que lo representa, en el caso de foto o video devuelve el thumb"
+  "Este servicio no devuelve el archivo original solo la imagen que lo representa, en el caso de foto o video devuelve el scale que se pide de existir."
   param :id, Fixnum, :desc => "Archive ID", :required => true
   param :scale, String, :desc => "Scale:full, medium, thumb", :required => true
   error 401, "Bad credentials"
