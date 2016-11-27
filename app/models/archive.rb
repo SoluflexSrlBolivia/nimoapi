@@ -75,31 +75,38 @@ class Archive < ActiveRecord::Base
   end
 
   def is_audio?
-    self.digital.content_type =~ /\Aaudio\/.*\Z/
+    #self.digital.content_type =~ /\Aaudio\/.*\Z/
+    /\Aaudio\/.*\Z/.match(self.digital.content_type)
   end
 
   def is_plain_text?
-    self.digital_file_name =~ %r{\.(txt)$}i
+    #self.digital_file_name =~ %r{\.(txt)$}i
+    %r{\.(txt)$}i.match(self.digital_file_name)
   end
 
   def is_excel?
-    self.digital_file_name =~ %r{\.(xls|xlt|xla|xlsx|xlsm|xltx|xltm|xlsb|xlam|csv|tsv)$}i
+    #self.digital_file_name =~ %r{\.(xls|xlt|xla|xlsx|xlsm|xltx|xltm|xlsb|xlam|csv|tsv)$}i
+    %r{\.(xls|xlt|xla|xlsx|xlsm|xltx|xltm|xlsb|xlam|csv|tsv)$}i.match(self.digital_file_name)
   end
 
   def is_word_document?
-    self.digital_file_name =~ %r{\.(docx|doc|dotx|docm|dotm)$}i
+    #self.digital_file_name =~ %r{\.(docx|doc|dotx|docm|dotm)$}i
+    %r{\.(docx|doc|dotx|docm|dotm)$}i.match(self.digital_file_name)
   end
 
   def is_powerpoint?
-    self.digital_file_name =~ %r{\.(pptx|ppt|potx|pot|ppsx|pps|pptm|potm|ppsm|ppam)$}i
+    #self.digital_file_name =~ %r{\.(pptx|ppt|potx|pot|ppsx|pps|pptm|potm|ppsm|ppam)$}i
+    %r{\.(pptx|ppt|potx|pot|ppsx|pps|pptm|potm|ppsm|ppam)$}i.match(self.digital_file_name)
   end
 
   def is_pdf?
-    self.digital_file_name =~ %r{\.(pdf)$}i
+    #self.digital_file_name =~ %r{\.(pdf)$}i
+    %r{\.(pdf)$}i.match(self.digital_file_name)
   end
 
   def is_svg?
-    self.digital_file_name =~ %r{\.(svg)$}i
+    #self.digital_file_name =~ %r{\.(svg)$}i
+    %r{\.(svg)$}i.match(self.digital_file_name)
   end
 
   def has_default_image?
