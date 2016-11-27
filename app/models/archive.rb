@@ -110,12 +110,12 @@ class Archive < ActiveRecord::Base
   end
 
   def has_default_image?
-    is_audio?
-    is_plain_text?
-    is_excel?
-    is_word_document?
-    is_powerpoint?
-    is_svg?
+    is_audio? ||
+    is_plain_text? ||
+    is_excel? ||
+    is_word_document? ||
+    is_powerpoint? ||
+    is_svg? ||
     is_pdf?
   end
 
