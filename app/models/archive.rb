@@ -69,6 +69,9 @@ class Archive < ActiveRecord::Base
       "#{Rails.root}/public/default/default.png"
     end
   end
+  def default_content_type
+    "image/png"
+  end
 
   # Helper method that uses the =~ regex method to see if
   # the current file_upload has a content_type
