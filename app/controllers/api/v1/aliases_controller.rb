@@ -28,12 +28,9 @@ class Api::V1::AliasesController < Api::V1::BaseController
     current_user.save!
 
     render(
-      json: ActiveModel::ArraySerializer.new(
-        current_user.aliases,
-        each_serializer: Api::V1::AliasSerializer,
-        root: 'aliases',
-        ),
-      status: 201
+        json: Api::V1::AliasSerializer.new(aliass, root: 'alias').to_json,
+        status: 201,
+        location: api_v1_post_path(post.id)
     )
   end
 
