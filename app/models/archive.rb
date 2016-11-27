@@ -11,9 +11,9 @@ class Archive < ActiveRecord::Base
                     processors: lambda {
                         |a| a.is_video? ? [ :transcoder ] : [ :thumbnail ]
                     },
-                    #:default_url => :default_images
+                    :default_url => :default_images
                     # Skip Paperclip's validations, as Angular will validate all uploads before upload
-                    validate_media_type: false
+                    #validate_media_type: false
 
   # Indicate we don't want to run validations server side (as client handles this)
   #do_not_validate_attachment_file_type :file_upload
