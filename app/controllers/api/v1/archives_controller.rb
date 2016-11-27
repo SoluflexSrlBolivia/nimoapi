@@ -3,11 +3,11 @@ class Api::V1::ArchivesController < Api::V1::BaseController
 
   def_param_group :create do
     param :file, Hash, :required => true do
-      param :archivable_type, String, :required => true
-      param :archivable_id, Fixnum, :required => true
-      param :owner_id, Fixnum, :required => true
-      param :owner_type, String, :required => true
-      param :uploader_id, Fixnum, :required => true
+      param :archivable_type, ["Alias", "Folder", "Group", "Post"], :desc => "Nombre de la tabla padre-ralacion", :required => true
+      param :archivable_id, Fixnum, :desc => "ID de la tabla padre-relacion 'Alias', 'Folder', 'Group', 'Post'", :required => true
+      param :owner_id, Fixnum, :desc => "ID de la tabla propietaria", :required => true
+      param :owner_type, ["User", "Group"], :desc => "Nombre de la tabla propietaria, Usuario o Grupo pueden ser dueños de un archivo", :required => true
+      param :uploader_id, Fixnum, :desc => "ID user que esta subiendo", :required => true
     end
   end
 
