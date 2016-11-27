@@ -66,47 +66,47 @@ class Archive < ActiveRecord::Base
   # attribute that contains the string "image" / "video", or "audio"
   def is_image?
     #self.digital.content_type =~ %r(image)
-    %r(image).match(self.digital.content_type)
+    %r(image).match(self.digital.content_type).present?
   end
 
   def is_video?
     #self.digital.content_type =~ %r(video)
-    %r(video).match(self.digital.content_type)
+    %r(video).match(self.digital.content_type).present?
   end
 
   def is_audio?
     #self.digital.content_type =~ /\Aaudio\/.*\Z/
-    /\Aaudio\/.*\Z/.match(self.digital.content_type)
+    /\Aaudio\/.*\Z/.match(self.digital.content_type).present?
   end
 
   def is_plain_text?
     #self.digital_file_name =~ %r{\.(txt)$}i
-    %r{\.(txt)$}i.match(self.digital_file_name)
+    %r{\.(txt)$}i.match(self.digital_file_name).present?
   end
 
   def is_excel?
     #self.digital_file_name =~ %r{\.(xls|xlt|xla|xlsx|xlsm|xltx|xltm|xlsb|xlam|csv|tsv)$}i
-    %r{\.(xls|xlt|xla|xlsx|xlsm|xltx|xltm|xlsb|xlam|csv|tsv)$}i.match(self.digital_file_name)
+    %r{\.(xls|xlt|xla|xlsx|xlsm|xltx|xltm|xlsb|xlam|csv|tsv)$}i.match(self.digital_file_name).present?
   end
 
   def is_word_document?
     #self.digital_file_name =~ %r{\.(docx|doc|dotx|docm|dotm)$}i
-    %r{\.(docx|doc|dotx|docm|dotm)$}i.match(self.digital_file_name)
+    %r{\.(docx|doc|dotx|docm|dotm)$}i.match(self.digital_file_name).present?
   end
 
   def is_powerpoint?
     #self.digital_file_name =~ %r{\.(pptx|ppt|potx|pot|ppsx|pps|pptm|potm|ppsm|ppam)$}i
-    %r{\.(pptx|ppt|potx|pot|ppsx|pps|pptm|potm|ppsm|ppam)$}i.match(self.digital_file_name)
+    %r{\.(pptx|ppt|potx|pot|ppsx|pps|pptm|potm|ppsm|ppam)$}i.match(self.digital_file_name).present?
   end
 
   def is_pdf?
     #self.digital_file_name =~ %r{\.(pdf)$}i
-    %r{\.(pdf)$}i.match(self.digital_file_name)
+    %r{\.(pdf)$}i.match(self.digital_file_name).present?
   end
 
   def is_svg?
     #self.digital_file_name =~ %r{\.(svg)$}i
-    %r{\.(svg)$}i.match(self.digital_file_name)
+    %r{\.(svg)$}i.match(self.digital_file_name).present?
   end
 
   def has_default_image?
