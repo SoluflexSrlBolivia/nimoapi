@@ -50,7 +50,7 @@ class Archive < ActiveRecord::Base
 
   def default_images
     if has_default_image?
-      ":rails_root/public/default/default.png"
+      ":rails_root/public/default/:extension.png"
     else
       ":rails_root/public/default/default.png"
     end
@@ -137,6 +137,10 @@ class Archive < ActiveRecord::Base
           :audio => {
               :format => "mp3"
           }
+      }
+    elsif self.is_word_document?
+      {
+          :thumb => ["200x200>", :png],
       }
     else
       {}
