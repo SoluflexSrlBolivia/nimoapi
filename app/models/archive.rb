@@ -16,7 +16,7 @@ class Archive < ActiveRecord::Base
                     validate_media_type: false
 
   # Indicate we don't want to run validations server side (as client handles this)
-  do_not_validate_attachment_file_type :file_upload
+  #do_not_validate_attachment_file_type :file_upload
 
 =begin
                     styles: {
@@ -60,12 +60,18 @@ class Archive < ActiveRecord::Base
       ":rails_root/public/default/default.png"
     end
   end
+
+  # Helper method that uses the =~ regex method to see if
+  # the current file_upload has a content_type
+  # attribute that contains the string "image" / "video", or "audio"
   def is_image?
-    self.digital.content_type =~ %r(image)
+    #self.digital.content_type =~ %r(image)
+    %r(image).match(self.digital.content_type)
   end
 
   def is_video?
-    self.digital.content_type =~ %r(video)
+    #self.digital.content_type =~ %r(video)
+    %r(video).match(self.digital.content_type)
   end
 
   def is_audio?
