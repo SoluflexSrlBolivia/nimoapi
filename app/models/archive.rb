@@ -60,6 +60,14 @@ class Archive < ActiveRecord::Base
       ":rails_root/public/default/default.png"
     end
   end
+  def default_image_path
+    ext_file = File.extname(self.digital_file_name)
+    if ext_file.size > 0
+      Rails.root.join('public' , 'default', '#{ext_file.downcase.sub(".", "")}.png')
+    else
+      Rails.root.join('public' , 'default', 'default.png')
+    end
+  end
 
   # Helper method that uses the =~ regex method to see if
   # the current file_upload has a content_type

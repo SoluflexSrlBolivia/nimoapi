@@ -36,9 +36,17 @@ class Api::V1::ArchivesController < Api::V1::BaseController
   def scale
     archive = Archive.find(params[:id])
     if request.headers["HTTP_RANGE"]
-      send_file archive.digital.path(params[:scale]), :range => true, type: archive.digital_content_type, :disposition => 'inline'
+      if archive.has_default_image?
+        send_file archive.default_image_path, :range => true, type: archive.digital_content_type, :disposition => 'inline'
+      else
+        send_file archive.digital.path(params[:scale]), :range => true, type: archive.digital_content_type, :disposition => 'inline'
+      end
     else
-      send_file archive.digital.path(params[:scale]), :filename => archive.original_file_name, :type => archive.digital_content_type, :disposition => 'inline'
+      if archive.has_default_image?
+        send_file archive.default_image_path, :filename => archive.original_file_name, :type => archive.digital_content_type, :disposition => 'inline'
+      else
+        send_file archive.digital.path(params[:scale]), :filename => archive.original_file_name, :type => archive.digital_content_type, :disposition => 'inline'
+      end
     end
   end
 
