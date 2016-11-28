@@ -64,7 +64,7 @@ class Api::V1::AliasesController < Api::V1::BaseController
   api! "Eliminacion de alias"
   def destroy
     aliass = Alias.find(params[:id])
-    authorize aliass
+    
 
     if !aliass.destroy
       return api_error(status: 500)
