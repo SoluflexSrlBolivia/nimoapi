@@ -30,7 +30,7 @@ class Api::V1::AliasesController < Api::V1::BaseController
     render(
         json: Api::V1::AliasSerializer.new(aliass, root: 'alias').to_json,
         status: 201,
-        location: api_v1_post_path(post.id)
+        location: api_v1_alias_path(aliass.id)
     )
   end
 
