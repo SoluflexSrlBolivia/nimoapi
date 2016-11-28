@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   has_many :posts
   has_many :comments
   
-  validates_length_of :aliases, maximum: 5
+  #validates_length_of :aliases, maximum: 5
   
   attr_accessor :remember_token, :activation_token, :reset_token, :fullname
   before_save   :downcase_email
