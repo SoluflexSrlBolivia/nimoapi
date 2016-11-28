@@ -37,7 +37,6 @@ class Api::V1::AliasesController < Api::V1::BaseController
   api! "Actulizacion de alias"
   def update
     aliass = Alias.find(params[:id])
-    authorize aliass
 
     if params[:digital] && digital_params[:data].present?
       aliass.archive.destroy unless aliass.archive.nil?
@@ -52,37 +51,22 @@ class Api::V1::AliasesController < Api::V1::BaseController
     end
 
     render(
-      json: ActiveModel::ArraySerializer.new(
-        current_user.aliases,
-        each_serializer: Api::V1::AliasSerializer,
-        root: 'aliases',
-        ),
-      status: 200
+        json: Api::V1::AliasSerializer.new(aliass, root: 'alias').to_json,
+        status: 201,
+        location: api_v1_alias_path(aliass.id)
     )
   end
 
   api! "Eliminacion de alias"
   def destroy
     aliass = Alias.find(params[:id])
-    
+
 
     if !aliass.destroy
       return api_error(status: 500)
     end
 
-    if current_user.alias_id == aliass.id
-      current_user.alias_id = nil 
-      current_user.save!
-    end
-
-    render(
-      json: ActiveModel::ArraySerializer.new(
-        current_user.aliases,
-        each_serializer: Api::V1::AliasSerializer,
-        root: 'aliases'
-        ),
-      status: 200
-    )
+    head status: 204
   end
 
   private

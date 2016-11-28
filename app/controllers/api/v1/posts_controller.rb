@@ -116,12 +116,9 @@ class Api::V1::PostsController < Api::V1::BaseController
     end
 
     render(
-      json: ActiveModel::ArraySerializer.new(
-        post.group.posts,
-        each_serializer: Api::V1::PostsSerializer,
-        root: 'posts',
-        ),
-      status: 200
+        json: Api::V1::PostSerializer.new(post).to_json,
+        status: 201,
+        location: api_v1_post_path(post.id)
     )
   end
 
@@ -135,14 +132,7 @@ class Api::V1::PostsController < Api::V1::BaseController
       return api_error(status: 500)
     end
 
-    render(
-      json: ActiveModel::ArraySerializer.new(
-        post.group.posts,
-        each_serializer: Api::V1::PostsSerializer,
-        root: 'posts',
-        ),
-      status: 204
-    )
+    head status: 204
   end
 
   private
