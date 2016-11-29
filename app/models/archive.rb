@@ -44,10 +44,10 @@ class Archive < ActiveRecord::Base
   after_destroy :remove_dependencies
 
 	include PgSearch
-    pg_search_scope :search, :against => [:digital_file_name, :description, :digital_content_type],
+    pg_search_scope :search, :against => [:original_file_name, :description, :digital_content_type],
     :using => {
               :tsearch => {:prefix => true},
-              :trigram => {:only => [:digital_file_name, :description]}
+              :trigram => {:only => [:original_file_name, :description]}
             },
     ignoring: :accents
 
