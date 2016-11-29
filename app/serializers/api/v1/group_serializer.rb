@@ -1,6 +1,6 @@
 class Api::V1::GroupSerializer < Api::V1::BaseSerializer
   #just some basic attributes
-  attributes :id, :name, :description, :keyword, :privacity, :archive_id, :admin, :notification, :rate, :member, :my_rate
+  attributes :id, :name, :description, :keyword, :privacity, :archive_id, :admin, :notification, :rate, :member, :my_rate, :alias
   
   has_one :folder
 
@@ -45,6 +45,16 @@ class Api::V1::GroupSerializer < Api::V1::BaseSerializer
       ug = object.user_groups.find_by_user_id current_user.id
       return 1 unless ug.nil?
       return 0
+    end
+  end
+
+  def alias
+    current_user = scope[:current_user]
+    if current_user.present?
+      user_group = UserGroup.find_by(:user_id=>current_user.id, :group_id=>object.id)
+      return nil if user_group.nil?
+
+      return user_group.alias
     end
   end
 end
