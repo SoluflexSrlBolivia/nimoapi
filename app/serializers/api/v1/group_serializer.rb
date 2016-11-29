@@ -54,6 +54,8 @@ class Api::V1::GroupSerializer < Api::V1::BaseSerializer
       user_group = UserGroup.find_by(:user_id=>current_user.id, :group_id=>object.id)
       return nil if user_group.nil?
 
+      return nil if user_group.alias.nil?
+
       aalias = Alias.find_by_name user_group.alias
 
       return Api::V1::AliasSerializer.new(aalias, root: false) unless aalias.nil?
