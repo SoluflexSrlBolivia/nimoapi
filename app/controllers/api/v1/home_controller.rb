@@ -26,6 +26,7 @@ class Api::V1::HomeController < Api::V1::BaseController
     posts = ActiveModel::ArraySerializer.new(
         recently_posts,
         each_serializer: Api::V1::HomePostSerializer,
+        scope: {:current_user=>current_user},
         root: "posts",
         meta: meta_attributes(recently_posts)
     )
