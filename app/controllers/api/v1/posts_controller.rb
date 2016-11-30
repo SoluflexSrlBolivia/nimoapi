@@ -109,7 +109,7 @@ class Api::V1::PostsController < Api::V1::BaseController
     end
 
     render(
-      json: Api::V1::PostSerializer.new(post).to_json,
+      json: Api::V1::PostSerializer.new(post, :scope=>{:current_user=>current_user}).to_json,
       status: 201,
       location: api_v1_post_path(post.id)
     )
@@ -126,7 +126,7 @@ class Api::V1::PostsController < Api::V1::BaseController
     end
 
     render(
-        json: Api::V1::PostSerializer.new(post).to_json,
+        json: Api::V1::PostSerializer.new(post, :scope=>{:current_user=>current_user}).to_json,
         status: 201,
         location: api_v1_post_path(post.id)
     )
