@@ -89,6 +89,7 @@ class Api::V1::PostCommentsController < Api::V1::BaseController
       json: ActiveModel::ArraySerializer.new(
         comments,
         each_serializer: Api::V1::CommentSerializer,
+        scope: {:current_user=>current_user},
         root: 'comments',
         meta: meta_attributes(comments)
       )
