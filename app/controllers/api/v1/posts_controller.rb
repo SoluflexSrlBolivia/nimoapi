@@ -46,6 +46,7 @@ class Api::V1::PostsController < Api::V1::BaseController
       json: ActiveModel::ArraySerializer.new(
         posts,
         each_serializer: Api::V1::PostSerializer,
+        scope: {:current_user=>current_user},
         root: 'posts',
         meta: meta_attributes(posts)
       )
