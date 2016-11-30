@@ -15,15 +15,12 @@ class Api::V1::DownloadSerializer < Api::V1::BaseSerializer
   	object.archive.digital_content_type
   end
   def alias
-    current_user = scope[:current_user]
-    if current_user.present?
-      return nil if object.archive.alias.nil?
+    return nil if object.archive.alias.nil?
 
-      aalias = Alias.find_by_name object.archive.alias
+    aalias = Alias.find_by_name object.archive.alias
 
-      return Api::V1::AliasSerializer.new(aalias, root: false) unless aalias.nil?
+    return Api::V1::AliasSerializer.new(aalias, root: false) unless aalias.nil?
 
-      return {:name=>object.archive.alias}
-    end
+    return {:name=>object.archive.alias}
   end
 end
