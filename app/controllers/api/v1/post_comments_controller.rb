@@ -118,9 +118,20 @@ class Api::V1::PostCommentsController < Api::V1::BaseController
   def create
     comment = Comment.new(create_params)
     #authorize comment
-    
+
+    return api_error(status: 422) unless create_params[:commentable_type] == "Post"
+
+    group_alias = UserGroup.find_by(:group_id=>comment.commentable.group.id, :user_id=>current_user.id)
+    if group_alias.nil?
+      comment.alias = current_user.notifier_name
+    elsif group_alias.alias.nil?
+      comment.alias = current_user.notifier_name
+    else
+      comment.alias = group_alias.alias
+    end
+
     return api_error(status: 422, errors: comment.errors) unless comment.valid?
-    
+
     comment.user = current_user
 
     comment.save!
@@ -176,6 +187,8 @@ class Api::V1::PostCommentsController < Api::V1::BaseController
   def update
     comment = Comment.find(params[:id])
     authorize comment
+
+    return api_error(status: 422) unless update_params[:commentable_type] == "Post"
 
     if !comment.update_attributes(update_params)
       return api_error(status: 422, errors: comment.errors)

@@ -58,8 +58,6 @@ class User < ActiveRecord::Base
   def notifier_name
     if "#{self.name} #{self.lastname}".strip.size > 0
       return "#{self.name} #{self.lastname}".strip
-    elsif !alias_selected.nil?
-      return alias_selected.name
     end
 
     self.email

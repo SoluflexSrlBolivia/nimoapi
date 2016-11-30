@@ -66,6 +66,15 @@ class Api::V1::PostsController < Api::V1::BaseController
       post.archive = archive
     end
 
+    group_alias = UserGroup.find_by(:group_id=>post.group.id, :user_id=>current_user.id)
+    if group_alias.nil?
+      post.alias = current_user.notifier_name
+    elsif group_alias.alias.nil?
+      post.alias = current_user.notifier_name
+    else
+      post.alias = group_alias.alias
+    end
+
     return api_error(status: 422, errors: post.errors) unless post.valid?
 
     post.save!
