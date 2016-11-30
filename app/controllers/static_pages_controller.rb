@@ -20,5 +20,6 @@ class StaticPagesController < ApplicationController
   end
   def terms_and_conditions
 
+    render :layout => false
   end
 end
