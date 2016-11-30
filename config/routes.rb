@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get    'help'    => 'static_pages#help'
   get    'about'   => 'static_pages#about'
   get    'contact' => 'static_pages#contact'
+  get    'terms_and_onditions' => 'static_pages#terms_and_onditions'
 
   get    'signup'  => 'users#new'
   get    'login'   => 'sessions#new'

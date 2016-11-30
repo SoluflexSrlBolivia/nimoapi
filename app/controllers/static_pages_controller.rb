@@ -18,4 +18,7 @@ class StaticPagesController < ApplicationController
   def not_found
     
   end
+  def terms_and_onditions
+
+  end
 end
