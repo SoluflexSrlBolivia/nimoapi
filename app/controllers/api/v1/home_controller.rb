@@ -20,6 +20,7 @@ class Api::V1::HomeController < Api::V1::BaseController
     archives = ActiveModel::ArraySerializer.new(
         recently_archives,
         each_serializer: Api::V1::HomeArchiveSerializer,
+        scope: {:current_user=>current_user},
         root: "archives",
         meta: meta_attributes(recently_archives)
     )

@@ -1,6 +1,6 @@
 class Api::V1::ArchiveSerializer < Api::V1::BaseSerializer
   #just some basic attributes
-  attributes :id, :name, :size, :content_type, :uploader, :rate
+  attributes :id, :name, :size, :content_type, :uploader, :rate, :alias
   
   def uploader
   	Api::V1::UserArchiveSerializer.new(object.uploader, root: false) unless object.uploader.nil?
@@ -22,6 +22,21 @@ class Api::V1::ArchiveSerializer < Api::V1::BaseSerializer
 
   def rate
     object.rate
+  end
+
+  def alias
+    current_user = scope[:current_user]
+    if current_user.present?
+      return nil if object.alias.nil?
+
+      aalias = Alias.find_by_name object.alias
+
+      return Api::V1::AliasSerializer.new(aalias, root: false) unless aalias.nil?
+
+      return {:name=>object.alias}
+    end
+
+    object.alias
   end
 
 end

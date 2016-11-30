@@ -73,12 +73,25 @@ class Api::V1::ArchivesController < Api::V1::BaseController
     archive = Archive.new(create_params)
     archive.digital = digital_params[:data]
 
+    if create_params[:owner_type] == "Group" #comes from folder of group
+      group_alias = UserGroup.find_by(:group_id=>archive.owner.id, :user_id=>current_user.id)
+      if group_alias.nil?
+        archive.alias = current_user.notifier_name
+      elsif group_alias.alias.nil?
+        archive.alias = current_user.notifier_name
+      else
+        archive.alias = group_alias.alias
+      end
+    else #comes from Folder of User
+      archive.alias = current_user.notifier_name
+    end
+
   	return api_error(status: 422, errors: archive.errors) unless archive.valid?
 
     archive.save!
 
     render(
-      json: Api::V1::ArchiveSerializer.new(archive).to_json,
+      json: Api::V1::ArchiveSerializer.new(archive, scope: {:current_user=>current_user}).to_json,
       status: 201,
       location: api_v1_archive_path(archive.id)
     )
@@ -104,7 +117,7 @@ class Api::V1::ArchivesController < Api::V1::BaseController
     end
 
     render(
-      json: Api::V1::ArchiveSerializer.new(archive).to_json,
+      json: Api::V1::ArchiveSerializer.new(archive, scope: {:current_user=>current_user}).to_json,
       status: 200
     )
   end

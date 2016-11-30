@@ -6,6 +6,7 @@ class CreateArchives < ActiveRecord::Migration
       t.integer :owner_id
       t.string :owner_type
       t.integer :uploader_id
+      t.string :alias
 
       t.references :archivable, polymorphic: true, index: true
 

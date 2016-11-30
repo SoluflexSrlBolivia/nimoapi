@@ -45,6 +45,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
       json: ActiveModel::ArraySerializer.new(
         archives,
         each_serializer: Api::V1::ArchiveSerializer,
+        scope: {:current_user=>current_user},
         root: 'pictures',
         meta: meta_attributes(archives)
       )
@@ -79,6 +80,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
       json: ActiveModel::ArraySerializer.new(
         archives,
         each_serializer: Api::V1::ArchiveSerializer,
+        scope: {:current_user=>current_user},
         root: 'videos',
         meta: meta_attributes(archives)
       )
@@ -112,6 +114,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
       json: ActiveModel::ArraySerializer.new(
         archives,
         each_serializer: Api::V1::ArchiveSerializer,
+        scope: {:current_user=>current_user},
         root: 'audios',
         meta: meta_attributes(archives)
       )
@@ -149,6 +152,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
       json: ActiveModel::ArraySerializer.new(
         archives,
         each_serializer: Api::V1::ArchiveSerializer,
+        scope: {:current_user=>current_user},
         root: 'files',
         meta: meta_attributes(archives)
       )

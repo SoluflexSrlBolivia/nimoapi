@@ -1,6 +1,6 @@
 class Api::V1::HomeArchiveSerializer < Api::V1::BaseSerializer
   #just some basic attributes
-  attributes :id, :name, :size, :content_type, :rate, :group, :uploader, :comments, :votes, :created_at, :updated_at
+  attributes :id, :name, :size, :content_type, :rate, :alias, :group, :uploader, :comments, :votes, :created_at, :updated_at
   
   def name
   	object.digital_file_name
@@ -28,5 +28,20 @@ class Api::V1::HomeArchiveSerializer < Api::V1::BaseSerializer
   end
   def comments
     object.comments.count
+  end
+
+  def alias
+    current_user = scope[:current_user]
+    if current_user.present?
+      return nil if object.alias.nil?
+
+      aalias = Alias.find_by_name object.alias
+
+      return Api::V1::AliasSerializer.new(aalias, root: false) unless aalias.nil?
+
+      return {:name=>object.alias}
+    end
+
+    object.alias
   end
 end

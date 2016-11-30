@@ -10,7 +10,7 @@ class Api::V1::DownloadsController < Api::V1::BaseController
     download.save!
 
     render(
-      json: Api::V1::DownloadSerializer.new(download).to_json,
+      json: Api::V1::DownloadSerializer.new(download, scope: {:current_user=>current_user}).to_json,
       status: 201,
       location: api_v1_archive_path(download.archive.id)
     )

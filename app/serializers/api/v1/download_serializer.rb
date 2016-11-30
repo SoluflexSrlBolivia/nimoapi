@@ -1,6 +1,6 @@
 class Api::V1::DownloadSerializer < Api::V1::BaseSerializer
   #just some basic attributes
-  attributes :id, :name, :size, :content_type
+  attributes :id, :name, :size, :content_type, :alias
   
   def id
   	object.archive.id
@@ -13,5 +13,17 @@ class Api::V1::DownloadSerializer < Api::V1::BaseSerializer
   end
   def content_type
   	object.archive.digital_content_type
+  end
+  def alias
+    current_user = scope[:current_user]
+    if current_user.present?
+      return nil if object.archive.alias.nil?
+
+      aalias = Alias.find_by_name object.archive.alias
+
+      return Api::V1::AliasSerializer.new(aalias, root: false) unless aalias.nil?
+
+      return {:name=>object.archive.alias}
+    end
   end
 end

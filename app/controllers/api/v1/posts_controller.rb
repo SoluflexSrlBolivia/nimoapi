@@ -60,12 +60,6 @@ class Api::V1::PostsController < Api::V1::BaseController
   def create
     post = Post.new(create_params)
     authorize post
-    
-    if params[:digital] && digital_params[:data].present?
-      archive = Archive.new(archive_params)
-      archive.digital = digital_params[:data]
-      post.archive = archive
-    end
 
     group_alias = UserGroup.find_by(:group_id=>post.group.id, :user_id=>current_user.id)
     if group_alias.nil?
@@ -74,6 +68,13 @@ class Api::V1::PostsController < Api::V1::BaseController
       post.alias = current_user.notifier_name
     else
       post.alias = group_alias.alias
+    end
+    
+    if params[:digital] && digital_params[:data].present?
+      archive = Archive.new(archive_params)
+      archive.digital = digital_params[:data]
+      archive.alias = post.alias
+      post.archive = archive
     end
 
     return api_error(status: 422, errors: post.errors) unless post.valid?

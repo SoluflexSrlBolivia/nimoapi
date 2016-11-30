@@ -39,7 +39,8 @@ class Api::V1::FoldersController < Api::V1::BaseController
 
     archives = ActiveModel::ArraySerializer.new(
       resultArchives,
-      each_serializer: Api::V1::ArchiveSerializer
+      each_serializer: Api::V1::ArchiveSerializer,
+      scope: {:current_user=>current_user}
     )
     folders = ActiveModel::ArraySerializer.new(
       resultFolders,
@@ -47,7 +48,8 @@ class Api::V1::FoldersController < Api::V1::BaseController
     )
     downloads = ActiveModel::ArraySerializer.new(
       resultDownloads,
-      each_serializer: Api::V1::DownloadSerializer
+      each_serializer: Api::V1::DownloadSerializer,
+      scope: {:current_user=>current_user}
     )
 
     render(
@@ -69,7 +71,8 @@ class Api::V1::FoldersController < Api::V1::BaseController
   def index
     archives = ActiveModel::ArraySerializer.new(
       current_user.folder.archives,
-      each_serializer: Api::V1::ArchiveSerializer
+      each_serializer: Api::V1::ArchiveSerializer,
+      scope: {:current_user=>current_user}
     )
     folders = ActiveModel::ArraySerializer.new(
       current_user.folder.folders,
@@ -77,7 +80,8 @@ class Api::V1::FoldersController < Api::V1::BaseController
     )
     downloads = ActiveModel::ArraySerializer.new(
       current_user.folder.downloads,
-      each_serializer: Api::V1::DownloadSerializer
+      each_serializer: Api::V1::DownloadSerializer,
+      scope: {:current_user=>current_user}
     )
 
     render(
@@ -103,7 +107,8 @@ class Api::V1::FoldersController < Api::V1::BaseController
 
     archives = ActiveModel::ArraySerializer.new(
       folder.archives,
-      each_serializer: Api::V1::ArchiveSerializer
+      each_serializer: Api::V1::ArchiveSerializer,
+      scope: {:current_user=>current_user}
     )
     folders = ActiveModel::ArraySerializer.new(
       folder.folders,
@@ -111,7 +116,8 @@ class Api::V1::FoldersController < Api::V1::BaseController
     )
     downloads = ActiveModel::ArraySerializer.new(
       folder.downloads,
-      each_serializer: Api::V1::DownloadSerializer
+      each_serializer: Api::V1::DownloadSerializer,
+      scope: {:current_user=>current_user}
     )
     
     render(
