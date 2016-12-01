@@ -152,7 +152,10 @@ class Api::V1::PostCommentsController < Api::V1::BaseController
       users_to_notify.each do |user|
         notification = Notification.new(
           :message=>notification_message,
-          :notification_type=>Notification::NOTIFICATION_NEW_COMMENT
+          :notification_type=>Notification::NOTIFICATION_NEW_COMMENT,
+          :action => {:commentable_type => "Post",
+                      :commentable_id => create_params[:commentable_id],
+                      :comment_id => comment.id}.to_s
         )
         notification.user = user
         notification.save!
@@ -166,8 +169,9 @@ class Api::V1::PostCommentsController < Api::V1::BaseController
       if devices.count>0
         Notification::send_notification notification_message, devices, {
             :type => Notification::NOTIFICATION_NEW_COMMENT,
-            :message => notification_message,
-            :comment=>Api::V1::CommentSerializer.new(comment, root: false)
+            :commentable_type => "Post",
+            :commentable_id => create_params[:commentable_id],
+            :comment_id => comment.id
         }
       end
 
