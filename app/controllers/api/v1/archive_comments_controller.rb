@@ -56,7 +56,7 @@ class Api::V1::ArchiveCommentsController < Api::V1::BaseController
     
     return api_error(status: 422) if archive.nil?
 
-    comments = archive.comments.order(created_at: :desc)
+    comments = archive.comments.order(created_at: :asc)
     comments = apply_filters(comments, params.except(:id)) #it comming id and fail the filter, so is empty the result
     
     comments = paginate(comments)
