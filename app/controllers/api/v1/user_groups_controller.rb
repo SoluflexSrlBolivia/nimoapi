@@ -69,6 +69,7 @@ class Api::V1::UserGroupsController < Api::V1::BaseController
       json: ActiveModel::ArraySerializer.new(
         group_members,
         each_serializer: Api::V1::MemberSerializer,
+        scope: {:group=>group},
         root: 'members',
         meta: meta_attributes(group_members)
       )
