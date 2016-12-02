@@ -100,12 +100,7 @@ class Api::V1::PostsController < Api::V1::BaseController
       devices = devices.map{|d| d.player_id}
 
       if devices.count>0
-        Notification::send_notification notification_message, devices, {
-            :type => Notification::NOTIFICATION_NEW_POST,
-            :message => notification_message,
-            :group_id => post.group.id,
-            :post=>Api::V1::HomePostSerializer.new(post, root: false)
-        }
+        NotificationNewCommentJob.perform_later notification_message, devices, post
       end
 
     end
