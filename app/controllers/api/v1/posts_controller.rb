@@ -103,6 +103,7 @@ class Api::V1::PostsController < Api::V1::BaseController
         Notification::send_notification notification_message, devices, {
             :type => Notification::NOTIFICATION_NEW_POST,
             :message => notification_message,
+            :group_id => post.group.id,
             :post=>Api::V1::HomePostSerializer.new(post, root: false)
         }
       end

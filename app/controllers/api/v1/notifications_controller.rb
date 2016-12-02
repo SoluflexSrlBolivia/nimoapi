@@ -56,6 +56,7 @@ class Api::V1::NotificationsController < Api::V1::BaseController
             Notification::send_notification notification_ans.message, devices, {
                 :type => notification_ans.notification_type,
                 :message => notification_ans.message,
+                :group_id=>group.id,
                 :group=>Api::V1::HomeGroupSerializer.new(group, root: false)
             }
           end
