@@ -1,5 +1,5 @@
 class NotificationNewCommentJob < ActiveJob::Base
-  queue_as :default
+  queue_as :urgent
 
   rescue_from(ActiveRecord::RecordNotFound) do |exception|
     # Do something with the exception
