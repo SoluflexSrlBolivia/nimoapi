@@ -67,3 +67,9 @@ gem "faker"
 gem 'paperclip-av-transcoder'
 
 gem 'apipie-rails'
+
+# Use sidekiq for background tasks
+gem 'sidekiq'
+
+# Use sidekiq enhancement for unique jobs
+gem 'sidekiq-unique-jobs'
