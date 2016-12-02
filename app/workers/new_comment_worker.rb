@@ -1,13 +1,5 @@
-class NotificationNewCommentJob < ActiveJob::Base
-  queue_as :urgent
-
-  # Just include the Mixin below and the perform_async method will be available
+class NewCommentWorker
   include Sidekiq::Worker
-
-  rescue_from(ActiveRecord::RecordNotFound) do |exception|
-    # Do something with the exception
-
-  end
 
   def perform(notification_message, devices, post)
     # Do something later
