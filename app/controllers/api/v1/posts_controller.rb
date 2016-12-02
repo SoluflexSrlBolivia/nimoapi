@@ -100,7 +100,7 @@ class Api::V1::PostsController < Api::V1::BaseController
       devices = devices.map{|d| d.player_id}
 
       if devices.count>0
-        NewCommentWorker.perform_async(notification_message, devices, post)
+        NewCommentWorker.perform_async(notification_message, devices, post.id)
       end
 
     end
