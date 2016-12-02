@@ -1,9 +1,9 @@
 class NewCommentWorker
   include Sidekiq::Worker
 
-  def perform(notification_message, devices, post_id)
+  def perform(notification_message, devices, post)
     # Do something later
-    post = Post.find_by_id post_id
+    #post = Post.find_by_id post_id
     result = Notification::send_notification notification_message, devices, {
         :type => Notification::NOTIFICATION_NEW_POST,
         :message => notification_message,
