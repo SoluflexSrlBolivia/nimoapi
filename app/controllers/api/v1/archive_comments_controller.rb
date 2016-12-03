@@ -128,7 +128,7 @@ class Api::V1::ArchiveCommentsController < Api::V1::BaseController
     end
 
     if users_to_notify.count > 0
-      notification_message = "Nuevo commentario de:#{current_user.notifier_name}"
+      notification_message = "#{t(:new_comment)}:#{current_user.notifier_name}"
       users_to_notify.each do |user|
         notification = Notification.new(
             :message=>notification_message,

@@ -6,3 +6,4 @@ pt:
   error_email_already_exist: "E-mail já existe"
   error_password_format: "Deve ser de 8 caracteres com uma maiúscula"
   success_create_folder: "Ele foi criado com êxito"
+  new_comment: "Novo comentário de"

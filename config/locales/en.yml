@@ -26,4 +26,5 @@ en:
   error_email_already_exist: "Email already exist"
   error_password_format: "Must be 8 characters with 1 uppercase"
   success_create_folder: "It was created successfully"
+  new_comment: "New comment of"
   
