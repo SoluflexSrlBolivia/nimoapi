@@ -137,15 +137,8 @@ class Api::V1::PostCommentsController < Api::V1::BaseController
 
     comment.save!
 
-    users_to_notify = []
-    group = nil
-    if comment.commentable.kind_of?(Post)
-      users_to_notify = comment.commentable.group.users.where.not(:id=>current_user.id).where(:deleted=>false)
-      group = comment.commentable.group
-    elsif comment.commentable.kind_of?(Archive) && comment.commentable.owner.kind_of?(Group)
-      users_to_notify = comment.commentable.owner.users.where.not(:id=>current_user.id).where(:deleted=>false)
-      group = comment.commentable.owner
-    end
+    users_to_notify = comment.commentable.group.users.where.not(:id=>current_user.id).where(:deleted=>false)
+    group = comment.commentable.group
     
     if users_to_notify.count > 0
       notification_message = "Nuevo commentario de:#{current_user.notifier_name}"
@@ -167,12 +160,7 @@ class Api::V1::PostCommentsController < Api::V1::BaseController
       devices = devices.map{|d| d.player_id}
 
       if devices.count>0
-        Notification::send_notification notification_message, devices, {
-            :type => Notification::NOTIFICATION_NEW_COMMENT,
-            :commentable_type => "Post",
-            :commentable_id => create_params[:commentable_id],
-            :comment_id => comment.id
-        }
+        NewCommentWorker.perform_async(notification_message, devices, "Post", create_params[:commentable_id], comment.id)
       end
 
     end

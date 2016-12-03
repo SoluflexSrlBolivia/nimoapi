@@ -120,6 +120,38 @@ class Api::V1::ArchiveCommentsController < Api::V1::BaseController
 
     comment.save!
 
+    users_to_notify = []
+    group = nil
+    if comment.commentable.owner.kind_of?(Group)
+      users_to_notify = comment.commentable.owner.users.where.not(:id=>current_user.id).where(:deleted=>false)
+      group = comment.commentable.owner
+    end
+
+    if users_to_notify.count > 0
+      notification_message = "Nuevo commentario de:#{current_user.notifier_name}"
+      users_to_notify.each do |user|
+        notification = Notification.new(
+            :message=>notification_message,
+            :notification_type=>Notification::NOTIFICATION_NEW_COMMENT,
+            :action => {:commentable_type => "Archive",
+                        :commentable_id => create_params[:commentable_id],
+                        :comment_id => comment.id}.to_s
+        )
+        notification.user = user
+        notification.save!
+      end
+
+      users_enabled = users_to_notify.select{|u| u.notification }.map{|u| u.id}
+      user_to_push = group.user_groups.where(:user_id=>users_enabled).where(:notification=>true)
+      devices = Device.where("user_id IN (#{user_to_push.map{|u| u.user_id}.join(",")})")
+      devices = devices.map{|d| d.player_id}
+
+      if devices.count>0
+        NewCommentWorker.perform_async(notification_message, devices, "Archive", create_params[:commentable_id], comment.id)
+      end
+
+    end
+
     render(
       json: Api::V1::CommentSerializer.new(comment).to_json,
       status: 201
