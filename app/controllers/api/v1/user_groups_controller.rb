@@ -160,7 +160,7 @@ class Api::V1::UserGroupsController < Api::V1::BaseController
 
     userGroup = group.user_groups.find_by_user_id current_user.id
     if userGroup.nil?
-      return render(json: {:message=>"keyword invalido"}) unless group.keyword == register_params[:keyword]
+      return render(json: {:message=>t(:keyword_invalid)}) unless group.keyword == register_params[:keyword]
       userGroup = UserGroup.new(:user_id=>current_user.id, :group_id=>group.id)
       userGroup.user = current_user
       userGroup.save!
@@ -171,7 +171,7 @@ class Api::V1::UserGroupsController < Api::V1::BaseController
       )
     end
     
-    render(json: {:message=>"Ya esta dentro del grupo"})
+    render(json: {:message=>t(:already_in_group)})
   end
 
   api! "Adicion de alias a un grupo"
@@ -188,7 +188,7 @@ class Api::V1::UserGroupsController < Api::V1::BaseController
 
     if userGroup.alias == alias_name
       return render(
-          json: {:status=>"fail", :message=>"Ya agrego ese alias"}
+          json: {:status=>"fail", :message=>t(:alias_exist)}
       )
     end
 
@@ -225,7 +225,7 @@ class Api::V1::UserGroupsController < Api::V1::BaseController
         notification = Notification.find_by_action action
         if notification.nil?
           notification = Notification.new(
-            :message=>"#{current_user.notifier_name} solicita el ingreso al grupo:#{group.name}",
+            :message=>"#{current_user.notifier_name} #{t(:request_to_join)}:#{group.name}",
             :notification_type=>Notification::NOTIFICATION_REQUEST_TO_JOIN_GROUP,
             :action=>action
           )
@@ -243,13 +243,13 @@ class Api::V1::UserGroupsController < Api::V1::BaseController
 
         end
 
-        return render(json: {:message=>"Se envio la solicitud al administrador del grupo"})
+        return render(json: {:message=>t(:request_sent_to_admin)})
       elsif group.privacity == 3 #Privado, no hace nada
         return api_error(status: 422)
       end
     end
 
-    render(json: {:message=>"Ya se envio la solicitud"})
+    render(json: {:message=>t(:request_already_sended)})
   end
 
   api! "Salir de un grupo"

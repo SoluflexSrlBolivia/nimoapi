@@ -83,7 +83,7 @@ class Api::V1::PostsController < Api::V1::BaseController
     
     users_to_notify = post.group.users.where.not(:id=>create_params[:user_id]).where(:deleted=>false)
     if users_to_notify.count > 0
-      notification_message = "#{current_user.notifier_name} acaba de postear al grupo:#{post.group.name}"
+      notification_message = "#{current_user.notifier_name} #{t(:new_post)}:#{post.group.name}"
 
       users_to_notify.each do |user|
         notification = Notification.new(

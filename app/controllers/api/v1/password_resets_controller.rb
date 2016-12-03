@@ -8,12 +8,12 @@ class Api::V1::PasswordResetsController < Api::V1::BaseController
       user.create_reset_digest
       user.send_password_reset_email
       render(
-        json: {:status=>"ok", :message=>"Email enviado con las instrucciones para cambiar el password"},
+        json: {:status=>"ok", :message=>t(:email_instruction_change_password)},
         status: 201
       )
     else
       render(
-        json: {:status=>"fail", :message=>"El email no existe en Nimo"},
+        json: {:status=>"fail", :message=>t(:email_not_found)},
         status: 201
       )
     end

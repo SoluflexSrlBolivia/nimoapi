@@ -1,3 +1,23 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
 
 es:
   message_activation_email: "Por favor, revisa tu e-mail para activar tu cuenta."
@@ -7,3 +27,15 @@ es:
   error_password_format: "Debe tener 8 caracteres con 1 mayuscula"
   success_create_folder: "se creo con exito"
   new_comment: "Nuevo comentario de"
+  accept_join: "acepto el ingreso al grupo"
+  reject_join: "rechazo su ingreso al grupo"
+  email_instruction_change_password: "Email enviado con las instrucciones para cambiar el password"
+  email_not_found: "El email no existe en Nimo"
+  new_post: "acaba de postear al grupo"
+  keyword_invalid: "keyword invalido"
+  already_in_group: "Ya esta dentro del grupo"
+  alias_exist: "Ya agrego ese alias"
+  request_to_join: "solicita el ingreso al grupo"
+  request_sent_to_admin: "Se envio la solicitud al administrador del grupo"
+  request_already_sended: "Ya se envio la solicitud"
+  account_not_active: "Account not activated. Check your email for the activation link."

@@ -26,6 +26,12 @@ class Api::V1::BaseController < ApplicationController
     I18n.backend.load_translations
   end
 
+  def update_locale locale
+    I18n.locale = locale || I18n.default_locale
+    I18n.backend.reload!
+    I18n.backend.load_translations
+  end
+
   def unauthenticated!
     response.headers['WWW-Authenticate'] = "Token realm=Application"
     render json: { error: 'Bad credentials' }, status: 401

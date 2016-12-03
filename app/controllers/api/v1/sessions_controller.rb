@@ -37,10 +37,8 @@ class Api::V1::SessionsController < Api::V1::BaseController
           status: 201
         )
       else
-        message  = "Account not activated. "
-        message += "Check your email for the activation link."
         render(
-          json: {:status=>"fail", :message=>message},
+          json: {:status=>"fail", :message=>t(:account_not_active)},
           status: 201
         )
       end

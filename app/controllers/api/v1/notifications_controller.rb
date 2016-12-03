@@ -38,7 +38,7 @@ class Api::V1::NotificationsController < Api::V1::BaseController
         notification_ans = Notification.find_by_action noti_action
         if notification_ans.nil?
           notification_ans = Notification.new(
-            :message=>"#{current_user.notifier_name} acepto su ingreso al grupo:#{group.name}",
+            :message=>"#{current_user.notifier_name} #{t(:accept_join)}:#{group.name}",
             :notification_type=>Notification::NOTIFICATION_GROUP_ACCEPTED,
             :action=>noti_action
           )
@@ -68,7 +68,7 @@ class Api::V1::NotificationsController < Api::V1::BaseController
         notification_ans = Notification.find_by_action noti_action
         if notification_ans.nil?
           notification_ans = Notification.new(
-            :message=>"#{current_user.notifier_name} rechazo su ingreso al grupo:#{group.name}",
+            :message=>"#{current_user.notifier_name} #{t(:reject_join)}:#{group.name}",
             :notification_type=>Notification::NOTIFICATION_GROUP_REJECTED,
             :action=>noti_action
           )
