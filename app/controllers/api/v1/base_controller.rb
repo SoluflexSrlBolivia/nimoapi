@@ -89,9 +89,7 @@ class Api::V1::BaseController < ApplicationController
   end
 
   private
-  def redis
-    @redis ||= Redis.new
-  end
+
   #ember specific :/
   def jsonapi_format(errors)
     return {:errors=>[{:error=>errors}]} if errors.is_a? String

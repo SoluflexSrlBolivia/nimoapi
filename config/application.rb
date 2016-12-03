@@ -42,19 +42,3 @@ module Nimo
     
   end
 end
-
-# Hack to start sidekiq & redis on runnable, upstart not working for redis-server
-module Rails
-  class Server < ::Rack::Server
-    def start_with_sidekiq
-      Thread.start do
-        `redis-server &`
-      end
-      Thread.start do
-        `sidekiq &`
-      end
-      start_without_sidekiq
-    end
-    alias_method_chain :start, :sidekiq
-  end
-end
