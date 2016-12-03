@@ -3,7 +3,7 @@ class Api::V1::HomeArchiveSerializer < Api::V1::BaseSerializer
   attributes :id, :name, :size, :content_type, :rate, :alias, :group, :uploader, :comments, :votes, :created_at, :updated_at
   
   def name
-  	object.digital_file_name
+  	object.original_file_name
   end
   def size
   	object.digital_file_size
