@@ -53,12 +53,7 @@ class Api::V1::NotificationsController < Api::V1::BaseController
           devices = devices.map{|d| d.player_id}
 
           if devices.count > 0
-            Notification::send_notification notification_ans.message, devices, {
-                :type => notification_ans.notification_type,
-                :message => notification_ans.message,
-                :group_id=>group.id,
-                :group=>Api::V1::HomeGroupSerializer.new(group, root: false)
-            }
+            RequestAcceptedWorker.perform_async(devices, notification_ans.id, group_id)
           end
           
         else
@@ -86,10 +81,7 @@ class Api::V1::NotificationsController < Api::V1::BaseController
           devices = devices.map{|d| d.player_id}
 
           if devices.count > 0
-            Notification::send_notification notification_ans.message, devices, {
-                :type => notification_ans.notification_type,
-                :message => notification_ans.message
-            }
+            RequestRejectedWorker.perform_async(devices, notification_ans.id)
           end
 
         end

@@ -238,11 +238,7 @@ class Api::V1::UserGroupsController < Api::V1::BaseController
           devices = devices.map{|d| d.player_id}
 
           if devices.count > 0
-            Notification::send_notification notification_ans.message, devices, {
-                :type => notification_ans.notification_type,
-                :message => notification_ans.message,
-                :notification=>Api::V1::NotificationSerializer.new(notification_ans, root: false)
-            }
+            RequestJoinWorker.perform_async(devices, notification.id)
           end
 
         end
