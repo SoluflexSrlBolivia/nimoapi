@@ -62,5 +62,5 @@ Rails.application.routes.draw do
     end
   end
 
-  get '/:anything', :to => lambda {|env| [404, {'Content-Type' => 'application/json; charset=utf-8' }, ['{"error": "not_found"}']] }, :constraints => { :anything => /.*/ }
+  match '/:anything', :to => lambda {|env| [404, {'Content-Type' => 'application/json; charset=utf-8' }, ['{"error": "not_found"}']] }, :constraints => { :anything => /.*/ }, :via => [:get, :post]
 end
