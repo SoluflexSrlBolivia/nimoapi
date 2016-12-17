@@ -63,4 +63,5 @@ Rails.application.routes.draw do
   end
 
   #get '/:anything', :to => "static_pages#not_found", :constraints => { :anything => /.*/ }
+  match '*foo', :format => true, :constraints => {:format => :json}, :to => lambda {|env| [404, {}, ['{"error": "not_found"}']] }
 end
