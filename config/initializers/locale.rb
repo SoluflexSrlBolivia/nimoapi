@@ -5,4 +5,4 @@
 I18n.config.enforce_available_locales = true
 I18n.config.available_locales = :en, :es, :pt
 # set default locale to something other than :en
-I18n.default_locale = :en
+I18n.default_locale = :es
