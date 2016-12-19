@@ -1,6 +1,27 @@
 class Api::V1::AliasesController < Api::V1::BaseController
   before_filter :authenticate_user!
 
+  def_param_group :create do
+    param :alias, Hash, :required => true do
+      param :name, String, :desc => "Nombre del alias",  :required => true
+    end
+  end
+
+  def_param_group :archive do
+    param :file, Hash, :required => true do
+      param :owner_id, Fixnum, :desc => "ID User propietario", :required => true
+      param :owner_type, ["User"], :desc => "\"User\" tabla del propiertario", :required => true
+      param :uploader_id, Fixnum, :desc => "ID del usuario q esta subiendo el archivo", :required => true
+    end
+  end
+
+  def_param_group :digital do
+    param :digital, Hash, :required => true do
+      param :data, String, :desc => "El archivo", :required => true
+    end
+  end
+
+
   api! "listado de alias de un usuario"
   def index
     render(
@@ -13,6 +34,9 @@ class Api::V1::AliasesController < Api::V1::BaseController
   end
 
   api! "Creacion de alias"
+  param_group :create
+  param_group :archive
+  param_group :digital
   def create
     aliass = Alias.new(create_params)
 
@@ -35,6 +59,10 @@ class Api::V1::AliasesController < Api::V1::BaseController
   end
 
   api! "Actulizacion de alias"
+  param :id, Fixnum, :desc => "ID Alias", :required => true
+  param_group :create
+  param_group :archive
+  param_group :digital
   def update
     aliass = Alias.find(params[:id])
 
@@ -58,6 +86,7 @@ class Api::V1::AliasesController < Api::V1::BaseController
   end
 
   api! "Eliminacion de alias"
+  param :id, Fixnum, :desc => "ID Alias", :required => true
   def destroy
     aliass = Alias.find(params[:id])
 
