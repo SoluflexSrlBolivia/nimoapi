@@ -47,3 +47,11 @@ es:
   password_cant_blank: "Password/confirmation no puede estar en blanco"
   password_reset_ok: "Contraseña se ha restablecido."
   password_reset_expired: "El restablecimiento de la contraseña ha caducado."
+
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            password:
+              too_short: "Debe tener 8 caracteres con 1 mayuscula"
