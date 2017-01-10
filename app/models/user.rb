@@ -21,11 +21,11 @@ class User < ActiveRecord::Base
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\-.]+\.[a-z]+\z/i
   VALID_PASSWORD_REGEX = /\A(?=\.*?[A-Z])/i
   validates :email, presence: true, length: { maximum: 255 },
-                    format: { with: VALID_EMAIL_REGEX, message: I18n.t('error_email_format') },
-                    uniqueness: { case_sensitive: false, message: I18n.t('error_email_already_exist') }
+                    format: { with: VALID_EMAIL_REGEX, message: I18n.t(:error_email_format) },
+                    uniqueness: { case_sensitive: false, message: I18n.t(:error_email_already_exist) }
   has_secure_password
   validates :password, length: { minimum: 8 }, allow_blank: true,
-            format: { with: VALID_PASSWORD_REGEX, message: I18n.t('error_password_format') }
+            format: { with: VALID_PASSWORD_REGEX, message: t(:error_password_format) }
 
   validates :password_confirmation, :presence => true, :if => '!password.nil?'
 
