@@ -50,6 +50,9 @@ es:
   password_reset_title: "Restablecer password"
   update_password: "Actulizar password"
   confirmation: "Confirmacion"
+  form_contain: "El formulario contiene"
+  errors: "errores"
+  error: "error"
 
   activerecord:
     errors:
