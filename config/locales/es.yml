@@ -47,6 +47,9 @@ es:
   password_cant_blank: "Password/confirmation no puede estar en blanco"
   password_reset_ok: "Contraseña se ha restablecido."
   password_reset_expired: "El restablecimiento de la contraseña ha caducado."
+  password_reset_title: "Restablecer password"
+  update_password: "Actulizar password"
+  confirmation: "Confirmacion"
 
   activerecord:
     errors:

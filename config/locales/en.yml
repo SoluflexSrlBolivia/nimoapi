@@ -47,6 +47,9 @@ en:
   password_cant_blank: "Password/confirmation can't be blank"
   password_reset_ok: "Password has been reset."
   password_reset_expired: "Password reset has expired."
+  password_reset_title: "Reset password"
+  update_password: "Update password"
+  confirmation: "Confirmacion"
 
   activerecord:
     errors:

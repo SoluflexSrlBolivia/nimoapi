@@ -47,6 +47,9 @@ pt:
   password_cant_blank: "Password/confirmation não pode ficar em branco"
   password_reset_ok: "A senha foi redefinida."
   password_reset_expired: "A redefinição de senha expirou."
+  password_reset_title: "Redefinir a senha"
+  update_password: "Atualizar senha"
+  confirmation: "Confirmação"
 
   activerecord:
     errors:
