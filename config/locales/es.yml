@@ -53,5 +53,8 @@ es:
       models:
         user:
           attributes:
+            password_confirmation:
+              confirmation: ""
+              blank: "confirmation no puede estar en blanco"
             password:
               too_short: "Debe tener 8 caracteres con 1 mayuscula"
