@@ -39,3 +39,11 @@ pt:
   request_sent_to_admin: "O pedido foi enviado para o administrador do grupo"
   request_already_sended: "Pedido já enviado"
   account_not_active: "Conta não ativada. Verifique seu e-mail para o link de ativação."
+
+  account_active: "Conta ativada!"
+  invalid_activation_link: "Link de ativação inválido"
+  email_reset_password: "Email enviado com instruções de redefinição de senha"
+  email_not_found: "Endereço de e-mail não encontrado"
+  password_cant_blank: "Password/confirmation não pode ficar em branco"
+  password_reset_ok: "A senha foi redefinida."
+  password_reset_expired: "A redefinição de senha expirou."

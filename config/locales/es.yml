@@ -39,3 +39,11 @@ es:
   request_sent_to_admin: "Se envio la solicitud al administrador del grupo"
   request_already_sended: "Ya se envio la solicitud"
   account_not_active: "Account not activated. Check your email for the activation link."
+
+  account_active: "Cuenta activada!"
+  invalid_activation_link: "Enlace de activación no válido"
+  email_reset_password: "Correo electrónico enviado con instrucciones de restablecimiento de contraseña"
+  email_not_found: "Dirección de correo electrónico no encontrado"
+  password_cant_blank: "Password/confirmation no puede estar en blanco"
+  password_reset_ok: "Contraseña se ha restablecido."
+  password_reset_expired: "El restablecimiento de la contraseña ha caducado."

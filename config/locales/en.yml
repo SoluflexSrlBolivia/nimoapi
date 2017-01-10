@@ -39,3 +39,11 @@ en:
   request_sent_to_admin: "The request was sent to the group administrator"
   request_already_sended: "Request already sent"
   account_not_active: "Account not activated. Check your email for the activation link."
+
+  account_active: "Account activated!"
+  invalid_activation_link: "Invalid activation link"
+  email_reset_password: "Email sent with password reset instructions"
+  email_not_found: "Email address not found"
+  password_cant_blank: "Password/confirmation can't be blank"
+  password_reset_ok: "Password has been reset."
+  password_reset_expired: "Password reset has expired."
