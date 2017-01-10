@@ -47,3 +47,14 @@ en:
   password_cant_blank: "Password/confirmation can't be blank"
   password_reset_ok: "Password has been reset."
   password_reset_expired: "Password reset has expired."
+
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            password_confirmation:
+              confirmation: "must match the password"
+              blank: "can not be blank"
+            password:
+              too_short: "must have 8 characters with 1 uppercase"

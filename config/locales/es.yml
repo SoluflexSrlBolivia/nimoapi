@@ -54,7 +54,7 @@ es:
         user:
           attributes:
             password_confirmation:
-              confirmation: ""
-              blank: "confirmation no puede estar en blanco"
+              confirmation: "debe coincidir con el password"
+              blank: "no puede estar en blanco"
             password:
-              too_short: "Debe tener 8 caracteres con 1 mayuscula"
+              too_short: "debe tener 8 caracteres con 1 mayuscula"
