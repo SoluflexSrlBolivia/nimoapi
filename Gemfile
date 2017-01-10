@@ -70,3 +70,4 @@ gem 'apipie-rails'
 
 # Use sidekiq for background tasks
 gem 'sidekiq'
+gem 'countries'
