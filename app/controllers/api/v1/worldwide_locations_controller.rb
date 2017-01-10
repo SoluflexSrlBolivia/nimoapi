@@ -53,12 +53,13 @@ class Api::V1::WorldwideLocationsController < Api::V1::BaseController
   ]
 }'
   def index
-  	countries = Carmen::Country.all.map do |c|
-  		{
-  			:name=>c.name,
-  			:code=>c.code
-  		}
-  	end
+  	#countries = Carmen::Country.all.map do |c|
+  	#	{
+  	#		:name=>c.name,
+  	#		:code=>c.code
+  	#	}
+		#end
+		countries = ISO3166::Country.all.map{|c| {:name=>c.name, :code=>c.alpha2}}
 
   	render(
       json: {:countries=>countries}
@@ -123,15 +124,16 @@ class Api::V1::WorldwideLocationsController < Api::V1::BaseController
   ]
 }'
   def show
-  	country = Carmen::Country.coded params[:id]
-
-  	subregions = country.subregions.map do |r|
-  		{
-  			:name=>r.name,
-  			:code=>r.code,
-  			:type=>r.type
-  		}
-  	end
+		#country = Carmen::Country.coded params[:id]
+		country = ISO3166::Country.find_country_by_alpha2 params[:id]
+		subregions = country.states.map{|r| {:name=>r[1].name, :code=>r[0]}}
+  	#subregions = country.subregions.map do |r|
+  	#	{
+  	#		:name=>r.name,
+  	#		:code=>r.code,
+  	#		:type=>r.type
+  	#	}
+  	#end
   	render(
       json: {:subregions=>subregions}
     )
