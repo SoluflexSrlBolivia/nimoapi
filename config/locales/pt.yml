@@ -20,7 +20,7 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 pt:
-  message_activation_email: "Por favor, confira seu email para ativar sua conta."
+  message_activation_email: "Verifique se o seu e-mail para ativar sua conta"
   success_create_account: "Parabéns já faz parte do Nimo"
   error_email_format: "Formato inválido"
   error_email_already_exist: "E-mail já existe"
@@ -53,6 +53,14 @@ pt:
   form_contain: "O formulário contém"
   errors: "erros"
   error: "erro"
+  welcome_to_nimo: "Bem-vindo ao NIMO"
+  press_link_to_activate: "Clique no link abaixo para ativar sua conta:"
+  activate_title: "ACTIVATE"
+  reset_password_link: "Para redefinir sua senha de imprensa no link encontrado abaixo:"
+  password_reset_title_uppercase: "PASSWORD RESET"
+  reset_link_expire: "Este link irá expirar em 2 horas."
+  reset_password_ignore: "Se você não precisa alterar sua senha, ignore este e-mail e sua senha vai continuar como antes."
+  password: "Senha"
 
   activerecord:
     errors:

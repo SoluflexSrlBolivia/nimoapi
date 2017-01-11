@@ -20,7 +20,7 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  message_activation_email: "Please check your email to activate your account."
+  message_activation_email: "Check your email to activate your account"
   success_create_account: "Congratulations is already part of Nimo"
   error_email_format: "Invalid format"
   error_email_already_exist: "Email already exist"
@@ -53,6 +53,14 @@ en:
   form_contain: "The form contains"
   errors: "errors"
   error: "error"
+  welcome_to_nimo: "Welcome to NIMO"
+  press_link_to_activate: "Click the link below to activate your account:"
+  activate_title: "ACTIVATE"
+  reset_password_link: "To reset your password, click on the link below:"
+  password_reset_title_uppercase: "RESTORE PASSWORD"
+  reset_link_expire: "This link expires in 2 hours."
+  reset_password_ignore: "If you do not need to change your password, ignore this email and your password will continue as before."
+  password: "Password"
 
   activerecord:
     errors:

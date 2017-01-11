@@ -1,5 +1,5 @@
-Hi <%= @user.name %>,
+<%= t(:welcome_to_nimo)%>,
 
-Welcome to the Nimo App! Click on the link below to activate your account:
+<%= t(:press_link_to_activate) %>
 
 <%= edit_account_activation_url(@user.activation_token, email: @user.email) %>

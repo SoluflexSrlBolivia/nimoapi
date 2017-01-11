@@ -1,10 +1,10 @@
-<h1>Nimo App</h1>
+<h1>NIMO</h1>
 
-<p>Hi <%= @user.name %>,</p>
+<p> <%= t(:welcome_to_nimo)%>, </p>
 
 <p>
-Welcome to the Nimo app! Click on the link below to activate your account:
+<%= t(:press_link_to_activate) %>
 </p>
 
-<%= link_to "Activate", edit_account_activation_url(@user.activation_token,
+<%= link_to t(:activate_title), edit_account_activation_url(@user.activation_token,
                                                     email: @user.email) %>

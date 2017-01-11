@@ -20,7 +20,7 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 es:
-  message_activation_email: "Por favor, revisa tu e-mail para activar tu cuenta."
+  message_activation_email: "Revisa tu correo electrónico para activar tu cuenta"
   success_create_account: "Felicidades ya es parte de Nimo"
   error_email_format: "Formato invalido"
   error_email_already_exist: "Email ya existe"
@@ -40,19 +40,27 @@ es:
   request_already_sended: "Ya se envio la solicitud"
   account_not_active: "Account not activated. Check your email for the activation link."
 
-  account_active: "Cuenta activada!"
-  invalid_activation_link: "Enlace de activación no válido"
+  account_active: "¡Cuenta activada!"
+  invalid_activation_link: "Enlace de activación inválido"
   email_reset_password: "Correo electrónico enviado con instrucciones de restablecimiento de contraseña"
   email_not_found: "Dirección de correo electrónico no encontrado"
   password_cant_blank: "Password/confirmation no puede estar en blanco"
-  password_reset_ok: "Contraseña se ha restablecido."
+  password_reset_ok: "Contraseña reestablecida"
   password_reset_expired: "El restablecimiento de la contraseña ha caducado."
-  password_reset_title: "Restablecer password"
-  update_password: "Actulizar password"
-  confirmation: "Confirmacion"
+  password_reset_title: "Restablecer contraseña"
+  update_password: "Actualizar contraseña"
+  confirmation: "Confirmación"
   form_contain: "El formulario contiene"
   errors: "errores"
   error: "error"
+  welcome_to_nimo: "Bienvenid@ a NIMO"
+  press_link_to_activate: "Presiona el enlace que se encuentra debajo para activar tu cuenta:"
+  activate_title: "ACTIVAR"
+  reset_password_link: "Para restablecer tu contraseña presiona el enlace que se encuentra debajo:"
+  password_reset_title_uppercase: "RESTABLECER CONTRASEÑA"
+  reset_link_expire: "Este enlace expira dentro de 2 horas."
+  reset_password_ignore: "Si no necesitas cambiar tu contraseña, ignora este correo y tu contraseña seguirá como antes."
+  password: "Contraseña"
 
   activerecord:
     errors:
