@@ -29,7 +29,7 @@ en:
   new_comment: "New comment of"
   accept_join: "accept to join group"
   reject_join: "I refuse to join the group"
-  email_instruction_change_password: "Email sent with instructions to change the password"
+  email_instruction_change_password: "Email sent with password reset instructions"
   email_not_found: "Email does not exist in Nimo"
   new_post: "just posted to the group"
   keyword_invalid: "invalid keyword"

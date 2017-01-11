@@ -29,7 +29,7 @@ pt:
   new_comment: "Novo comentário de"
   accept_join: "aceitar para participar do grupo"
   reject_join: "rejeição entrar para o grupo"
-  email_instruction_change_password: "E-mail enviado com instruções para alterar a senha"
+  email_instruction_change_password: "Email enviado com instruções de redefinição de senha"
   email_not_found: "E-mail não existe no Nimo"
   new_post: "apenas publicado no grupo"
   keyword_invalid: "palavra-chave inválida"
