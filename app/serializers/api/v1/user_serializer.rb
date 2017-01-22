@@ -14,7 +14,7 @@ class Api::V1::UserSerializer < Api::V1::BaseSerializer
   def birthday
     return nil if object.birthday.nil?
 
-    object.birthday.strftime(t(:date_format))
+    object.birthday.strftime(I18n.t(:date_format))
   end
 
   def name
