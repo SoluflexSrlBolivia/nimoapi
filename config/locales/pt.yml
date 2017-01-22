@@ -61,6 +61,7 @@ pt:
   reset_link_expire: "Este link irá expirar em 2 horas."
   reset_password_ignore: "Se você não precisa alterar sua senha, ignore este e-mail e sua senha vai continuar como antes."
   password: "Senha"
+  date_format: "%d-%m-%Y"
 
   activerecord:
     errors:

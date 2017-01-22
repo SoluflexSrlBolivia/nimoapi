@@ -11,6 +11,12 @@ class Api::V1::UserSerializer < Api::V1::BaseSerializer
     )
   end
 
+  def birthday
+    return nil if object.birthday.nil?
+
+    object.birthday.strftime(t("date_format"))
+  end
+
   def name
   	object.try(:name) || "Sin nombre"
   end
