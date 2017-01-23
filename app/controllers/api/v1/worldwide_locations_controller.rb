@@ -125,7 +125,8 @@ class Api::V1::WorldwideLocationsController < Api::V1::BaseController
 }'
   def show
 		#country = Carmen::Country.coded params[:id]
-		country = ISO3166::Country.find_country_by_alpha2 params[:id]
+    code = params[:id]
+		country = ISO3166::Country.find_country_by_alpha2 code
 		#subregions = country.states.map{|r| {:name=>r[1].name, :code=>r[0]}}
     subregions = country.states.map{|r| {:name=>(code.downcase == "bo") ? (r[1].name.include?("Beni") ? "Beni":r[1].name):r[1].name, :code=>r[0]}}
   	#subregions = country.subregions.map do |r|
