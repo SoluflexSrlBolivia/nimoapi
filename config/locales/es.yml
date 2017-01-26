@@ -62,6 +62,7 @@ es:
   reset_password_ignore: "Si no necesitas cambiar tu contraseña, ignora este correo y tu contraseña seguirá como antes."
   password: "Contraseña"
   date_format: "%d-%m-%Y"
+  date_time_format: "%d-%m-%Y %H:%M:%S"
 
   activerecord:
     errors:

@@ -15,4 +15,13 @@ class Api::V1::CommentSerializer < Api::V1::BaseSerializer
 
     return {:name=>object.alias}
   end
+
+  def created_at
+    object.created_at.strftime(I18n.t(:date_time_format))
+  end
+
+  def updated_at
+    object.updated_at.strftime(I18n.t(:date_time_format))
+  end
+
 end

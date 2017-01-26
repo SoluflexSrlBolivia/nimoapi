@@ -62,6 +62,7 @@ pt:
   reset_password_ignore: "Se você não precisa alterar sua senha, ignore este e-mail e sua senha vai continuar como antes."
   password: "Senha"
   date_format: "%d-%m-%Y"
+  date_time_format: "%d-%m-%Y %H:%M:%S"
 
   activerecord:
     errors:
