@@ -63,5 +63,6 @@ Rails.application.routes.draw do
     end
   end
 
-  match '/:anything', :to => lambda {|env| [404, {'Content-Type' => 'application/json; charset=utf-8' }, ['{"error": "not_found"}']] }, :constraints => { :anything => /.*/ }, :via => [:get, :post]
+  #match '/:anything', :to => lambda {|env| [404, {'Content-Type' => 'application/json; charset=utf-8' }, ['{"error": "not_found"}']] }, :constraints => { :anything => /.*/ }, :via => [:get, :post]
+  match "*path" => "static_pages#home", via: [:get, :post]
 end
