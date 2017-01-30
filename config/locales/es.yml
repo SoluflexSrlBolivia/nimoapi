@@ -63,6 +63,7 @@ es:
   password: "Contraseña"
   date_format: "%d-%m-%Y"
   date_time_format: "%d-%m-%Y %H:%M:%S"
+  date_time_format_universal: "%m-%d-%Y %H:%M:%S"
 
   activerecord:
     errors:

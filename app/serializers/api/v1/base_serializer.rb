@@ -21,10 +21,10 @@ class Api::V1::BaseSerializer < ActiveModel::Serializer
 =end
 
   def created_at
-    object.created_at.strftime(I18n.t(:date_time_format)) if object.created_at
+    object.created_at.strftime(I18n.t(:date_time_format_universal)) if object.created_at
   end
 
   def updated_at
-    object.updated_at.strftime(I18n.t(:date_time_format)) if object.updated_at
+    object.updated_at.strftime(I18n.t(:date_time_format_universal)) if object.updated_at
   end
 end
