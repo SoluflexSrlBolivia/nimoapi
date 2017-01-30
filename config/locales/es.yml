@@ -60,6 +60,7 @@ es:
   password_reset_title_uppercase: "RESTABLECER CONTRASEÑA"
   reset_link_expire: "Este enlace expira dentro de 2 horas."
   reset_password_ignore: "Si no necesitas cambiar tu contraseña, ignora este correo y tu contraseña seguirá como antes."
+  registration_account: "Activación de la cuenta"
   password: "Contraseña"
   date_format: "%m-%d-%Y"
   date_time_format: "%m-%d-%Y %H:%M:%S"

@@ -60,6 +60,7 @@ en:
   password_reset_title_uppercase: "RESTORE PASSWORD"
   reset_link_expire: "This link expires in 2 hours."
   reset_password_ignore: "If you do not need to change your password, ignore this email and your password will continue as before."
+  registration_account: "Account activation"
   password: "Password"
   date_format: "%m-%d-%Y"
   date_time_format: "%m-%d-%Y %H:%M:%S"
