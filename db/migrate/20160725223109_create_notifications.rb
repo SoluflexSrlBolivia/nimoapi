@@ -3,7 +3,7 @@ class CreateNotifications < ActiveRecord::Migration
     create_table :notifications do |t|
     	t.text :title
       t.text :message
-      t.integer :notification_type
+      t.string :notification_type
       t.text :action
       
       t.belongs_to :user, index: true, foreign_key: true
