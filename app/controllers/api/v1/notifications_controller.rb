@@ -33,7 +33,7 @@ class Api::V1::NotificationsController < Api::V1::BaseController
     	requester_user = User.find action[:user]
     	group = Group.find action[:group]
 
-    	if notification.notification_type == 3
+    	if notification.notification_type == Notification::NOTIFICATION_GROUP_ACCEPTED
     		noti_action = {:admin=>current_user.id, :group=>group.id}.to_s
         notification_ans = Notification.find_by_action noti_action
         if notification_ans.nil?
@@ -63,7 +63,7 @@ class Api::V1::NotificationsController < Api::V1::BaseController
           	group.save!
         	end
         end
-    	elsif notification.notification_type == 4
+    	elsif notification.notification_type == Notification::NOTIFICATION_GROUP_REJECTED
     		noti_action = {:admin=>current_user.id, :group=>group.id}.to_s
         notification_ans = Notification.find_by_action noti_action
         if notification_ans.nil?
