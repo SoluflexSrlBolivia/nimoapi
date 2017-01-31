@@ -6,7 +6,7 @@ class RequestJoinWorker
     result = Notification::send_notification notification_message, devices, {
         :type => Notification::NOTIFICATION_REQUEST_TO_JOIN_GROUP,
         :message => notification_message,
-        :notification=>{:id => notification_id,
+        :notification => {:id => notification_id,
                         :notification_type => Notification::NOTIFICATION_REQUEST_TO_JOIN_GROUP,
                         :action => notification_action
         }
