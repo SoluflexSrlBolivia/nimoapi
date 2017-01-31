@@ -47,21 +47,21 @@ class Api::V1::NotificationsController < Api::V1::BaseController
           group.users << requester_user
           group.save!
 
-          users_enabled = [notification_ans.user].select{|u| u.notification }.map{|u| u.id}
-          user_to_push = group.user_groups.where(:user_id=>users_enabled).where(:notification=>true)
-          devices = Device.where("user_id IN (#{user_to_push.map{|u| u.user_id}.join(",")})")
-          devices = devices.map{|d| d.player_id}
-
-          if devices.count > 0
-            RequestAcceptedWorker.perform_async(devices, notification_ans.id, group_id)
-          end
-          
         else
         	newuser = group.users.find_by_id requester_user.id
         	if newuser.nil?
         		group.users << requester_user
           	group.save!
         	end
+        end
+
+        users_enabled = [notification_ans.user].select{|u| u.notification }.map{|u| u.id}
+        user_to_push = group.user_groups.where(:user_id=>users_enabled).where(:notification=>true)
+        devices = Device.where("user_id IN (#{user_to_push.map{|u| u.user_id}.join(",")})")
+        devices = devices.map{|d| d.player_id}
+
+        if devices.count > 0
+          RequestAcceptedWorker.perform_async(devices, notification_ans.id, group.id)
         end
     	elsif notification.notification_type == Notification::NOTIFICATION_GROUP_REJECTED
     		noti_action = {:admin=>current_user.id, :group=>group.id}.to_s
@@ -75,15 +75,15 @@ class Api::V1::NotificationsController < Api::V1::BaseController
           notification_ans.user = requester_user
           notification_ans.save!
 
-          users_enabled = [notification_ans.user].select{|u| u.notification }.map{|u| u.id}
-          user_to_push = group.user_groups.where(:user_id=>users_enabled).where(:notification=>true)
-          devices = Device.where("user_id IN (#{user_to_push.map{|u| u.user_id}.join(",")})")
-          devices = devices.map{|d| d.player_id}
+        end
 
-          if devices.count > 0
-            RequestRejectedWorker.perform_async(devices, notification_ans.id)
-          end
+        users_enabled = [notification_ans.user].select{|u| u.notification }.map{|u| u.id}
+        user_to_push = group.user_groups.where(:user_id=>users_enabled).where(:notification=>true)
+        devices = Device.where("user_id IN (#{user_to_push.map{|u| u.user_id}.join(",")})")
+        devices = devices.map{|d| d.player_id}
 
+        if devices.count > 0
+          RequestRejectedWorker.perform_async(devices, notification_ans.id)
         end
     	end
     end
