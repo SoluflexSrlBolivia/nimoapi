@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20160728192636) do
     t.integer  "owner_id"
     t.string   "owner_type"
     t.integer  "uploader_id"
+    t.string   "alias"
     t.integer  "archivable_id"
     t.string   "archivable_type"
     t.datetime "created_at",           null: false
