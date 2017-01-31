@@ -108,7 +108,7 @@ ActiveRecord::Schema.define(version: 20160728192636) do
   create_table "notifications", force: :cascade do |t|
     t.text     "title"
     t.text     "message"
-    t.integer  "notification_type"
+    t.string   "notification_type"
     t.text     "action"
     t.integer  "user_id"
     t.datetime "created_at",        null: false
