@@ -239,7 +239,7 @@ class Api::V1::UserGroupsController < Api::V1::BaseController
         devices = devices.map{|d| d.player_id}
 
         if devices.count > 0
-          RequestJoinWorker.perform_async(devices, notification.id)
+          RequestJoinWorker.perform_async(devices, notification.id, notification.action, notification.message)
         end
 
         return render(json: {:message=>t(:request_sent_to_admin)})
