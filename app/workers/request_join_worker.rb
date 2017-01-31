@@ -5,9 +5,12 @@ class RequestJoinWorker
     notification = Notification.find notification_id
 
     result = Notification::send_notification notification.message, devices, {
-        :type => notification.notification_type,
+        :type => Notification::NOTIFICATION_REQUEST_TO_JOIN_GROUP,
         :message => notification.message,
-        :notification=>Api::V1::NotificationSerializer.new(notification, root: false)
+        :notification=>{:id => notification.id,
+                        :notification_type => Notification::NOTIFICATION_REQUEST_TO_JOIN_GROUP,
+                        :action => notification.action
+        }
     }
 
     puts "request_to_join:#{result}"
