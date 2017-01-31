@@ -2,7 +2,7 @@ class RequestJoinWorker
   include Sidekiq::Worker
 
   def perform(devices, notification_id)
-    notification = Notification.find_by_id notification_id
+    notification = Notification.find notification_id
 
     result = Notification::send_notification notification.message, devices, {
         :type => notification.notification_type,
