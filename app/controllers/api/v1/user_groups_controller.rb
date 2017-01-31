@@ -231,16 +231,15 @@ class Api::V1::UserGroupsController < Api::V1::BaseController
           )
           notification.user = group.admin
           notification.save!
+        end
 
-          users_enabled = [notification.user].select{|u| u.notification }.map{|u| u.id}
-          user_to_push = group.user_groups.where(:user_id=>users_enabled).where(:notification=>true)
-          devices = Device.where("user_id IN (#{user_to_push.map{|u| u.user_id}.join(",")})")
-          devices = devices.map{|d| d.player_id}
+        users_enabled = [notification.user].select{|u| u.notification }.map{|u| u.id}
+        user_to_push = group.user_groups.where(:user_id=>users_enabled).where(:notification=>true)
+        devices = Device.where("user_id IN (#{user_to_push.map{|u| u.user_id}.join(",")})")
+        devices = devices.map{|d| d.player_id}
 
-          if devices.count > 0
-            RequestJoinWorker.perform_async(devices, notification.id)
-          end
-
+        if devices.count > 0
+          RequestJoinWorker.perform_async(devices, notification.id)
         end
 
         return render(json: {:message=>t(:request_sent_to_admin)})
