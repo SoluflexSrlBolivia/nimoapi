@@ -49,7 +49,7 @@ pt:
   password_reset_expired: "A redefinição de senha expirou."
   password_reset_title: "Redefinir a senha"
   update_password: "Atualizar senha"
-  confirmation: "Confirmação"
+  confirmation: "Confirmação de senha."
   form_contain: "O formulário contém"
   errors: "erros"
   error: "erro"

@@ -49,7 +49,7 @@ en:
   password_reset_expired: "Password reset has expired."
   password_reset_title: "Reset password"
   update_password: "Update password"
-  confirmation: "Confirmacion"
+  confirmation: "Confirmation of password."
   form_contain: "The form contains"
   errors: "errors"
   error: "error"
