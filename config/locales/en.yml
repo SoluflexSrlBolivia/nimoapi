@@ -23,7 +23,7 @@ en:
   message_activation_email: "Check your email to activate your account"
   success_create_account: "Congratulations is already part of Nimo"
   error_email_format: "Invalid format"
-  error_email_already_exist: "Email already exist"
+  error_email_already_exist: "This email has already been registered. Want to try another email?"
   error_password_format: "Must be 8 characters with 1 uppercase"
   success_create_folder: "It was created successfully"
   new_comment: "New comment of"
