@@ -71,7 +71,7 @@ en:
         user:
           attributes:
             password_confirmation:
-              confirmation: "must match the password"
+              confirmation: "does not match the password. Do you want to try again?"
               blank: "can not be blank"
             password:
               too_short: "must contain at least 8 characters."
