@@ -24,7 +24,7 @@ en:
   success_create_account: "Congratulations is already part of Nimo"
   error_email_format: "Invalid format"
   error_email_already_exist: "This email has already been registered. Want to try another email?"
-  error_password_format: "Must be 8 characters with 1 uppercase"
+  error_password_format: "it must contain 7 characters and 1 capital."
   success_create_folder: "It was created successfully"
   new_comment: "New comment of"
   accept_join: "accept to join group"
@@ -74,4 +74,4 @@ en:
               confirmation: "must match the password"
               blank: "can not be blank"
             password:
-              too_short: "must have 8 characters with 1 uppercase"
+              too_short: "must contain at least 8 characters."

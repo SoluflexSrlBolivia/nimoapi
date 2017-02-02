@@ -24,7 +24,7 @@ pt:
   success_create_account: "Parabéns já faz parte do Nimo"
   error_email_format: "Formato inválido"
   error_email_already_exist: "Este e-mail já foi registrado. Você quer tentar outro e-mail?"
-  error_password_format: "Deve ser de 8 caracteres com uma maiúscula"
+  error_password_format: "7 caracteres e deve conter uma letra maiúscula."
   success_create_folder: "Ele foi criado com êxito"
   new_comment: "Novo comentário de"
   accept_join: "aceitar para participar do grupo"
@@ -74,4 +74,4 @@ pt:
               confirmation: "você deve coincidir com a senha"
               blank: "não pode estar em branco"
             password:
-              too_short: "você deve ser de 8 caracteres com letra uma capital"
+              too_short: "ele deve conter pelo menos 8 caracteres."

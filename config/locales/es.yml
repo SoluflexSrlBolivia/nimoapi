@@ -24,7 +24,7 @@ es:
   success_create_account: "Felicidades ya es parte de Nimo"
   error_email_format: "Formato invalido"
   error_email_already_exist: "Este correo electrónico ya fue registrado. ¿Quieres probar con otro correo electrónico?"
-  error_password_format: "Debe tener 8 caracteres con 1 mayuscula"
+  error_password_format: "debe contener 7 caracteres y 1 mayúscula."
   success_create_folder: "se creo con exito"
   new_comment: "Nuevo comentario de"
   accept_join: "acepto el ingreso al grupo"
@@ -74,4 +74,4 @@ es:
               confirmation: "debe coincidir con el password"
               blank: "no puede estar en blanco"
             password:
-              too_short: "debe tener 8 caracteres con 1 mayuscula"
+              too_short: "debe contener como mínimo 8 caracteres."
