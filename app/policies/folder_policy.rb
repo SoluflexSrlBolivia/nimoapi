@@ -15,7 +15,7 @@ class FolderPolicy < ApplicationPolicy
     return true if user.admin?
     return true if record.owner_type == "User" && record.owner_id == user.id
     if record.owner_type == "Group"
-      return true unless record.owner.admin_id == user.id
+      return true if record.owner.admin_id == user.id
     end
   end
 
