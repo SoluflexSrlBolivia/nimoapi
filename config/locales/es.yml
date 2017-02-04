@@ -36,7 +36,7 @@ es:
   already_in_group: "Ya esta dentro del grupo"
   alias_exist: "Ya agrego ese alias"
   request_to_join: "solicita el ingreso al grupo"
-  request_sent_to_admin: "Se envio la solicitud al administrador del grupo"
+  request_sent_to_admin: "Se envió la solicitud al administrador del grupo."
   request_already_sended: "Ya se envio la solicitud"
   account_not_active: "Cuenta no activada. Revise su correo electrónico para ver el enlace de activación."
 
