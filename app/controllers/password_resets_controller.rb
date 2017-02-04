@@ -20,6 +20,7 @@ class PasswordResetsController < ApplicationController
   end
 
   def edit
+    flash[:success] = nil
   end
 
   def update
