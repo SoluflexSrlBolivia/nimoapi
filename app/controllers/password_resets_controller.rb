@@ -20,7 +20,6 @@ class PasswordResetsController < ApplicationController
   end
 
   def edit
-    flash[:success] = ""
   end
 
   def update
@@ -29,7 +28,7 @@ class PasswordResetsController < ApplicationController
       render 'edit'
     elsif @user.update_attributes(user_params)
       log_in @user
-      flash[:success] = t(:password_reset_ok)
+      flash.now[:success] = t(:password_reset_ok)
       #redirect_to @user
       render 'user'
     else
