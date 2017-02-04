@@ -15,8 +15,7 @@ class FolderPolicy < ApplicationPolicy
     return true if user.admin?
     return true if record.owner_type == "User" && record.owner_id == user.id
     if record.owner_type == "Group"
-      member = UserGroup.find_by(:user_id=>user.id, :group_id=>record.owner.id)
-      return true unless member.nil?
+      return true unless record.owner.admin_id == user.id
     end
   end
 
