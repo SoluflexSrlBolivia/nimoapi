@@ -21,7 +21,7 @@ class FolderPolicy < ApplicationPolicy
 
   def destroy?
     return true if user.admin?
-    return true if record.owner_type == "Group" && record.owner_id == user.id
+    return true if record.owner_type == "User" && record.owner_id == user.id
   end
 
   class Scope < ApplicationPolicy::Scope
