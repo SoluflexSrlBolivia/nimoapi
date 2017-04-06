@@ -52,6 +52,7 @@ class Archive < ActiveRecord::Base
     ignoring: :accents
 
   before_create :randomize_file_name
+  before_save :extract_dimensions
 
   #MIME::Types.type_for(a.digital.path).first.content_type
   def default_images
@@ -213,6 +214,22 @@ class Archive < ActiveRecord::Base
     self.original_file_name = self.digital_file_name
     extension = File.extname(self.digital_file_name).downcase
     self.digital.instance_write(:file_name, "#{SecureRandom.hex(16)}#{extension}")
+  end
+  def extract_dimensions
+    #return unless self.is_image?
+    #return unless self.is_pdf?
+    #return unless self.is_video?
+
+    tempfile = self.digital.queued_for_write[:medium]
+    if !tempfile.nil?
+      geometry = Paperclip::Geometry.from_file(tempfile)
+      self.image_width = geometry.width.to_i
+      self.image_height = geometry.height.to_i
+    else
+      geometry = Paperclip::Geometry.from_file(default_image_path)
+      self.image_width = geometry.width.to_i
+      self.image_height = geometry.height.to_i
+    end
   end
 
   def owner

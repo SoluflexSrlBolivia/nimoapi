@@ -1,6 +1,6 @@
 class Api::V1::ArchiveSerializer < Api::V1::BaseSerializer
   #just some basic attributes
-  attributes :id, :name, :size, :content_type, :uploader, :rate, :alias
+  attributes :id, :name, :size, :content_type, :uploader, :rate, :alias, :width, :height
   
   def uploader
   	Api::V1::UserArchiveSerializer.new(object.uploader, root: false) unless object.uploader.nil?
@@ -32,6 +32,13 @@ class Api::V1::ArchiveSerializer < Api::V1::BaseSerializer
     return Api::V1::AliasSerializer.new(aalias, root: false) unless aalias.nil?
 
     return {:name=>object.alias}
+  end
+
+  def width
+    object.try(:image_width) || nil
+  end
+  def height
+    object.try(:image_height) || nil
   end
 
 end
