@@ -1,6 +1,6 @@
 class Api::V1::HomeArchiveSerializer < Api::V1::BaseSerializer
   #just some basic attributes
-  attributes :id, :name, :size, :content_type, :rate, :alias, :group, :uploader, :comments, :votes, :created_at, :updated_at
+  attributes :id, :name, :size, :content_type, :rate, :alias, :group, :uploader, :comments, :votes, :created_at, :updated_at, :width, :height
   
   def name
   	object.original_file_name
@@ -39,4 +39,12 @@ class Api::V1::HomeArchiveSerializer < Api::V1::BaseSerializer
 
     return {:name=>object.alias}
   end
+
+  def width
+    object.try(:image_width) || nil
+  end
+  def height
+    object.try(:image_height) || nil
+  end
+
 end
