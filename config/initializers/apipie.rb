@@ -1,6 +1,6 @@
 Apipie.configure do |config|
   config.app_name                = "Nimo social"
-  config.copyright               = "&copy; 2016 Nelson Garcia, nelsongarcia.info@gmail.com"
+  config.copyright               = "&copy; 2017 Nelson Garcia, nelsongarcia.info@gmail.com"
   config.api_base_url            = "/api"
   config.doc_base_url            = "/apidoc"
   config.validate                = false
@@ -9,7 +9,7 @@ Apipie.configure do |config|
     Documentacion de servicios para el app Nimo.social
   "
   # where is your API defined?
-  config.api_controllers_matcher = "#{Rails.root}/app/controllers/**/*.rb"
+  config.api_controllers_matcher = File.join(Rails.root, "app", "controllers", "**","*.rb")
   config.api_routes              = Rails.application.routes
 
   # user to access API section

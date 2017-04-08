@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170406051451) do
+ActiveRecord::Schema.define(version: 20170408193046) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,8 +43,8 @@ ActiveRecord::Schema.define(version: 20170406051451) do
     t.string   "digital_content_type"
     t.integer  "digital_file_size"
     t.datetime "digital_updated_at"
-    t.integer  "digital_width"
-    t.integer  "digital_height"
+    t.integer  "image_width"
+    t.integer  "image_height"
   end
 
   add_index "archives", ["archivable_type", "archivable_id"], name: "index_archives_on_archivable_type_and_archivable_id", using: :btree
@@ -156,6 +156,36 @@ ActiveRecord::Schema.define(version: 20170406051451) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "report_archives", force: :cascade do |t|
+    t.integer  "archive_id"
+    t.integer  "group_id"
+    t.integer  "informer_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "report_archives", ["archive_id"], name: "index_report_archives_on_archive_id", using: :btree
+  add_index "report_archives", ["group_id"], name: "index_report_archives_on_group_id", using: :btree
+
+  create_table "report_posts", force: :cascade do |t|
+    t.integer  "post_id"
+    t.integer  "group_id"
+    t.integer  "informer_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "report_users", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "group_id"
+    t.integer  "informer_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "report_users", ["group_id"], name: "index_report_users_on_group_id", using: :btree
+  add_index "report_users", ["user_id"], name: "index_report_users_on_user_id", using: :btree
+
   create_table "user_groups", force: :cascade do |t|
     t.boolean  "notification", default: true
     t.integer  "rate",         default: 0
@@ -193,4 +223,8 @@ ActiveRecord::Schema.define(version: 20170406051451) do
 
   add_foreign_key "devices", "users"
   add_foreign_key "notifications", "users"
+  add_foreign_key "report_archives", "archives"
+  add_foreign_key "report_archives", "groups"
+  add_foreign_key "report_users", "groups"
+  add_foreign_key "report_users", "users"
 end
