@@ -21,9 +21,9 @@ Rails.application.routes.draw do
   #api
   namespace :api do
     namespace :v1 do
-      post "reports/user" => "reports#user"
-      post "reports/post" => "reports#post"
-      post "reports/archive" => "reports#archive"
+      post "report_user" => "reports#user"
+      post "report_post" => "reports#post"
+      post "report_archive" => "reports#archive"
       resources :users, only: [:index, :create, :show, :update, :destroy]
       get "users/:q/search"  => "users#search"
       resources :aliases, only: [:index, :create, :update, :destroy]
