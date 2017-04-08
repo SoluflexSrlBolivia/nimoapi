@@ -44,7 +44,8 @@ class Api::V1::ReportsController < Api::V1::BaseController
     report.save!
 
     render(
-        json: {:status=>"ok"}
+        json: {:status => "ok" },
+        status: 201
     )
 
   end
@@ -70,7 +71,8 @@ class Api::V1::ReportsController < Api::V1::BaseController
     report.save!
 
     render(
-        json: {:status=>"ok"}
+        json: {:status => "ok" },
+        status: 201
     )
   end
 
@@ -95,7 +97,8 @@ class Api::V1::ReportsController < Api::V1::BaseController
     report.save!
 
     render(
-        json: {:status=>"ok"}
+        json: {:status => "ok" },
+        status: 201
     )
   end
 
