@@ -34,7 +34,7 @@ class Api::V1::ReportsController < Api::V1::BaseController
     "status":"ok"
   }'
   def user
-    report = ReportUser.find(report_params)
+    report = ReportUser.find_by(report_params)
     if report.nil?
       report = ReportUser.new(report_params)
     end
@@ -60,7 +60,7 @@ class Api::V1::ReportsController < Api::V1::BaseController
     "status":"ok"
   }'
   def post
-    report = ReportPost.find(report_params)
+    report = ReportPost.find_by(report_params)
     if report.nil?
       report = ReportPost.new(report_params)
     end
@@ -85,7 +85,7 @@ class Api::V1::ReportsController < Api::V1::BaseController
     "status":"ok"
   }'
   def archive
-    report = ReportArchive.find(report_params)
+    report = ReportArchive.find_by(report_params)
     if report.nil?
       report = ReportArchive.new(report_params)
     end
