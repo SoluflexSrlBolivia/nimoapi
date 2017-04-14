@@ -15,7 +15,7 @@ class Api::V1::HomePostSerializer < Api::V1::BaseSerializer
   end
 
   def group
-    Api::V1::HomeGroupSerializer.new(object.group, root: false)
+    Api::V1::HomeGroupSerializer.new(Group.find(object.group_id), root: false)
   end
 
   def user

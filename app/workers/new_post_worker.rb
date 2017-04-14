@@ -7,7 +7,7 @@ class NewPostWorker
     result = Notification::send_notification notification_message, devices, {
         :type => Notification::NOTIFICATION_NEW_POST,
         :message => notification_message,
-        :group_id => post.group.id,
+        :group_id => post.group_id,
         :post=>Api::V1::HomePostSerializer.new(post, root: false)
     }
 
