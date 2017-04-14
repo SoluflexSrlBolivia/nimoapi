@@ -3,7 +3,7 @@ class NewPostWorker
 
   def perform(notification_message, devices, post_id)
     # Do something later
-    post = Post.find_by_id post_id
+    post = Post.find(post_id)
     result = Notification::send_notification notification_message, devices, {
         :type => Notification::NOTIFICATION_NEW_POST,
         :message => notification_message,
