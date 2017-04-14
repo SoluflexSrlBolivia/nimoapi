@@ -80,7 +80,8 @@ class Api::V1::PostsController < Api::V1::BaseController
     return api_error(status: 422, errors: post.errors) unless post.valid?
 
     post.save!
-    
+
+    post_id = post.id
     users_to_notify = post.group.users.where.not(:id=>create_params[:user_id]).where(:deleted=>false)
     if users_to_notify.count > 0
       notification_message = "#{current_user.notifier_name} #{t(:new_post)}:#{post.group.name}"
@@ -99,7 +100,6 @@ class Api::V1::PostsController < Api::V1::BaseController
       devices = Device.where("user_id IN (#{user_to_push.map{|u| u.user_id}.join(",")})")
       devices = devices.map{|d| d.player_id}
 
-      post_id = post.id
       if devices.count>0
         NewPostWorker.perform_async(notification_message, devices, post_id)
       end
