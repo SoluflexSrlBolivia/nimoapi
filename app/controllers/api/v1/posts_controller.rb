@@ -61,7 +61,7 @@ class Api::V1::PostsController < Api::V1::BaseController
     post = Post.new(create_params)
     authorize post
 
-    group_alias = UserGroup.find_by(:group_id=>post.group.id, :user_id=>current_user.id)
+    group_alias = UserGroup.find_by(:group_id=>post.group_id, :user_id=>current_user.id)
     if group_alias.nil?
       post.alias = current_user.notifier_name
     elsif group_alias.alias.nil?
@@ -100,7 +100,7 @@ class Api::V1::PostsController < Api::V1::BaseController
       devices = devices.map{|d| d.player_id}
 
       if devices.count>0
-        NewPostWorker.perform_async(notification_message, devices, post.id)
+        NewPostWorker.perform_async(notification_message, devices, post.reload.id)
       end
 
     end
