@@ -21,3 +21,16 @@ sidekiq manipulate
 #   sudo stop sidekiq index=0
 #   sudo status sidekiq index=0
 
+
+
+#Development Configuration
+Start:
+
+$ bundle exec sidekiq -d -P tmp/sidekiq.pid -L log/sidekiq.log 
+where -d demonize, -P pid file, -L log file.
+
+Stop:
+
+$ bundle exec sidekiqctl stop tmp/sidekiq.pid 0
+Sidekiq shut down gracefully.
+where 0 is number of seconds to wait until Sidekiq exits.
