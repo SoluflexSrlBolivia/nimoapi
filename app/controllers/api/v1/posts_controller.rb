@@ -101,7 +101,7 @@ class Api::V1::PostsController < Api::V1::BaseController
       devices = devices.map{|d| d.player_id}
 
       if devices.count>0
-        NewPostWorker.perform_async(notification_message, devices, post_id, create_params[:group_id])
+        NewPostWorker.perform_async(notification_message, devices, post_id, create_params["group_id"])
       end
 
     end
