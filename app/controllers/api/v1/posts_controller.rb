@@ -82,7 +82,6 @@ class Api::V1::PostsController < Api::V1::BaseController
     post.save!
 
     post_id = post.id
-    puts "----------------POST_ID:#{post_id}"
     users_to_notify = post.group.users.where.not(:id=>create_params[:user_id]).where(:deleted=>false)
     if users_to_notify.count > 0
       notification_message = "#{current_user.notifier_name} #{t(:new_post)}:#{post.group.name}"
@@ -102,7 +101,7 @@ class Api::V1::PostsController < Api::V1::BaseController
       devices = devices.map{|d| d.player_id}
 
       if devices.count>0
-        NewPostWorker.perform_async(notification_message, devices, post_id)
+        NewPostWorker.perform_async(notification_message, devices, post_id, create_params[:group_id])
       end
 
     end
