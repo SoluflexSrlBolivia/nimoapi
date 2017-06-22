@@ -23,7 +23,7 @@ class Api::V1::NotificationsController < Api::V1::BaseController
   api! "Actulizacion de notificacion"
   def update
   	notification = Notification.find params[:id]
-    
+
     if !notification.update_attributes(update_params)
       return api_error(status: 422, errors: notification.errors)
     end
@@ -34,7 +34,7 @@ class Api::V1::NotificationsController < Api::V1::BaseController
     	group = Group.find action[:group]
 
     	if notification.notification_type == Notification::NOTIFICATION_GROUP_ACCEPTED
-    		noti_action = {:admin=>current_user.id, :group=>group.id}.to_s
+    		noti_action = {:admin=>current_user.id, :group=>group.id, :user => requester_user.id}.to_s
         notification_ans = Notification.find_by_action noti_action
         if notification_ans.nil?
           notification_ans = Notification.new(
@@ -64,7 +64,7 @@ class Api::V1::NotificationsController < Api::V1::BaseController
           RequestAcceptedWorker.perform_async(devices, notification_ans.id, group.id)
         end
     	elsif notification.notification_type == Notification::NOTIFICATION_GROUP_REJECTED
-    		noti_action = {:admin=>current_user.id, :group=>group.id}.to_s
+    		noti_action = {:admin=>current_user.id, :group=>group.id, :user => requester_user.id}.to_s
         notification_ans = Notification.find_by_action noti_action
         if notification_ans.nil?
           notification_ans = Notification.new(
