@@ -78,8 +78,8 @@ class Api::V1::NotificationsController < Api::V1::BaseController
         end
 
         users_enabled = [notification_ans.user].select{|u| u.notification }.map{|u| u.id}
-        user_to_push = group.user_groups.where(:user_id=>users_enabled).where(:notification=>true)
-        devices = Device.where("user_id IN (#{user_to_push.map{|u| u.user_id}.join(",")})")
+        #user_to_push = group.user_groups.where(:user_id=>users_enabled).where(:notification=>true)
+        devices = Device.where("user_id IN (#{users_enabled.join(",")})")
         devices = devices.map{|d| d.player_id}
 
         if devices.count > 0
