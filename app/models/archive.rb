@@ -118,7 +118,7 @@ class Archive < ActiveRecord::Base
 
   def is_audio?
     #self.digital.content_type =~ /\Aaudio\/.*\Z/
-    /\Aaudio\/.*\Z/.match(self.digital.content_type).present?
+    %r(audio).match(self.digital.content_type).present?
   end
 
   def is_plain_text?
