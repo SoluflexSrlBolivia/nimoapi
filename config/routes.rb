@@ -47,6 +47,7 @@ Rails.application.routes.draw do
       get "user_groups/:id/join" => "user_groups#join"
       get "user_groups/:id/members" => "user_groups#members"
       post "user_groups/:id/add"  => "user_groups#add_members"
+      post "user_groups/:id/add_android"  => "user_groups#add_members_android"
       post "user_groups/:id/alias"  => "user_groups#add_alias"
       post "user_groups/:id/keyword" => "user_groups#register_by_keyword"
       resources :notifications, only: [:index, :update]

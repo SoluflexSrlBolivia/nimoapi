@@ -322,6 +322,47 @@ class Api::V1::UserGroupsController < Api::V1::BaseController
     )
   end
 
+  api! "Agregar miembro al grupo, android"
+  param_group :member
+  def add_members_android
+    group = Group.find params[:id]
+    return api_error(status: 422) if group.nil?
+
+    all_user_ids = member_params[:member_ids].split(",")
+    all_user_ids.map!{|n| n.to_i}
+    all_user_ids << current_user.id unless all_user_ids.include?(current_user.id)
+    user_ids_already = group.user_groups.where("user_id IN (#{all_user_ids.join(",")})").map{|ug| ug.user_id}
+    new_user_ids = all_user_ids.select{|id| !user_ids_already.include?(id) }
+
+    new_user_ids.each{|id| UserGroup.create(:user_id=>id, :group_id=>group.id)}
+
+    ############
+    if new_user_ids.count > 0
+      notification_message = "#{t(:add_member_to_group)}: #{group.name}"
+      new_user_ids.each do |user_id|
+        notification = Notification.new(
+            :message=>notification_message,
+            :notification_type=>Notification::NOTIFICATION_MEMBER_ADDED_TO_GROUP
+        )
+        notification.user_id = user_id
+        notification.save!
+      end
+
+      user_to_push = group.user_groups.where("user_id IN (#{new_user_ids.join(",")})").where(:notification=>true)
+      devices = Device.where("user_id IN (#{user_to_push.map{|u| u.user_id}.join(",")})")
+      devices = devices.map{|d| d.player_id}
+
+      if devices.count > 0
+        MemberAddedWorker.perform_async(devices, notification_message)
+      end
+    end
+    ############
+
+    render(
+      json: {:status=>"ok"}
+    )
+  end
+
   private
 	  def group_params
       params.require(:group).permit(
