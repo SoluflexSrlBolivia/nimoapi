@@ -328,7 +328,7 @@ class Api::V1::UserGroupsController < Api::V1::BaseController
     group = Group.find params[:id]
     return api_error(status: 422) if group.nil?
 
-    all_user_ids = member_params[:member_ids].split(",")
+    all_user_ids = member_params_android[:member_ids].split(",")
     all_user_ids.map!{|n| n.to_i}
     all_user_ids << current_user.id unless all_user_ids.include?(current_user.id)
     user_ids_already = group.user_groups.where("user_id IN (#{all_user_ids.join(",")})").map{|ug| ug.user_id}
@@ -372,6 +372,11 @@ class Api::V1::UserGroupsController < Api::V1::BaseController
     def member_params 
       params.require(:group).permit(
         member_ids: []
+      ).delete_if{ |k,v| v.nil?}
+    end
+    def member_params_android
+      params.require(:group).permit(
+        :member_ids
       ).delete_if{ |k,v| v.nil?}
     end
     def alias_params
